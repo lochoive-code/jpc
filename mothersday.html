@@ -103,6 +103,18 @@
             background: #fecdd3;
             border-radius: 10px;
         }
+
+        /* 底部單位標註樣式 */
+        .footer-label {
+            position: fixed;
+            bottom: 12px;
+            right: 16px;
+            font-size: 10px;
+            color: rgba(156, 163, 175, 0.6); /* gray-400 with opacity */
+            letter-spacing: 0.05em;
+            pointer-events: none;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
@@ -114,6 +126,11 @@
             <!-- JS 動態生成分頁點 -->
         </div>
     </nav>
+
+    <!-- 固定右下角標註 -->
+    <div class="footer-label">
+        人資行政部 & 行銷 Marketing
+    </div>
 
     <main class="pt-28 pb-16 px-5 max-w-xl mx-auto min-h-screen">
         
@@ -183,7 +200,7 @@
             </div>
         </section>
 
-        <!-- Page 4｜今日故事頁 (已更新排版風格) -->
+        <!-- Page 4｜今日故事頁 -->
         <section id="page-4" class="page-transition hidden-page">
             <div class="story-card overflow-hidden">
                 <div class="h-80 bg-gray-200 relative">
