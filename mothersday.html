@@ -209,7 +209,7 @@
 
         <!-- Page 4｜今日故事頁 -->
         <section id="page-4" class="page-transition hidden-page">
-            <div class="story-card overflow-hidden">
+            <div class="story-card overflow-hidden mb-8">
                 <div class="h-80 bg-gray-200 relative">
                     <img src="https://lochoive-code.github.io/jpc/Cindy&Agnes.jpg" alt="九樓的時間整理者" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 p-8 text-white">
@@ -259,7 +259,29 @@
                     </div>
                 </div>
             </div>
-            <button onclick="goToPage(5)" class="w-full mt-8 bg-rose-50 text-rose-500 py-4 rounded-2xl font-bold hover:bg-rose-100 transition-all flex items-center justify-center">
+
+            <!-- Page 4 專屬留言板 (與 Page 6 同步) -->
+            <div class="story-card p-6 mb-8 border border-rose-50">
+                <h3 class="text-xl font-bold text-gray-800 mb-5 flex items-center border-b border-rose-50 pb-3">
+                    <i class="fa-regular fa-comments text-rose-400 mr-2"></i> 給她們一點鼓勵
+                </h3>
+                
+                <div class="mb-6 space-y-3">
+                    <input type="text" class="comment-name-input w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm" placeholder="你的名字 / 暱稱 (選填)">
+                    <textarea class="comment-text-input w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm resize-none" rows="2" placeholder="留下你想對她們說的話..."></textarea>
+                    <button class="submit-comment-btn w-full bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 transition-all shadow-md flex items-center justify-center">
+                        <i class="fa-regular fa-paper-plane mr-2"></i> 送出祝福
+                    </button>
+                </div>
+
+                <div class="bg-gray-50/50 rounded-xl p-4">
+                    <div class="comments-list-display space-y-4 max-h-[300px] overflow-y-auto pr-2 comments-scroll">
+                        <div class="text-center text-gray-400 text-sm py-4">載入留言中...</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="goToPage(5)" class="w-full mt-2 bg-rose-50 text-rose-500 py-4 rounded-2xl font-bold hover:bg-rose-100 transition-all flex items-center justify-center">
                 前往目錄與預告 <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
         </section>
@@ -329,15 +351,15 @@
                 </h3>
                 
                 <div class="mb-6 space-y-3">
-                    <input type="text" id="comment-name" placeholder="你的名字 / 暱稱 (選填)" class="w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm">
-                    <textarea id="comment-text" rows="3" placeholder="留下你想對她們說的話，或分享你的照顧日常..." class="w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm resize-none"></textarea>
-                    <button id="submit-comment" class="w-full bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 transition-all shadow-md flex items-center justify-center">
+                    <input type="text" class="comment-name-input w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm" placeholder="你的名字 / 暱稱 (選填)">
+                    <textarea class="comment-text-input w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm resize-none" rows="3" placeholder="留下你想對她們說的話，或分享你的照顧日常..."></textarea>
+                    <button class="submit-comment-btn w-full bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 transition-all shadow-md flex items-center justify-center">
                         <i class="fa-regular fa-paper-plane mr-2"></i> 送出祝福
                     </button>
                 </div>
 
                 <div class="bg-gray-50/50 rounded-xl p-4">
-                    <div id="comments-list" class="space-y-4 max-h-[350px] overflow-y-auto pr-2 comments-scroll">
+                    <div class="comments-list-display space-y-4 max-h-[350px] overflow-y-auto pr-2 comments-scroll">
                         <div class="text-center text-gray-400 text-sm py-4">載入留言中...</div>
                     </div>
                 </div>
@@ -484,56 +506,67 @@
         const db = getFirestore(app);
         const commentsRef = collection(db, "mothers_day_comments");
 
+        // 取得所有留言並同步更新兩個顯示區
         const q = query(commentsRef, orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
-            const list = document.getElementById('comments-list');
-            list.innerHTML = ''; 
+            const displays = document.querySelectorAll('.comments-list-display');
+            let htmlContent = '';
             
             if(snapshot.empty) {
-                list.innerHTML = '<div class="text-center text-gray-400 text-sm py-4">成為第一個留下祝福的人吧！</div>';
-                return;
+                htmlContent = '<div class="text-center text-gray-400 text-sm py-4">成為第一個留下祝福的人吧！</div>';
+            } else {
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString('zh-TW', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : '剛剛';
+                    const displayName = data.name || '匿名同事';
+                    
+                    htmlContent += `
+                        <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm mb-3">
+                            <div class="flex justify-between items-center mb-2 border-b border-gray-50 pb-2">
+                                <span class="font-bold text-sm text-gray-700"><i class="fa-solid fa-user-astronaut text-rose-300 mr-1"></i> ${displayName}</span>
+                                <span class="text-xs text-gray-400">${date}</span>
+                            </div>
+                            <p class="text-gray-600 text-[15px] leading-relaxed break-words">${data.text}</p>
+                        </div>
+                    `;
+                });
             }
 
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                const date = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString('zh-TW', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : '剛剛';
-                const displayName = data.name || '匿名同事';
-                
-                list.innerHTML += `
-                    <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm mb-3">
-                        <div class="flex justify-between items-center mb-2 border-b border-gray-50 pb-2">
-                            <span class="font-bold text-sm text-gray-700"><i class="fa-solid fa-user-astronaut text-rose-300 mr-1"></i> ${displayName}</span>
-                            <span class="text-xs text-gray-400">${date}</span>
-                        </div>
-                        <p class="text-gray-600 text-[15px] leading-relaxed break-words">${data.text}</p>
-                    </div>
-                `;
+            displays.forEach(display => {
+                display.innerHTML = htmlContent;
             });
         }, (error) => {
             console.error("讀取留言時發生錯誤: ", error);
-            document.getElementById('comments-list').innerHTML = `<div class="text-center text-rose-500 text-sm py-4">讀取留言失敗。</div>`;
         });
 
-        document.getElementById('submit-comment').addEventListener('click', async () => {
-            const nameInput = document.getElementById('comment-name');
-            const textInput = document.getElementById('comment-text');
-            if(!textInput.value.trim()) return;
-            const btn = document.getElementById('submit-comment');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 傳送中...';
-            btn.disabled = true;
-            try {
-                await addDoc(commentsRef, {
-                    name: nameInput.value.trim(),
-                    text: textInput.value.trim(),
-                    timestamp: serverTimestamp()
-                });
-                textInput.value = '';
-            } catch (e) {
-                console.error("寫入錯誤: ", e);
-            } finally {
-                btn.innerHTML = '<i class="fa-regular fa-paper-plane mr-2"></i> 送出祝福';
-                btn.disabled = false;
-            }
+        // 監聽所有提交按鈕
+        document.querySelectorAll('.submit-comment-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const parent = e.target.closest('.story-card');
+                const nameInput = parent.querySelector('.comment-name-input');
+                const textInput = parent.querySelector('.comment-text-input');
+                
+                if(!textInput.value.trim()) return;
+                
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 傳送中...';
+                btn.disabled = true;
+
+                try {
+                    await addDoc(commentsRef, {
+                        name: nameInput.value.trim(),
+                        text: textInput.value.trim(),
+                        timestamp: serverTimestamp()
+                    });
+                    textInput.value = '';
+                    nameInput.value = '';
+                } catch (err) {
+                    console.error("寫入錯誤: ", err);
+                } finally {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }
+            });
         });
     </script>
 </body>
