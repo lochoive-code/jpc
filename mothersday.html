@@ -90,6 +90,19 @@
         .coming-soon-tag {
             animation: bounce-slow 2s infinite;
         }
+
+        /* 留言區捲軸美化 */
+        .comments-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .comments-scroll::-webkit-scrollbar-track {
+            background: #fdf7f7;
+            border-radius: 10px;
+        }
+        .comments-scroll::-webkit-scrollbar-thumb {
+            background: #fecdd3;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -119,8 +132,31 @@
             </button>
         </section>
 
-        <!-- Page 2｜活動介紹 -->
+        <!-- Page 2｜前言 -->
         <section id="page-2" class="page-transition hidden-page">
+            <div class="story-card p-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i class="fa-solid fa-quote-right text-8xl text-rose-300"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fa-solid fa-pen-fancy text-rose-400 mr-3"></i> 前言
+                </h3>
+                <div class="space-y-6 text-gray-600 leading-relaxed text-[17px]">
+                    <p>在日常工作之外，我們不常有機會，理解同事在不同角色中的樣子。</p>
+                    <p>今年母親節，我們以「同仁故事」為主軸，邀請幾位同時承擔家庭照顧角色的同仁，分享他們在工作與生活之間的日常與選擇。</p>
+                    <p>這些角色不只限於母親，也包含在不同位置上照顧他人的人。我們從不同部門與職務中，選擇具有多元背景的同仁作為分享對象，希望呈現更貼近真實的經驗。</p>
+                    <div class="bg-rose-50/50 p-5 rounded-2xl border border-rose-100 text-rose-600 font-medium text-center">
+                        也提醒，在照顧他人的同時，照顧好自己，同樣重要。
+                    </div>
+                </div>
+                <button onclick="nextPage()" class="w-full mt-8 bg-gray-800 text-white py-4 rounded-2xl font-bold hover:bg-gray-700 transition-all shadow-md">
+                    繼續閱讀
+                </button>
+            </div>
+        </section>
+
+        <!-- Page 3｜活動介紹 -->
+        <section id="page-3" class="page-transition hidden-page">
             <div class="story-card p-10 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-4 opacity-10">
                     <i class="fa-solid fa-leaf text-8xl text-rose-300"></i>
@@ -129,8 +165,8 @@
                     <span class="bg-rose-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm shadow-sm">01</span>
                     關於這本故事書
                 </h3>
-                <div class="space-y-6 text-gray-600 leading-relaxed text-lg">
-                    <p>這是一本關於「平衡」的故事書，紀錄了辦公室裡幾位同事最真實的日常，邀請妳走進她們的世界。</p>
+                <div class="space-y-6 text-gray-600 leading-relaxed text-[17px]">
+                    <p>這是一本關於「平衡」的故事書，紀錄了辦公室裡幾位同事最真實的日常，邀請你走進他們的世界。</p>
                     <div class="bg-rose-50/50 p-6 rounded-2xl border-l-4 border-rose-400 my-8">
                         <p class="font-bold text-rose-600 mb-3 flex items-center">
                             <i class="fa-solid fa-calendar-check mr-2"></i> 閱覽說明
@@ -141,55 +177,71 @@
                         </ul>
                     </div>
                 </div>
-                <button onclick="nextPage()" class="w-full mt-6 bg-gray-800 text-white py-4 rounded-2xl font-bold hover:bg-gray-700 transition-all shadow-md">
+                <button onclick="nextPage()" class="w-full mt-6 bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all shadow-md">
                     解鎖今日故事
                 </button>
             </div>
         </section>
 
-        <!-- Page 3｜今日故事頁 (故事二：行政部門的隱藏超人) -->
-        <section id="page-3" class="page-transition hidden-page">
+        <!-- Page 4｜今日故事頁 (已更新排版風格) -->
+        <section id="page-4" class="page-transition hidden-page">
             <div class="story-card overflow-hidden">
                 <div class="h-80 bg-gray-200 relative">
                     <img src="https://lochoive-code.github.io/jpc/Cindy&Agnes.jpg" alt="九樓的時間整理者" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 p-8 text-white">
                         <span class="bg-rose-500 px-3 py-1 rounded-full text-xs font-bold mb-2 inline-block">故事二</span>
-                        <h4 class="text-3xl font-bold">九樓的時間整理者</h4>
+                        <h4 class="text-3xl font-bold">九樓的時間管理大師</h4>
                     </div>
                 </div>
                 <div class="p-8 sm:p-10">
                     <div class="mb-8 gold-quote">
                         <i class="fa-solid fa-quote-left text-rose-200 text-4xl mb-4 block"></i>
-                        <h5 class="text-2xl font-bold text-gray-800 leading-snug">「在忙碌之中，替自己留一段時間——時間管理大師」</h5>
+                        <h5 class="text-2xl font-bold text-gray-800 leading-snug">「在忙碌之中，替自己留一段時間」</h5>
                     </div>
                     
-                    <div class="space-y-6 text-gray-600 text-[17px] leading-relaxed">
-                        <p>行政部門裡，有兩位三寶媽。</p>
-                        <p>不太高調，但大家的印象都是：她們很穩，也很漂亮。</p>
-                        
-                        <p>會注意到她們，是因為常在中午 1.5 小時把孩子的事處理好：買用品、看作業，甚至順便修剪頭髮。再回到公司，依然是那種「不費力地讓一切接軌」的狀態。</p>
-                        
-                        <p>她們笑說，彼此是「取暖的夥伴」，忙的時候互相 cover，累的時候不用多說就懂。三個孩子的生活沒有空檔，但她們還是留了一段 ME TIME。不只是處理事情，也留一點時間給自己。</p>
-                        
-                        <p>現在的她們，更像時間的整理者。知道什麼要快、什麼可以慢一點，也慢慢學會，不是每件事都要做到滿分。回到家，看到孩子的笑容，或是今天又闖了點小禍，一邊想嘆氣，一邊又會笑出來——再累，也值得。</p>
-                        
-                        <div class="bg-rose-50/30 p-6 rounded-2xl border-rose-100 border italic text-rose-600">
-                            「在工作與家庭之間，她們沒有選邊站，只是找到自己的節奏，讓日子穩穩往前走。因為照顧好所有人之前，先讓自己有力氣。」
+                    <div class="space-y-8 text-gray-600 text-[17px] leading-relaxed">
+                        <div>
+                            <p>行政部門裡，有兩位三寶媽。</p>
+                            <p>不太高調，但大家的印象都是：她們很穩，也很漂亮。</p>
                         </div>
 
-                        <p class="mt-10 pt-6 border-t border-rose-100 text-center font-medium text-gray-500">
-                            你大概每天都會在九樓遇到她們。<br>猜猜，是哪兩位？
-                        </p>
+                        <div class="bg-rose-50/20 p-6 rounded-2xl border-l-4 border-rose-200">
+                            <p class="mb-3 italic flex items-center"><i class="fa-solid fa-clock-rotate-left mr-2"></i> 總在中午 1.5 小時，讓一切接軌。</p>
+                            <p>買用品、看作業，甚至順便修剪頭髮。</p>
+                            <p class="mt-2">回到公司，依然是那種「不費力地讓日子運轉」的狀態。</p>
+                        </div>
+                        
+                        <div>
+                            <p>她們笑說，彼此是「取暖的夥伴」。</p>
+                            <p>忙的時候互相 cover，累的時候不用多說就懂。</p>
+                            <p class="mt-3 text-rose-500 font-medium">三個孩子的生活沒有空檔，但她們還是留了一段 ME TIME。</p>
+                        </div>
+
+                        <div class="h-px bg-rose-100/50 w-full"></div>
+                        
+                        <div>
+                            <p>現在的她們，更像時間的整理者。</p>
+                            <p>知道什麼要快、什麼可以慢一點，也慢慢學會，<span class="border-b border-rose-200">不是每件事都要做到滿分。</span></p>
+                        </div>
+ 
+                        <div class="bg-gray-50/50 p-6 rounded-2xl italic text-gray-500">
+                            「回到家，看到孩子的笑容，或是今天又闖了點小禍，一邊想嘆氣，一邊又會笑出來——再累，也值得。」
+                        </div>
+
+                        <div class="text-center pt-4">
+                            <p class="font-medium text-gray-700 mb-2">你大概每天都會在九樓遇到她們。</p>
+                            <p class="text-rose-400 text-sm italic tracking-widest">猜猜，是哪兩位？</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button onclick="nextPage()" class="w-full mt-8 bg-rose-50 text-rose-500 py-4 rounded-2xl font-bold hover:bg-rose-100 transition-all flex items-center justify-center">
+            <button onclick="goToPage(5)" class="w-full mt-8 bg-rose-50 text-rose-500 py-4 rounded-2xl font-bold hover:bg-rose-100 transition-all flex items-center justify-center">
                 前往目錄與預告 <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
         </section>
 
-        <!-- Page 4｜解鎖後目錄與預告 -->
-        <section id="page-4" class="page-transition hidden-page">
+        <!-- Page 5｜目錄頁 -->
+        <section id="page-5" class="page-transition hidden-page">
             <div class="story-card p-8 border-2 border-rose-50">
                 <div class="text-center mb-8">
                     <h3 class="text-2xl font-bold text-gray-800 mb-2 italic">✨ 故事目錄</h3>
@@ -197,7 +249,6 @@
                 </div>
 
                 <div class="mb-10 space-y-3">
-                    <!-- 故事一 (May) -->
                     <div onclick="goToPage(7)" class="history-item unlocked flex items-center justify-between p-4 border border-rose-100 rounded-2xl cursor-pointer">
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-rose-100 text-rose-500 text-xs rounded-full flex items-center justify-center mr-3 font-bold">1</span>
@@ -209,19 +260,17 @@
                         <i class="fa-solid fa-chevron-right text-rose-300 text-sm"></i>
                     </div>
 
-                    <!-- 故事二 (今日故事) -->
-                    <div onclick="goToPage(3)" class="history-item unlocked flex items-center justify-between p-4 border border-rose-200 bg-rose-50/30 rounded-2xl cursor-pointer">
+                    <div onclick="goToPage(4)" class="history-item unlocked flex items-center justify-between p-4 border border-rose-200 bg-rose-50/30 rounded-2xl cursor-pointer">
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-rose-500 text-white text-xs rounded-full flex items-center justify-center mr-3 font-bold">2</span>
                             <div>
-                                <p class="font-bold text-gray-700">九樓的時間整理者</p>
+                                <p class="font-bold text-gray-700">九樓的時間管理大師</p>
                                 <p class="text-xs text-rose-400 font-medium tracking-wide">今日新內容</p>
                             </div>
                         </div>
                         <i class="fa-solid fa-chevron-right text-rose-300 text-sm"></i>
                     </div>
 
-                    <!-- 預告故事三 (新預告) -->
                     <div class="history-item locked flex items-center justify-between p-4 border border-gray-100 rounded-2xl bg-gray-50/50">
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-gray-200 text-white text-xs rounded-full flex items-center justify-center mr-3 font-bold">3</span>
@@ -236,20 +285,41 @@
                     </div>
                 </div>
 
-                <button onclick="goToPage(5)" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all shadow-md">
-                    完成今日閱覽
+                <button onclick="goToPage(6)" class="w-full bg-gray-800 text-white py-4 rounded-2xl font-bold hover:bg-gray-700 transition-all shadow-md">
+                    前往留言板
                 </button>
             </div>
         </section>
 
-        <!-- Page 5｜收束結尾頁 -->
-        <section id="page-5" class="page-transition hidden-page text-center py-16">
-            <div class="mb-12">
-                <div class="text-rose-200 text-6xl mb-8"><i class="fa-solid fa-seedling"></i></div>
-                <h2 class="text-3xl font-bold text-gray-800 mb-5 leading-tight">每一個日常，<br>都值得被看見</h2>
-                <p class="text-gray-400 text-lg">謝謝你閱讀她們的故事。</p>
+        <!-- Page 6｜留言板 -->
+        <section id="page-6" class="page-transition hidden-page pb-10">
+            <div class="text-center mb-8 pt-4">
+                <div class="text-rose-200 text-5xl mb-4"><i class="fa-solid fa-seedling"></i></div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2 leading-tight">每一個日常，<br>都值得被看見</h2>
+                <p class="text-gray-400 text-sm">謝謝你閱讀她們的故事。</p>
             </div>
-            <button onclick="goToPage(1)" class="group inline-flex items-center space-x-3 text-gray-400 hover:text-rose-500 transition-colors font-bold text-lg">
+
+            <div class="story-card p-6 mb-8 border border-rose-50">
+                <h3 class="text-xl font-bold text-gray-800 mb-5 flex items-center border-b border-rose-50 pb-3">
+                    <i class="fa-regular fa-comments text-rose-400 mr-2"></i> 溫慢留言區
+                </h3>
+                
+                <div class="mb-6 space-y-3">
+                    <input type="text" id="comment-name" placeholder="你的名字 / 暱稱 (選填)" class="w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm">
+                    <textarea id="comment-text" rows="3" placeholder="留下你想對她們說的話，或分享你的照顧日常..." class="w-full px-4 py-3 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 bg-gray-50 text-sm resize-none"></textarea>
+                    <button id="submit-comment" class="w-full bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 transition-all shadow-md flex items-center justify-center">
+                        <i class="fa-regular fa-paper-plane mr-2"></i> 送出祝福
+                    </button>
+                </div>
+
+                <div class="bg-gray-50/50 rounded-xl p-4">
+                    <div id="comments-list" class="space-y-4 max-h-[350px] overflow-y-auto pr-2 comments-scroll">
+                        <div class="text-center text-gray-400 text-sm py-4">載入留言中...</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="goToPage(1)" class="group w-full flex justify-center items-center space-x-2 text-gray-400 hover:text-rose-500 transition-colors font-bold text-sm">
                 <i class="fa-solid fa-arrow-rotate-left group-hover:rotate-[-120deg] transition-transform"></i>
                 <span>返回封面</span>
             </button>
@@ -268,23 +338,53 @@
                 <div class="p-8 sm:p-10">
                     <div class="mb-8 gold-quote">
                         <i class="fa-solid fa-quote-left text-rose-200 text-4xl mb-4 block"></i>
-                        <h5 class="text-2xl font-bold text-gray-800 leading-snug">「照顧別人之前，也要先學會照顧好自己。」</h5>
+                        <h5 class="text-2xl font-bold text-gray-800 leading-snug">「活出自己，是最重要的。」</h5>
                     </div>
                     
-                    <div class="space-y-6 text-gray-600 text-[17px] leading-relaxed">
-                        <p>May 是公司裡大家熟知的超級業務，長期跑歐美線，清晨六點落地是她熟悉的節奏。在繁忙的跨國時差與會議之中，她反而更清楚什麼是不能被忽略的。</p>
+                    <div class="space-y-8 text-gray-600 text-[17px] leading-relaxed">
+                        <div>
+                            <p>MAY 是公司裡大家熟知的超級業務，長期跑歐美線。</p>
+                            <p>在忙碌之中，她反而更清楚什麼不能被忽略。</p>
+                        </div>
+
+                        <div>
+                            <p>她最常對孩子說的一句話，是<br><span class="text-rose-500 font-medium">「為了生活而工作，不是為了工作而生活。」</span></p>
+                            <p>孩子甚至把這句話放在手機置頂。</p>
+                        </div>
                         
-                        <p>「為了生活而工作，不是為了工作而生活。」這是她常對孩子說的話，孩子甚至把這句話設為手機置頂。回到家，她褪去業務的光環，成為家裡兩位「獅子座男人」身邊的小女人，享受先生與孩子準備的早餐，感受那份純粹的被愛。</p>
+                        <div class="bg-rose-50/20 p-6 rounded-2xl border-l-4 border-rose-200">
+                            <p class="mb-3 italic flex items-center"><i class="fa-solid fa-plane-arrival mr-2"></i> 清晨六點落地，是她熟悉的節奏。</p>
+                            <p>先生和孩子會準備好早餐，在樓下等她、幫她拿行李。</p>
+                            <p class="mt-3 font-bold text-gray-700">回到家，她不是超級業務，是媽媽。</p>
+                        </div>
                         
-                        <p>以前的她也曾焦慮，非得回完最後一封郵件才肯入睡。現在，她學會了在輕重緩急間取捨，透過打球或小酌讓心情轉場。對於孩子，她沒有過多的框架，只希望他們學會為自己的選擇負責。</p>
+                        <div>
+                            <p>她笑說，家裡兩個男人都是獅子座。</p>
+                            <p class="text-gray-800 font-medium">「我在家，就是一個小女人。」</p>
+                            <p>她把事情排好順序，先生和孩子會一起完成。</p>
+                        </div>
+
+                        <div class="h-px bg-rose-100/50 w-full"></div>
                         
-                        <div class="bg-rose-50/30 p-6 rounded-2xl border-rose-100 border italic text-rose-600">
-                            「如果有一天孩子看到這篇，我希望留下的叮嚀只有一句：活出自己，是最重要的事。」
+                        <div>
+                            <p>以前的她，其實也很忙亂。</p>
+                            <p>會為了把每一封信回完才睡，壓力大到睡不好。</p>
+                            <p class="mt-3">現在，她學會打球、暢飲或小酌，也學會把事情分輕重緩急，<span class="border-b border-rose-200">有些可以放的，就放。</span></p>
+                        </div>
+ 
+                        <div class="py-4">
+                            <p>生活還是忙。</p>
+                            <p>但她不再追求什麼都及時完成，而是把力氣留給重要的事。</p>
+                        </div>
+ 
+                        <div class="text-center pt-4">
+                            <p class="text-sm text-gray-400 mb-2 italic">對孩子，她沒有太多框架。只希望他們為自己的選擇負責。</p>
+                            <p class="text-rose-600 font-bold text-lg italic">如果有一天孩子看到這篇，她希望留下的，是這一句：<br>「活出自己，是最重要的。」</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <button onclick="goToPage(4)" class="w-full mt-8 bg-gray-100 text-gray-500 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-all flex items-center justify-center">
+            <button onclick="goToPage(5)" class="w-full mt-8 bg-gray-100 text-gray-500 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-all flex items-center justify-center">
                 返回目錄 <i class="fa-solid fa-list ml-2"></i>
             </button>
         </section>
@@ -293,7 +393,7 @@
 
     <script>
         let currentPage = 1;
-        const totalPages = 5; 
+        const totalPages = 6;
 
         function initNav() {
             const container = document.getElementById('nav-dots');
@@ -329,7 +429,7 @@
                     targetEl.classList.remove('hidden-page');
                     targetEl.classList.add('active-page');
                     currentPage = pageNum;
-                    updateNav();
+                    if(pageNum !== 7) updateNav(); 
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }, 50);
@@ -337,10 +437,80 @@
 
         function nextPage() { 
             if (currentPage < totalPages) goToPage(currentPage + 1); 
-            else if (currentPage === 7) goToPage(4);
         }
 
         window.onload = initNav;
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC0H9e5BrV5FOg6LukIB5bhDf-E77A_hlE",
+            authDomain: "message-wall-90e8f.firebaseapp.com",
+            projectId: "message-wall-90e8f",
+            storageBucket: "message-wall-90e8f.firebasestorage.app",
+            messagingSenderId: "153335468484",
+            appId: "1:153335468484:web:c65ac98990e9bdfd549491",
+            measurementId: "G-S2M2VDEPBC"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const commentsRef = collection(db, "mothers_day_comments");
+
+        const q = query(commentsRef, orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const list = document.getElementById('comments-list');
+            list.innerHTML = ''; 
+            
+            if(snapshot.empty) {
+                list.innerHTML = '<div class="text-center text-gray-400 text-sm py-4">成為第一個留下祝福的人吧！</div>';
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString('zh-TW', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : '剛剛';
+                const displayName = data.name || '匿名同事';
+                
+                list.innerHTML += `
+                    <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm mb-3">
+                        <div class="flex justify-between items-center mb-2 border-b border-gray-50 pb-2">
+                            <span class="font-bold text-sm text-gray-700"><i class="fa-solid fa-user-astronaut text-rose-300 mr-1"></i> ${displayName}</span>
+                            <span class="text-xs text-gray-400">${date}</span>
+                        </div>
+                        <p class="text-gray-600 text-[15px] leading-relaxed break-words">${data.text}</p>
+                    </div>
+                `;
+            });
+        }, (error) => {
+            console.error("讀取留言時發生錯誤: ", error);
+            document.getElementById('comments-list').innerHTML = `<div class="text-center text-rose-500 text-sm py-4">讀取留言失敗。</div>`;
+        });
+
+        document.getElementById('submit-comment').addEventListener('click', async () => {
+            const nameInput = document.getElementById('comment-name');
+            const textInput = document.getElementById('comment-text');
+            if(!textInput.value.trim()) return;
+            const btn = document.getElementById('submit-comment');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 傳送中...';
+            btn.disabled = true;
+            try {
+                await addDoc(commentsRef, {
+                    name: nameInput.value.trim(),
+                    text: textInput.value.trim(),
+                    timestamp: serverTimestamp()
+                });
+                textInput.value = '';
+            } catch (e) {
+                console.error("寫入錯誤: ", e);
+            } finally {
+                btn.innerHTML = '<i class="fa-regular fa-paper-plane mr-2"></i> 送出祝福';
+                btn.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>
