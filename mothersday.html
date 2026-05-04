@@ -452,13 +452,70 @@
                 </div>
             </div>
 
-            <button onclick="unlockAnimation(7, '結語與預告已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
+            <button onclick="unlockAnimation(7, '專屬造型師已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
+                閱讀完畢，前往下一則故事 <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </section>
+
+        <!-- Page 7｜故事四 (Ian) -->
+        <section id="page-7" class="page-transition hidden-page">
+            <div class="story-card overflow-hidden mb-8">
+                <div class="h-80 bg-gray-200 relative">
+                    <img src="https://lochoive-code.github.io/jpc/lan.jpg" alt="生活中的超人 Ian" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 p-8 text-white">
+                        <span class="bg-rose-500 px-3 py-1 rounded-full text-xs font-bold mb-2 inline-block">故事四</span>
+                        <h4 class="text-3xl font-bold">生活中的超人｜Ian</h4>
+                    </div>
+                </div>
+                <div class="p-8 sm:p-10">
+                    <div class="mb-8 gold-quote">
+                        <i class="fa-solid fa-quote-left text-rose-200 text-4xl mb-4 block"></i>
+                        <h5 class="text-2xl font-bold text-gray-800 leading-snug">「不把工作的急躁，帶進陪伴的時光」</h5>
+                    </div>
+                    
+                    <div class="space-y-8 text-gray-600 text-[17px] leading-relaxed">
+                        <div>
+                            <p>母親節，不只是屬於母親的日子。</p>
+                            <p>在孩子的世界裡，所有家長都是撐起童年的超人。</p>
+                        </div>
+
+                        <div class="bg-rose-50/20 p-6 rounded-2xl border-l-4 border-rose-200">
+                            <p class="mb-3 font-medium text-gray-800">Ian，是女兒的「專屬造型師」。</p>
+                            <p>第一次替她綁頭髮，只是怕吃飯時弄髒；從簡單的沖天炮，到如今女兒指定的獵魔女巫造型。</p>
+                            <p class="mt-2">他在一次次嘗試裡學會——<span class="text-rose-500 font-medium">不把大人的標準帶進孩子的天地，也不把工作的急躁帶進陪伴的時光。</span></p>
+                        </div>
+                        
+                        <div>
+                            <p>育兒的每一項技能，都是在成為父母後才慢慢習得。</p>
+                            <p>他笑說，和工作一樣，「只要願意嘗試，就有機會做好。」</p>
+                        </div>
+
+                        <div class="h-px bg-rose-100/50 w-full"></div>
+                        
+                        <div>
+                            <p>口罩上的手繪圖案、卡通睡衣、畢業典禮的手作捧花——</p>
+                            <p>這些細碎的片段，都是他與太太在生活與家庭之間彼此配合、共同接住孩子成長的痕跡。</p>
+                        </div>
+ 
+                        <div class="bg-gray-50/50 p-6 rounded-2xl italic text-gray-500 text-center">
+                            Ian 想對天下父母說：<br>
+                            「加油，說累了也沒關係，記得喘口氣。」
+                        </div>
+
+                        <div class="text-center pt-4">
+                            <p class="text-gray-400 text-sm italic">如果有一天，女兒讀到這篇文章，他希望她能在字裡行間，憶起這些時光，快樂前行。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="unlockAnimation(8, '結語與預告已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
                 閱讀完畢，看最後一段話 <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
         </section>
 
-        <!-- Page 7｜結語與預告 -->
-        <section id="page-7" class="page-transition hidden-page pb-10">
+        <!-- Page 8｜結語與預告 -->
+        <section id="page-8" class="page-transition hidden-page pb-10">
             <div class="story-card p-10 mt-4 border border-rose-50 text-center">
                 <div class="text-rose-200 text-6xl mb-6"><i class="fa-solid fa-seedling"></i></div>
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 leading-tight">每一個日常，<br>都值得被看見</h2>
@@ -469,8 +526,8 @@
                 
                 <div class="bg-gray-50/80 p-6 rounded-2xl mb-8">
                     <p class="text-xs text-gray-400 uppercase tracking-widest mb-2 font-bold">Coming Soon</p>
-                    <p class="text-gray-700 font-medium">下一期預告｜超人爸爸的溫柔日常</p>
-                    <p class="text-rose-400 text-sm mt-2"><i class="fa-regular fa-calendar mr-1"></i> 敬請期待</p>
+                    <p class="text-gray-700 font-medium">下一期預告｜日常裡默默發光的人</p>
+                    <p class="text-rose-400 text-sm mt-2"><i class="fa-regular fa-calendar-star mr-1"></i> 敬請期待</p>
                 </div>
             </div>
 
@@ -484,7 +541,7 @@
 
     <script>
         let currentPage = 1;
-        const totalPages = 7;
+        const totalPages = 8;
         
         function initNav() {
             const container = document.getElementById('nav-dots');
