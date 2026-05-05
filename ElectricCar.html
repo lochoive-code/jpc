@@ -9,7 +9,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #F9FAFB; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #FFFFFF; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 20px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #EF4444; }
         
@@ -26,12 +26,12 @@
         }
     </style>
 </head>
-<body class="bg-[#F5F5F7] overflow-hidden">
+<body class="bg-white overflow-hidden">
 
     <div class="w-full h-screen flex items-center justify-center p-4 md:p-12 relative">
         
         <!-- 互動地圖容器 -->
-        <div class="relative w-full max-w-6xl aspect-[16/9] bg-white rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.05)] border border-white overflow-hidden group">
+        <div class="relative w-full max-w-6xl aspect-[16/9] bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden group">
             
             <div class="relative w-full h-full flex items-center justify-center scale-[1.5] origin-center p-8 md:p-16 transition-transform duration-1000 ease-in-out">
                 <!-- EV 底盤背景 -->
@@ -47,8 +47,8 @@
         </div>
 
         <!-- 詳情彈窗 (Detail Modal) -->
-        <div id="detail-modal" class="fixed inset-0 z-50 items-center justify-center p-6 bg-gray-500/10 backdrop-blur-md">
-            <div class="bg-white w-full max-w-5xl max-h-[85vh] rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.12)] border border-white overflow-hidden flex flex-col relative transition-all duration-500">
+        <div id="detail-modal" class="fixed inset-0 z-50 items-center justify-center p-6 bg-white/60 backdrop-blur-md">
+            <div class="bg-white w-full max-w-5xl max-h-[85vh] rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col relative transition-all duration-500">
                 
                 <div class="absolute top-0 left-0 right-0 h-1.5 bg-red-600"></div>
 
@@ -59,7 +59,7 @@
                     </div>
                     <button 
                         onclick="closeModal()"
-                        class="w-12 h-12 bg-gray-50 hover:bg-red-50 text-gray-400 hover:text-red-600 rounded-full flex items-center justify-center transition-all duration-300 border border-gray-100"
+                        class="w-12 h-12 bg-white hover:bg-red-50 text-gray-400 hover:text-red-600 rounded-full flex items-center justify-center transition-all duration-300 border border-gray-100"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 
-                <div class="h-1 bg-gray-50"></div>
+                <div class="h-1 bg-white"></div>
             </div>
         </div>
     </div>
@@ -146,7 +146,7 @@
                     <div class="relative flex items-center justify-center">
                         <div class="w-3 h-3 rounded-full border-2 border-white shadow-[0_2px_10px_rgba(0,0,0,0.2)] bg-red-500 hover:bg-red-600 transition-all duration-500"></div>
                         <div class="absolute inset-0 w-full h-full bg-red-500 rounded-full pulse-animation"></div>
-                        <div class="absolute px-4 py-2 bg-white/95 backdrop-blur-md text-[#333] border border-gray-100 rounded-lg text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap shadow-xl pointer-events-none ${getLabelStyle(prod.labelPos)}">
+                        <div class="absolute px-4 py-2 bg-white text-[#333] border border-gray-100 rounded-lg text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap shadow-xl pointer-events-none ${getLabelStyle(prod.labelPos)}">
                             ${prod.name}
                         </div>
                     </div>
@@ -164,9 +164,9 @@
             listContainer.innerHTML = prod.items.map(item => `
                 <div 
                     onclick="${item.url ? `window.open('${item.url}', '_blank')` : ''}"
-                    class="group flex flex-col p-2 bg-white border border-gray-100 transition-all duration-500 rounded-[2rem] text-left outline-none relative ${item.url ? 'hover:border-red-200 hover:shadow-[0_15px_40px_rgba(0,0,0,0.04)] cursor-pointer' : 'cursor-default'}"
+                    class="group flex flex-col p-2 bg-white border border-gray-50 transition-all duration-500 rounded-[2rem] text-left outline-none relative ${item.url ? 'hover:border-red-100 hover:shadow-[0_15px_40px_rgba(0,0,0,0.03)] cursor-pointer' : 'cursor-default'}"
                 >
-                    <div class="w-full aspect-square bg-gray-50 rounded-[1.5rem] overflow-hidden mb-4 border border-gray-50 relative">
+                    <div class="w-full aspect-square bg-white rounded-[1.5rem] overflow-hidden mb-4 border border-gray-50 relative">
                         <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all duration-700">
                         ${item.spec ? `
                             <div class="absolute top-3 right-3">
