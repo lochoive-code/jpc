@@ -1,239 +1,198 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react';
-
-/**
- * 產品數據定義 (Product Data Definition)
- */
-const PRODUCTS = [
-  {
-    id: 'inverter',
-    name: 'Inverter',
-    top: '30%', 
-    left: '38%', 
-    labelPos: 'left',
-    color: 'bg-red-600',
-    items: [
-      { 
-        name: 'TL200 Series', 
-        spec: '200A',
-        img: 'https://lochoive-code.github.io/jpc/1648538235_TL200-3.jpg', 
-        url: 'https://www.jpcco.com/lang/tw/product/find/TL200_High_Power_Connector' 
-      },
-      { name: 'TL300 High-Power Series', spec: '250A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=200&h=150' },
-      { name: 'TL-X Heavy Duty Plug', spec: '350A', img: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=200&h=150' },
-      { name: 'Mini-Invert Slim Link', spec: '120A', img: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=200&h=150' },
-      { name: 'Pro-Connect Gen 2', spec: '280A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=200&h=150' },
-      { name: 'Eco-Link Efficient', spec: '150A', img: 'https://images.unsplash.com/photo-1635332829082-c15d4821a44f?auto=format&fit=crop&q=80&w=200&h=150' },
-      { name: 'TL-Hybrid Interface', spec: '220A', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=200&h=150' }
-    ]
-  },
-  {
-    id: 'pdu',
-    name: 'On-Board Charger',
-    top: '58%', 
-    left: '62%', 
-    labelPos: 'right', 
-    color: 'bg-red-600',
-    items: [
-      { name: 'XL602 3P Series', spec: '23A', img: 'https://images.unsplash.com/photo-1635332829082-c15d4821a44f?auto=format&fit=crop&q=80&w=200&h=150' }
-    ]
-  },
-  {
-    id: 'rearMotor',
-    name: 'Rear Motor',
-    top: '55%', 
-    left: '59%',
-    labelPos: 'top', 
-    color: 'bg-red-600',
-    items: [
-      { name: 'XLP200 Motor Adapter', spec: '200A', img: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=200&h=150' }
-    ]
-  },
-  {
-    id: 'batteryPack',
-    name: 'Battery System',
-    top: '55%', 
-    left: '45%',
-    labelPos: 'bottom',
-    color: 'bg-red-600',
-    items: [
-      { name: 'Mini MSD Switch', spec: '400A', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=200&h=150' }
-    ]
-  },
-  {
-    id: 'frontMotor',
-    name: 'Front Motor',
-    top: '40%', 
-    left: '36%',
-    labelPos: 'bottom', 
-    color: 'bg-red-600',
-    items: [
-      { name: 'XLP200 Compact Connector', spec: '200A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=200&h=150' }
-    ]
-  },
-  {
-    id: 'mcu',
-    name: 'Motor Control Unit',
-    top: '28%', 
-    left: '42%',
-    labelPos: 'right', 
-    color: 'bg-red-600',
-    items: [
-      { name: 'XL203 Signal Control', spec: '32A', img: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=200&h=150' }
-    ]
-  }
-];
-
-export default function App() {
-  const [activeProduct, setActiveProduct] = useState(null);
-
-  /**
-   * 根據位置返回標籤樣式 (Returns style classes based on position)
-   */
-  const getLabelStyle = (pos) => {
-    switch(pos) {
-      case 'top': return 'bottom-6 left-1/2 -translate-x-1/2';
-      case 'bottom': return 'top-6 left-1/2 -translate-x-1/2';
-      case 'right': return 'left-6 top-1/2 -translate-y-1/2';
-      case 'left': return 'right-6 top-1/2 -translate-y-1/2';
-      default: return 'top-6 left-1/2 -translate-x-1/2';
-    }
-  };
-
-  /**
-   * 處理產品頁面跳轉 (Handles opening the product URL)
-   */
-  const handleItemClick = (url) => {
-    if (url) {
-      window.open(url, '_blank');
-    }
-  };
-
-  return (
-    <div className="w-full h-screen bg-[#F5F5F7] overflow-hidden flex items-center justify-center font-sans selection:bg-red-100 selection:text-red-900 relative p-4 md:p-12">
-      
-      {/* 互動地圖容器 (Interactive Map Container) */}
-      <div className="relative w-full max-w-6xl aspect-[16/9] bg-white rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.05)] border border-white overflow-hidden group">
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV High-Voltage System Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #F9FAFB; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 20px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #EF4444; }
         
-        {/* 內容容器 (Content Container - Scale 1.5x) */}
-        <div className="relative w-full h-full flex items-center justify-center scale-[1.5] origin-center p-8 md:p-16 transition-transform duration-1000 ease-in-out">
-           {/* EV 底盤背景 (EV Chassis Background) */}
-           <img 
-             src="https://lochoive-code.github.io/jpc/EV.jpg" 
-             alt="EV Chassis Structure"
-             className="w-full h-full object-contain opacity-95"
-           />
+        /* 隱藏與顯示邏輯 */
+        #detail-modal { display: none; }
+        #detail-modal.active { display: flex; }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1.5); }
+            50% { opacity: 0.1; transform: scale(1.8); }
+        }
+    </style>
+</head>
+<body class="bg-[#F5F5F7] overflow-hidden">
 
-          {/* 交互點 (Interactive Navigation Points) */}
-          {PRODUCTS.map((prod) => (
-            <button
-              key={prod.id}
-              style={{ top: prod.top, left: prod.left }}
-              onClick={() => setActiveProduct(prod)}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none transition-all duration-300
-                ${activeProduct?.id === prod.id ? 'z-50' : 'z-20 hover:z-40'}`}
-            >
-              <div className="relative flex items-center justify-center">
-                {/* 圓點 (Refined Dot Core) */}
-                <div className={`w-3 h-3 rounded-full border-2 border-white shadow-[0_2px_10px_rgba(0,0,0,0.2)] transition-all duration-500
-                  ${activeProduct?.id === prod.id ? 'bg-red-600 scale-125' : 'bg-red-500 hover:bg-red-600'}`}
-                ></div>
-                
-                {/* 動畫圈 (Lightweight Pulse Animation) */}
-                <div className="absolute inset-0 w-full h-full bg-red-500 rounded-full animate-ping opacity-30 scale-150"></div>
-                
-                {/* 標籤文字 (Tooltip Label) */}
-                <div className={`absolute px-4 py-2 bg-white/95 backdrop-blur-md text-[#333] border border-gray-100 rounded-lg text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap shadow-xl pointer-events-none ${getLabelStyle(prod.labelPos)}`}
+    <div class="w-full h-screen flex items-center justify-center p-4 md:p-12 relative">
+        
+        <!-- 互動地圖容器 -->
+        <div class="relative w-full max-w-6xl aspect-[16/9] bg-white rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.05)] border border-white overflow-hidden group">
+            
+            <div class="relative w-full h-full flex items-center justify-center scale-[1.5] origin-center p-8 md:p-16 transition-transform duration-1000 ease-in-out">
+                <!-- EV 底盤背景 -->
+                <img 
+                    src="https://lochoive-code.github.io/jpc/EV.jpg" 
+                    alt="EV 底盤結構"
+                    class="w-full h-full object-contain opacity-95"
                 >
-                  {prod.name}
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
 
-      {/* 詳情彈窗 (Detail Modal) */}
-      {activeProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-gray-500/10 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-5xl max-h-[85vh] rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.12)] border border-white overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-8 duration-500 relative">
-            
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-red-600"></div>
-
-            {/* 彈窗頭部 (Modal Header) */}
-            <div className="px-12 py-10 flex justify-between items-center bg-white z-10">
-              <div className="flex flex-col">
-                <h3 className="text-4xl font-bold text-[#1A1A1A] tracking-tight">{activeProduct.name}</h3>
-              </div>
-              <button 
-                onClick={() => setActiveProduct(null)}
-                className="w-12 h-12 bg-gray-50 hover:bg-red-50 text-gray-400 hover:text-red-600 rounded-full flex items-center justify-center transition-all duration-300 border border-gray-100"
-              >
-                <X size={24} />
-              </button>
+                <!-- 交互點容器 -->
+                <div id="navigation-points"></div>
             </div>
+        </div>
 
-            {/* 產品列表區 (Product List Area) */}
-            <div className="px-12 pb-12 overflow-y-auto flex-1 custom-scrollbar">
-              <div className="max-w-4xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {activeProduct.items.map((item, i) => (
+        <!-- 詳情彈窗 (Detail Modal) -->
+        <div id="detail-modal" class="fixed inset-0 z-50 items-center justify-center p-6 bg-gray-500/10 backdrop-blur-md">
+            <div class="bg-white w-full max-w-5xl max-h-[85vh] rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.12)] border border-white overflow-hidden flex flex-col relative transition-all duration-500">
+                
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-red-600"></div>
+
+                <!-- 彈窗頭部 -->
+                <div class="px-12 py-10 flex justify-between items-center bg-white z-10">
+                    <div class="flex flex-col">
+                        <h3 id="modal-title" class="text-4xl font-bold text-[#1A1A1A] tracking-tight">產品名稱</h3>
+                    </div>
                     <button 
-                      key={i} 
-                      onClick={() => handleItemClick(item.url)}
-                      className={`group flex flex-col p-2 bg-white border border-gray-100 transition-all duration-500 rounded-[2rem] text-left outline-none relative
-                        ${item.url ? 'hover:border-red-200 hover:shadow-[0_15px_40px_rgba(0,0,0,0.04)] cursor-pointer' : 'cursor-default'}`}
+                        onclick="closeModal()"
+                        class="w-12 h-12 bg-gray-50 hover:bg-red-50 text-gray-400 hover:text-red-600 rounded-full flex items-center justify-center transition-all duration-300 border border-gray-100"
                     >
-                      {/* 產品照 (Product Image) */}
-                      <div className="w-full aspect-square bg-gray-50 rounded-[1.5rem] overflow-hidden mb-4 border border-gray-50 relative">
-                        <img 
-                          src={item.img} 
-                          alt={item.name} 
-                          className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all duration-700"
-                        />
-                        
-                        {/* 規格標籤 (Spec Badge) - 重新恢復 */}
-                        {item.spec && (
-                          <div className="absolute top-3 right-3">
-                            <span className="text-[10px] font-bold text-white bg-red-600/90 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-lg">
-                              {item.spec}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* 產品名稱 (Product Name) */}
-                      <div className="px-4 pb-4">
-                        <h4 className="text-sm font-bold text-[#1A1A1A] group-hover:text-red-600 transition-colors line-clamp-2">
-                          {item.name}
-                        </h4>
-                      </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
-                  ))}
                 </div>
-              </div>
-            </div>
-            
-            <div className="h-1 bg-gray-50"></div>
-          </div>
-        </div>
-      )}
 
-      <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #F9FAFB;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #E5E7EB;
-          border-radius: 20px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #EF4444;
-        }
-      `}</style>
+                <!-- 產品列表區 -->
+                <div class="px-12 pb-12 overflow-y-auto flex-1 custom-scrollbar">
+                    <div id="product-list" class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 動態生成產品卡片 -->
+                    </div>
+                </div>
+                
+                <div class="h-1 bg-gray-50"></div>
+            </div>
+        </div>
     </div>
-  );
-}
+
+    <script>
+        const products = [
+            {
+                id: 'inverter',
+                name: 'Inverter',
+                top: '30%', left: '38%', labelPos: 'left',
+                items: [
+                    { name: 'TL200 Series', spec: '200A', img: 'https://lochoive-code.github.io/jpc/1648538235_TL200-3.jpg', url: 'https://www.jpcco.com/lang/tw/product/find/TL200_High_Power_Connector' },
+                    { name: 'TL300 High-Power Series', spec: '250A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=200&h=150' },
+                    { name: 'TL-X Heavy Duty Plug', spec: '350A', img: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=200&h=150' },
+                    { name: 'Mini-Invert Slim Link', spec: '120A', img: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=200&h=150' },
+                    { name: 'Pro-Connect Gen 2', spec: '280A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=200&h=150' },
+                    { name: 'Eco-Link Efficient', spec: '150A', img: 'https://images.unsplash.com/photo-1635332829082-c15d4821a44f?auto=format&fit=crop&q=80&w=200&h=150' },
+                    { name: 'TL-Hybrid Interface', spec: '220A', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=200&h=150' }
+                ]
+            },
+            {
+                id: 'pdu',
+                name: 'On-Board Charger',
+                top: '58%', left: '62%', labelPos: 'right',
+                items: [{ name: 'XL602 3P Series', spec: '23A', img: 'https://images.unsplash.com/photo-1635332829082-c15d4821a44f?auto=format&fit=crop&q=80&w=200&h=150' }]
+            },
+            {
+                id: 'rearMotor',
+                name: 'Rear Motor',
+                top: '55%', left: '59%', labelPos: 'top',
+                items: [{ name: 'XLP200 Motor Adapter', spec: '200A', img: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=200&h=150' }]
+            },
+            {
+                id: 'batteryPack',
+                name: 'Battery System',
+                top: '55%', left: '45%', labelPos: 'bottom',
+                items: [{ name: 'Mini MSD Switch', spec: '400A', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=200&h=150' }]
+            },
+            {
+                id: 'frontMotor',
+                name: 'Front Motor',
+                top: '40%', left: '36%', labelPos: 'bottom',
+                items: [{ name: 'XLP200 Compact Connector', spec: '200A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=200&h=150' }]
+            },
+            {
+                id: 'mcu',
+                name: 'Motor Control Unit',
+                top: '28%', left: '42%', labelPos: 'right',
+                items: [{ name: 'XL203 Signal Control', spec: '32A', img: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=200&h=150' }]
+            }
+        ];
+
+        function getLabelStyle(pos) {
+            switch(pos) {
+                case 'top': return 'bottom-6 left-1/2 -translate-x-1/2';
+                case 'bottom': return 'top-6 left-1/2 -translate-x-1/2';
+                case 'right': return 'left-6 top-1/2 -translate-y-1/2';
+                case 'left': return 'right-6 top-1/2 -translate-y-1/2';
+                default: return 'top-6 left-1/2 -translate-x-1/2';
+            }
+        }
+
+        function renderPoints() {
+            const container = document.getElementById('navigation-points');
+            container.innerHTML = products.map(prod => `
+                <button
+                    onclick="openModal('${prod.id}')"
+                    style="top: ${prod.top}; left: ${prod.left};"
+                    class="absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none transition-all duration-300 z-20 hover:z-40"
+                >
+                    <div class="relative flex items-center justify-center">
+                        <div class="w-3 h-3 rounded-full border-2 border-white shadow-[0_2px_10px_rgba(0,0,0,0.2)] bg-red-500 hover:bg-red-600 transition-all duration-500"></div>
+                        <div class="absolute inset-0 w-full h-full bg-red-500 rounded-full pulse-animation"></div>
+                        <div class="absolute px-4 py-2 bg-white/95 backdrop-blur-md text-[#333] border border-gray-100 rounded-lg text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap shadow-xl pointer-events-none ${getLabelStyle(prod.labelPos)}">
+                            ${prod.name}
+                        </div>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function openModal(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+
+            document.getElementById('modal-title').innerText = prod.name;
+            const listContainer = document.getElementById('product-list');
+            
+            listContainer.innerHTML = prod.items.map(item => `
+                <div 
+                    onclick="${item.url ? `window.open('${item.url}', '_blank')` : ''}"
+                    class="group flex flex-col p-2 bg-white border border-gray-100 transition-all duration-500 rounded-[2rem] text-left outline-none relative ${item.url ? 'hover:border-red-200 hover:shadow-[0_15px_40px_rgba(0,0,0,0.04)] cursor-pointer' : 'cursor-default'}"
+                >
+                    <div class="w-full aspect-square bg-gray-50 rounded-[1.5rem] overflow-hidden mb-4 border border-gray-50 relative">
+                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all duration-700">
+                        ${item.spec ? `
+                            <div class="absolute top-3 right-3">
+                                <span class="text-[10px] font-bold text-white bg-red-600/90 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-lg">
+                                    ${item.spec}
+                                </span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="px-4 pb-4">
+                        <h4 class="text-sm font-bold text-[#1A1A1A] group-hover:text-red-600 transition-colors line-clamp-2">
+                            ${item.name}
+                        </h4>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('detail-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.remove('active');
+        }
+
+        // 初始化
+        window.onload = renderPoints;
+    </script>
+</body>
+</html>
