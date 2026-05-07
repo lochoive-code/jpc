@@ -70,7 +70,6 @@
             z-index: -1;
         }
 
-        /* 底部單位標註樣式 */
         .footer-label {
             position: fixed;
             bottom: 20px;
@@ -89,7 +88,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* 鎖頭解鎖動畫樣式 */
         .unlock-overlay {
             position: fixed;
             inset: 0;
@@ -122,7 +120,6 @@
             transform: scale(1);
         }
 
-        /* 鎖震動動畫 */
         .shake-animation {
             animation: shake 0.5s ease-in-out;
         }
@@ -133,7 +130,6 @@
             40%, 80% { transform: rotate(10deg); }
         }
 
-        /* 鎖頭開啟圖示切換 */
         .lock-icon-box {
             display: inline-block;
             transition: all 0.3s ease;
@@ -155,7 +151,6 @@
             transform: translateY(0);
         }
 
-        /* 發光與亮點特效 */
         .glow-effect {
             position: absolute;
             top: 50%;
@@ -176,7 +171,6 @@
 </head>
 <body>
 
-    <!-- 解鎖動畫 Overlay -->
     <div id="unlock-overlay" class="unlock-overlay">
         <div class="glow-effect"></div>
         <div id="lock-container" class="lock-container">
@@ -187,15 +181,12 @@
         <div id="unlock-msg" class="unlock-text"></div>
     </div>
 
-    <!-- 頂部導覽 -->
     <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 py-5 px-8 flex justify-between items-center border-b border-rose-50">
         <h1 class="text-rose-500 font-bold text-lg tracking-tight">🌷 她們的日常力量</h1>
         <div class="flex space-x-2" id="nav-dots">
-            <!-- JS 動態生成分頁點 -->
         </div>
     </nav>
 
-    <!-- 固定右下角標註 -->
     <div class="footer-label">
         人資行政部 & 行銷
     </div>
@@ -566,7 +557,7 @@
             </div>
 
             <button onclick="unlockAnimation(9, 'SPM YK 已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
-                閱讀完畢，前往最後一則故事 <i class="fa-solid fa-arrow-right ml-2"></i>
+                閱讀完畢，前往下一則故事 <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
         </section>
 
@@ -631,13 +622,81 @@
                 </div>
             </div>
 
-            <button onclick="unlockAnimation(10, '企劃結語已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
+            <button onclick="unlockAnimation(10, 'SOURC3 已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
+                閱讀完畢，前往下一則故事 <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </section>
+
+        <!-- Page 10｜故事七 (SOURC3 採購女團) -->
+        <section id="page-10" class="page-transition hidden-page">
+            <div class="story-card overflow-hidden mb-8">
+                <div class="h-80 bg-gray-200 relative">
+                    <img src="https://lochoive-code.github.io/jpc/SOURC3.jpg" alt="SOURC3 採購女團" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 p-8 text-white">
+                        <span class="bg-rose-500 px-3 py-1 rounded-full text-xs font-bold mb-2 inline-block">故事七</span>
+                        <h4 class="text-3xl font-bold">採購女團｜SOURC3</h4>
+                    </div>
+                </div>
+                <div class="p-8 sm:p-10">
+                    <div class="mb-8 gold-quote">
+                        <i class="fa-solid fa-quote-left text-rose-200 text-4xl mb-4 block"></i>
+                        <h5 class="text-2xl font-bold text-gray-800 leading-snug">「謝謝自己工作一整天、努力生活」</h5>
+                    </div>
+                    
+                    <div class="space-y-8 text-gray-600 text-[17px] leading-relaxed">
+                        <div>
+                            <p>如果把採購的日常想像成一個舞台，那她們不是站在聚光燈下的人，卻穩穩掌握著整體節奏。</p>
+                            <p>三種不同風格，同步運作、精準接球，讓每一個環節順利往前。</p>
+                        </div>
+
+                        <div>
+                            <p>這次母親節，我們用一點不同的方式，認識這三位來自採購的同仁：風格各異，卻默契十足，像一個運作穩定的小型女團，我們稱她們為 <span class="text-rose-500 font-bold">「SOURC3」</span>——一位嚴謹、一位彈性、一位安靜而穩定。</p>
+                        </div>
+
+                        <div class="bg-rose-50/20 p-6 rounded-2xl border-l-4 border-rose-400">
+                            <p class="mb-3 font-medium text-gray-800">談到工作，她們有一個很一致的共識：比起分工或歸屬，更重要的是讓事情能被推進。</p>
+                            <p>其中隊長 Sandy 的一句話，也成為女團的工作節奏：<br><span class="text-rose-600 font-bold">「我們對工作內容要求嚴謹，但心情要輕鬆應對。」</span></p>
+                        </div>
+                        
+                        <div>
+                            <p>在高密度的工作之中，緊繃幾乎是日常：有人感受到時間永遠不夠用，因此特別重視週末的平衡；有人坦言壓力幾乎是 all the time。</p>
+                            <p class="mt-3">也有人覺得真正的高峰反而在回到家之後：做飯、家務與照顧老小，同時心裡還掛著尚未完成的工作，甚至會希望一天有 48 小時。不同情境，卻同樣真實。</p>
+                        </div>
+
+                        <div class="h-px bg-rose-100/50 w-full"></div>
+
+                        <!-- 更新部分：兩張照片改為一張直式照片 -->
+                        <div class="my-10 max-w-sm mx-auto">
+                            <div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+                                <img src="https://lochoive-code.github.io/jpc/flower.jpg" alt="日式池坊插花作品" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-center text-xs text-gray-400 italic mt-4">Sandy 持續四年的日式池坊插花課作品紀錄</p>
+                        </div>
+                        
+                        <div>
+                            <p>隊長也分享了她讓自己慢下來的方式：<span class="font-bold text-gray-800">持續四年的日式池坊插花課。</span></p>
+                            <p class="mt-2">起初，她總是班上最快完成作品的人，因為習慣了工作中的「快」，但在反覆練習中，逐漸理解「less is more」，是一種讓心「慢」下來的禪意練習。</p>
+                            <p class="mt-2">透過由繁化簡的過程，在枝葉的伸展中觀照自身呼吸與情緒，也慢慢讓自己在另一種節奏中找到平衡。</p>
+                        </div>
+ 
+                        <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+                            <p class="text-gray-700 italic">「把日常過好。這不只是時間分配，而是一種選擇：先有自己，才有餘裕成為他人的支點；感謝自己，練習看見自己的優點。」</p>
+                        </div>
+
+                        <div class="text-center pt-4">
+                            <p class="text-rose-600 font-bold text-lg italic mt-4">各自不同，但始終一起把事情往前推進。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="unlockAnimation(11, '企劃結語已解鎖')" class="w-full bg-rose-500 text-white py-4 rounded-2xl font-bold hover:bg-rose-600 transition-all flex items-center justify-center shadow-md">
                 閱讀完畢，看最後一段話 <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
         </section>
 
-        <!-- Page 10｜結語與預告 -->
-        <section id="page-10" class="page-transition hidden-page pb-10">
+        <!-- Page 11｜結語與預告 -->
+        <section id="page-11" class="page-transition hidden-page pb-10">
             <div class="story-card p-10 mt-4 border border-rose-50 text-center">
                 <div class="text-rose-200 text-6xl mb-6"><i class="fa-solid fa-seedling"></i></div>
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 leading-tight">每一個日常，<br>都值得被看見</h2>
@@ -648,7 +707,7 @@
                 
                 <div class="bg-gray-50/80 p-6 rounded-2xl mb-8">
                     <p class="text-xs text-gray-400 uppercase tracking-widest mb-2 font-bold">Coming Soon</p>
-                    <p class="text-gray-700 font-medium">下一期預告｜在日常裡，好好謝謝努力生活的自己</p>
+                    <p class="text-gray-700 font-medium">下一期預告｜產線的溫柔力量</p>
                     <p class="text-rose-400 text-sm mt-2"><i class="fa-regular fa-calendar-star mr-1"></i> 敬請期待</p>
                 </div>
             </div>
@@ -663,7 +722,7 @@
 
     <script>
         let currentPage = 1;
-        const totalPages = 10;
+        const totalPages = 11;
         
         function initNav() {
             const container = document.getElementById('nav-dots');
@@ -711,7 +770,6 @@
             }
         }
 
-        // 鎖頭解鎖動畫邏輯
         function unlockAnimation(targetPage, msgText) {
             const overlay = document.getElementById('unlock-overlay');
             const lockIcon = document.getElementById('lock-icon');
