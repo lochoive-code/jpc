@@ -44,7 +44,7 @@
             transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Clean cover spine simulation */
+        /* Clean cover spine simulation - No Shadow */
         .cover-left {
             transform-origin: left center;
             transition: transform 1.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -60,6 +60,7 @@
             background-color: var(--color-paper-base);
             box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.04), 0 5px 15px -5px rgba(0, 0, 0, 0.02); /* 更加乾淨、現代的輕陰影 */
             border: 1px solid var(--color-paper-border);
+            position: relative; /* 確保絕對定位的貼紙能準確相對於書頁定位 */
         }
 
         /* Beautiful 180deg Flip Card Animation */
@@ -144,7 +145,7 @@
                 "沒有 SOP 引導，AI 只是玩具；有了 SOP，AI 就是企業的護城河！",
                 "將優良的 Prompt 標準化，讓新手也能一秒複製資深前輩的黃金腦袋。"
             ],
-            reactions: { resonance: 4, rethink: 2, inspire: 6, bookmark: 1, digest: 3 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "ch-2",
@@ -158,7 +159,7 @@
             colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
             tagColor: "bg-[#5D6D7E] text-white",
             content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">以前大家覺得寫程式碼是工程師專屬，但現在「人類自然語言」就是最新的高階程式碼！第二章揭曉的『Prompt 驅動學』簡真是所有不擅長溝通之人的救星。</p>
+                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">以前大家覺得寫程式碼是工程師專屬，但現在「人類自然語言」就是最新的高階程式碼！第二章揭曉的『Prompt 驅動學』簡則是所有不擅長溝通之人的救星。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">書中大方公開了研發團隊實證有效的 20 組黃金 Prompt 模板。以前行銷、業務向工程團隊提需求，總是像「隔山打牛」般雞同鴨講；現在雙方套用書中的溝通框架，就能先與 AI 進行完美對接，吐出結構分明的架構！</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">標準化的對話模式，就像為全公司裝上了统一的萬能 API 接口。它不只讓 AI 的產出準確率飆升，還無形中強迫我們理清自己的邏輯思考，真是一舉兩得！</p>
             `,
@@ -167,7 +168,7 @@
                 "書中分享的 20 組實戰範本是現成大禮包，直接拷貝使用免摸索！",
                 "寫好提示詞的過程，本質上就是自我思維的極致排毒與重整。"
             ],
-            reactions: { resonance: 8, rethink: 4, inspire: 12, bookmark: 5, digest: 2 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "ch-3",
@@ -190,7 +191,7 @@
                 "利用 AI 設定不同角色（黑帽/白帽）進行多視角壓力測試，決策更周延！",
                 "拒絕擁抱 AI 的管理者，終將被學會用 AI 降低決策成本的對手降維打擊。"
             ],
-            reactions: { resonance: 5, rethink: 6, inspire: 7, bookmark: 2, digest: 4 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "ch-4",
@@ -204,7 +205,7 @@
             colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
             tagColor: "bg-[#5D6D7E] text-white",
             content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">從財務數據來看，許多公司拼命追求營收成長，卻忽略了流程延宕帶來的巨大『行政隱形成本』。本書第四章提出的『管理財』概念，簡真一針見血！</p>
+                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">從財務數據來看，許多公司拼命追求營收成長，卻忽略了流程延宕帶來的巨大『行政隱形成本』。本書第四章提出的『管理財』概念，簡直一針見血！</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">當重複的報表審核、合約對比、供應商報價通知，都可以轉化為 AI 自動跑的工作流時，省下來的絕對不是只有時間，而是實打實的人工成本。這些釋放的珍貴工時，可以被引導去開發新客戶或做高毛利的創新業務。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">這本書把原本枯燥的流程改善，包裝得像是在企業內部尋寶。每一次找到可以被 AI × SOP 取代的卡點，就等同於為公司挖出一個聚寶盆！這才是精實管理最迷人的地方。</p>
             `,
@@ -213,7 +214,7 @@
                 "日常表單、重覆回信、數據比對是 AI 最棒的狩獵場，應列為最先自動化對象。",
                 "時間就是金錢，幫同仁省下日常庶務時間，就是最棒的無形調薪。"
             ],
-            reactions: { resonance: 9, rethink: 2, inspire: 5, bookmark: 4, digest: 1 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "ch-5",
@@ -236,7 +237,7 @@
                 "利用『玩遊戲』的心態，建立互相分享 Prompt 的共學社群，效果奇佳！",
                 "當每個人都獲得 AI 工具的加持，基層的戰鬥力將會全面向上翻倍。"
             ],
-            reactions: { resonance: 10, rethink: 1, inspire: 8, bookmark: 6, digest: 2 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "ch-6",
@@ -259,7 +260,7 @@
                 "不能僅用舊的指標評估 AI，要著眼於流程的縮短與組織核心反應速度的提升。",
                 "將 AI 定位為公司的數位智慧中樞，讓每個新員工都能插即用、立即發揮即戰力。"
             ],
-            reactions: { resonance: 6, rethink: 5, inspire: 9, bookmark: 3, digest: 1 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "ch-7",
@@ -275,14 +276,14 @@
             content: `
                 <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">在培訓同仁時，我們最怕買到寫滿艱澀學術術語、看完了卻不知道明早第一步該做什麼的書籍。而陳泳睿老師這本《AI × SOP》，是我見過最沒有贅肉、含金量最高的實戰聖經！</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">書中分享的 20 組 Prompt 模板，背後是他歷時三年、走訪無數大小企業，在最真實的商業泥淖中反覆打磨、修正出來的無價之寶。不論你面對的是刁鑽的客戶投訴、繁瑣的合約，還是天馬行空的行銷案，書裡都有即插即用的黃金解法。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">看這本書，就像是有一位身價百萬的顧問直接坐在你旁邊，手把手帶 conventions領你跨越對 AI 的迷航期。它給予員工的不只是工具，而是無比強大的自信心！</p>
+                <p class="mb-6 leading-relaxed text-base text-slate-600">看這本書，就像是有一位身價百萬的顧問直接坐在你旁邊，手把手帶領你跨越對 AI 的迷航期。它給予員工的不只是工具，而是無比強大的自信心！</p>
             `,
             takeaways: [
                 "實戰派教授的極致魅力：沒有空泛的大話，只有一條條驗證有效、精準打中痛點的落地 SOP。",
                 "歷時三年反覆淬煉的範本，能幫企業省下高昂無比的摸索時間與慘痛試錯成本。",
                 "掌握主動權！不要等技術找上你，現在就照著書中食譜在自己業務中插旗。"
             ],
-            reactions: { resonance: 12, rethink: 2, inspire: 11, bookmark: 8, digest: 5 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "extra-1",
@@ -303,7 +304,7 @@
                 "透過角色扮演（Role-playing）技巧，AI 的專業度會瞬間暴增、表現驚人！",
                 "AI 軍師的深度完全取決於你的問題維度，好的 SOP 引導是啟發它的最強鑰匙。"
             ],
-            reactions: { resonance: 7, rethink: 3, inspire: 9, bookmark: 2, digest: 4 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "extra-2",
@@ -321,10 +322,10 @@
                 <p class="mb-6 leading-relaxed text-base text-slate-600">書中提到：AI 最擅長的是重複性高、消耗靈魂的例行工作。而我運用書中的 Prompt 精髓，把每天最頭痛、花掉兩小時整理排版的報表工作自動化之後，我終於能走出辦公室，跟客戶深度訪談、構思極具創意的行銷戰略。我沒有被取代，我是被『升級』成更有價值的行銷大師！這是一場溫柔無比的工作革命。</p>
             `,
             takeaways: [
-                "擺脫科技焦慮，把 AI 當作你的最佳助理，放手把雜務拋給它！",
+                "擺退科技焦慮，把 AI 當作你的最佳助理，放手把雜務拋給它！",
                 "人類獨有的創意、同理心與情感連結，是機器永遠無法跨越的溫暖護城河。"
             ],
-            reactions: { resonance: 15, rethink: 1, inspire: 10, bookmark: 7, digest: 3 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
             id: "extra-3",
@@ -334,7 +335,7 @@
             dept: "🔍 產業趨勢研究組",
             author: "首席分析師",
             summary: "不談花拳繡腿，只講求在殘酷戰場上活下來的真功夫！三年實戰精華，不容錯過！🏆",
-            quote: "(" + "「大浪淘沙，唯有禁得起三年反覆修改、在實戰戰場上存活下來的工作流，才是真正有價值的黃金法則。」" + ")",
+            quote: "「大浪淘沙，唯有禁得起三年反覆修改、在實戰戰場上存活下來的工作流，才是真正有價值的黃金法則。」",
             colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
             tagColor: "bg-[#5D6D7E] text-white",
             content: `
@@ -346,16 +347,10 @@
                 "一整套禁得起時間打磨的 SOP 工作流，價值遠勝過幾十個零星的小工具噱頭。",
                 "精裝版工具書，是現代經理人辦公桌上最應該隨時翻閱的降魔利器。"
             ],
-            reactions: { resonance: 11, rethink: 3, inspire: 8, bookmark: 5, digest: 6 }
+            reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         }
     ];
 
-    // 新增：活動開始，強制將所有模擬數據歸零
-    curatedData.forEach(item => {
-        item.reactions = { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 };
-    });
-
-    // 更改 STORAGE_KEY 以清除舊有的瀏覽器本地點擊紀錄，確保全新開始
     const STORAGE_KEY = 'ai_sop_reader_serene_v5_reset';
     let userReactionsState = {};
     let articleData = JSON.parse(JSON.stringify(curatedData)); // Deep copy
@@ -385,7 +380,7 @@
     <!-- ================= VIEW 0: QUIET COVER SECTION ================= -->
     <section id="view-cover" class="transition-view flex flex-col items-center justify-center max-w-xl w-full text-center space-y-12 py-12">
         
-        <!-- Book Image Representation (Retaining JS/CSS structure for animation compatibility) -->
+        <!-- Book Image Representation (No Shadow, Pure Clean Look) -->
         <div class="book-perspective w-56 sm:w-64 cursor-pointer group" onclick="openBookAndShowMenu()">
             <div id="spine-pivot" class="book-container w-full h-full relative">
                 <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="cover-left w-full h-auto object-contain relative z-10" />
@@ -419,7 +414,7 @@
             </p>
         </div>
 
-        <!-- 10 Chapters grid, beautifully aligned with plenty of whitespace -->
+        <!-- 10 Chapters grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="chapter-cards-container">
             <!-- Dynamically populated via script -->
         </div>
@@ -433,19 +428,19 @@
         </div>
     </section>
 
-    <!-- ================= VIEW 2: SINGLE-COLUMN COZY READER ================= -->
-    <section id="view-reader" class="hidden transition-view max-w-2xl w-full flex flex-col space-y-8">
+    <!-- ================= VIEW 2: THE IMMERSIVE READER ================= -->
+    <section id="view-reader" class="transition-view hidden max-w-2xl w-full relative z-10 px-4 sm:px-0">
         
         <!-- Subtle header back navigation -->
-        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
             <button onclick="backToMenu()" class="text-[11px] font-bold text-slate-400 hover:text-slate-700 transition-colors uppercase flex items-center gap-1">
                 <span>←</span> 返回選單大廳
             </button>
             <span class="text-[10px] tracking-[0.15em] text-slate-400 uppercase font-mono" id="reader-tracker-num">CH 01</span>
         </div>
 
-        <!-- Main single-column article block (completely responsive and natural layout) -->
-        <div class="paper-layout rounded-2xl p-6 sm:p-10 md:p-12 flex flex-col relative">
+        <!-- Paper Layout with Absolute Coordinates support for Stamps -->
+        <div class="paper-layout rounded-2xl p-6 sm:p-10 md:p-12 relative overflow-hidden mb-6" id="interactive-paper-surface">
             
             <!-- Context Header -->
             <div class="flex flex-wrap items-center gap-2 mb-6 text-[11px] font-bold">
@@ -464,7 +459,7 @@
                 「當我們把 AI 從單點工具升級為自動工作流，企業就像是突然多了一萬個高材生助理！」
             </div>
 
-            <!-- Natural body text container (flexible, no fixed height constraints) -->
+            <!-- Natural body text container -->
             <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-6 mt-6 border-t border-slate-100 pt-6" id="reader-body">
                 <!-- Rich text injected dynamically -->
             </div>
@@ -570,7 +565,6 @@
             gain.connect(ctx.destination);
             
             if (flavor === 'page_turn') {
-                // Soft triangular wave sweep to mimic sliding paper sound
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(140, ctx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.3);
@@ -579,7 +573,6 @@
                 osc.start();
                 osc.stop(ctx.currentTime + 0.3);
             } else if (flavor === 'stamp_placement') {
-                // Energetic bright pop-clink
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(290, ctx.currentTime);
                 osc.frequency.setValueAtTime(440, ctx.currentTime + 0.08);
@@ -588,7 +581,6 @@
                 osc.start();
                 osc.stop(ctx.currentTime + 0.2);
             } else if (flavor === 'soft_tap') {
-                // Tiny quiet UI click
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(200, ctx.currentTime);
                 gain.gain.setValueAtTime(0.02, ctx.currentTime);
@@ -617,7 +609,7 @@
         triggerTactileSound('stamp_placement');
         canvas.classList.remove('hidden');
         sparkGroup = [];
-        const subtleColors = ['#94A3B8', '#CBD5E1', '#E2E8F0', '#F1F5F9', '#64748B']; // 更純粹、乾淨的灰藍色系
+        const subtleColors = ['#94A3B8', '#CBD5E1', '#E2E8F0', '#F1F5F9', '#64748B'];
         
         for (let i = 0; i < 45; i++) {
             sparkGroup.push({
@@ -670,7 +662,63 @@
 </script>
 
 <script>
-    let currentActiveChapterId = null;
+    let activeChapterId = "ch-1"; 
+    let chapterStamps = {}; 
+
+    function loadStampsFromStorage() {
+        const saved = localStorage.getItem('book_review_stamps_sync');
+        if (saved) {
+            try {
+                chapterStamps = JSON.parse(saved);
+            } catch (e) {
+                console.error("貼紙資料載入失敗，已重設:", e);
+                chapterStamps = {};
+            }
+        }
+    }
+
+    function saveStampsToStorage() {
+        localStorage.setItem('book_review_stamps_sync', JSON.stringify(chapterStamps));
+    }
+
+    function renderStampsForChapter(chapterId) {
+        const paper = document.getElementById('interactive-paper-surface');
+        if (!paper) return;
+
+        const existingStamps = paper.querySelectorAll('.placed-stamp-element');
+        existingStamps.forEach(stamp => stamp.remove());
+
+        const stamps = chapterStamps[chapterId] || [];
+        stamps.forEach(stamp => {
+            const stampEl = document.createElement('div');
+            stampEl.className = 'placed-stamp-element absolute z-20 select-none cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95 group';
+            stampEl.style.left = `${stamp.x}%`;
+            stampEl.style.top = `${stamp.y}%`;
+            stampEl.style.transform = `translate(-50%, -50%) rotate(${stamp.rotation}deg)`;
+            
+            stampEl.innerHTML = `
+                <div class="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] text-xs font-semibold text-slate-700 hover:border-slate-300">
+                    <span class="text-sm">${stamp.emoji}</span>
+                    <span class="text-[10px] text-slate-500 tracking-wider font-sans">${stamp.text}</span>
+                </div>
+                <button class="absolute -top-1.5 -right-1.5 hidden group-hover:flex items-center justify-center w-4 h-4 rounded-full bg-slate-800 text-white text-[8px] border border-white shadow-sm hover:bg-slate-900 transition-colors" onclick="removeStamp(event, '${chapterId}', '${stamp.id}')">
+                    ×
+                </button>
+            `;
+            
+            paper.appendChild(stampEl);
+        });
+    }
+
+    function removeStamp(event, chapterId, stampId) {
+        event.stopPropagation();
+        if (chapterStamps[chapterId]) {
+            chapterStamps[chapterId] = chapterStamps[chapterId].filter(s => s.id !== stampId);
+            saveStampsToStorage();
+            renderStampsForChapter(chapterId);
+            triggerTactileSound('soft_tap');
+        }
+    }
 
     function openBookAndShowMenu() {
         const coverBox = document.getElementById('spine-pivot');
@@ -716,7 +764,7 @@
         const container = document.getElementById('chapter-cards-container');
         container.innerHTML = "";
 
-        articleData.forEach((item, index) => {
+        articleData.forEach((item) => {
             const cardWrapper = document.createElement('div');
             cardWrapper.className = "card-perspective h-44 cursor-pointer";
             
@@ -739,7 +787,7 @@
                         </div>
                     </div>
                     
-                    <!-- Card Back Face / Beautiful editorial summary -->
+                    <!-- Card Back Face -->
                     <div class="absolute inset-0 rotate-y-180 backface-hidden p-5 bg-slate-50 rounded-xl flex flex-col justify-between border border-slate-200/60" onclick="performMenuCardFlip(event, '${item.id}')">
                         <div class="flex-grow flex items-center justify-center">
                             <p class="text-slate-600 text-[11px] leading-relaxed italic text-center font-serif">
@@ -760,7 +808,6 @@
     }
 
     function performMenuCardFlip(e, articleId) {
-        // Prevent trigger if they click internal buttons
         if (e.target.tagName === 'BUTTON') return;
         
         const innerNode = document.getElementById(`menu-card-${articleId}`);
@@ -770,7 +817,6 @@
         if (isCurrentlyFlipped) {
             innerNode.classList.remove('flipped');
         } else {
-            // Dismiss other open cards first to keep layout tidy
             document.querySelectorAll('.flip-card-inner.flipped').forEach(fEl => {
                 fEl.classList.remove('flipped');
             });
@@ -785,9 +831,8 @@
         const article = articleData.find(x => x.id === articleId);
         if (!article) return;
 
-        currentActiveChapterId = articleId;
+        activeChapterId = articleId;
 
-        // Map general labels
         document.getElementById('reader-tracker-num').textContent = article.num;
         document.getElementById('reader-badge-num').textContent = article.num;
         document.getElementById('reader-badge-dept').textContent = article.dept;
@@ -796,7 +841,6 @@
         document.getElementById('reader-quote').textContent = article.quote;
         document.getElementById('reader-body').innerHTML = article.content;
 
-        // Render takeaways
         const takeList = document.getElementById('reader-takeaways-list');
         takeList.innerHTML = "";
         article.takeaways.forEach(p => {
@@ -805,15 +849,13 @@
             takeList.appendChild(li);
         });
 
-        // Initialize Stamp Count Views
         refreshImpressionCounts();
+        renderStampsForChapter(activeChapterId);
 
-        // Configure Navigation buttons
         const currIndex = articleData.findIndex(x => x.id === articleId);
         document.getElementById('btn-chapter-prev').disabled = (currIndex === 0);
         document.getElementById('btn-chapter-next').disabled = (currIndex === articleData.length - 1);
         
-        // Mute button styling based on state
         document.getElementById('btn-chapter-prev').style.opacity = (currIndex === 0) ? "0.3" : "1";
         document.getElementById('btn-chapter-next').style.opacity = (currIndex === articleData.length - 1) ? "0.3" : "1";
 
@@ -821,8 +863,8 @@
     }
 
     function jumpToAdjacentChapter(offset) {
-        if (!currentActiveChapterId) return;
-        const currIndex = articleData.findIndex(x => x.id === currentActiveChapterId);
+        if (!activeChapterId) return;
+        const currIndex = articleData.findIndex(x => x.id === activeChapterId);
         const targetIndex = currIndex + offset;
         
         if (targetIndex >= 0 && targetIndex < articleData.length) {
@@ -831,8 +873,8 @@
     }
 
     function refreshImpressionCounts() {
-        if (!currentActiveChapterId) return;
-        const article = articleData.find(x => x.id === currentActiveChapterId);
+        if (!activeChapterId) return;
+        const article = articleData.find(x => x.id === activeChapterId);
         if (!article) return;
 
         const stickerTypes = ['resonance', 'rethink', 'inspire', 'bookmark', 'digest'];
@@ -842,23 +884,22 @@
                 badge.textContent = article.reactions[type] || 0;
             }
 
-            // Highlighting buttons if user has active reaction
             const btn = badge.parentElement;
-            const stateKey = `${currentActiveChapterId}_${type}`;
+            const stateKey = `${activeChapterId}_${type}`;
             if (userReactionsState[stateKey]) {
-                btn.classList.add('bg-slate-50', 'border-slate-400');
+                btn.classList.add('bg-slate-100', 'border-slate-400');
             } else {
-                btn.classList.remove('bg-slate-50', 'border-slate-400');
+                btn.classList.remove('bg-slate-100', 'border-slate-400');
             }
         });
     }
 
     function castImpressionSticker(type) {
-        if (!currentActiveChapterId) return;
-        const article = articleData.find(x => x.id === currentActiveChapterId);
+        if (!activeChapterId) return;
+        const article = articleData.find(x => x.id === activeChapterId);
         if (!article) return;
 
-        const stateKey = `${currentActiveChapterId}_${type}`;
+        const stateKey = `${activeChapterId}_${type}`;
         const alreadyStamped = userReactionsState[stateKey] || false;
 
         if (!alreadyStamped) {
@@ -871,19 +912,52 @@
             article.reactions[type] = Math.max(0, (article.reactions[type] || 1) - 1);
             userReactionsState[stateKey] = false;
             displayInlineToast("已悄悄撕下貼紙。");
+            
+            // 同步移除紙張上對應的隨機絕對定位貼紙標記
+            if (chapterStamps[activeChapterId]) {
+                const idx = chapterStamps[activeChapterId].findIndex(s => s.type === type);
+                if (idx !== -1) {
+                    chapterStamps[activeChapterId].splice(idx, 1);
+                    saveStampsToStorage();
+                    renderStampsForChapter(activeChapterId);
+                }
+            }
         } else {
             article.reactions[type] = (article.reactions[type] || 0) + 1;
             userReactionsState[stateKey] = true;
 
             let textFeedback = "已完成印記投遞！";
+            let emoji = "💡";
             switch(type) {
-                case 'resonance': textFeedback = "💡 已投遞「深有同感」心靈貼紙"; break;
-                case 'rethink': textFeedback = "🤔 已投遞「促我深思」心靈貼紙"; break;
-                case 'inspire': textFeedback = "✨ 已投遞「啟迪思維」心靈貼紙"; break;
-                case 'bookmark': textFeedback = "📌 已成功儲存此章節"; break;
-                case 'digest': textFeedback = "☕ 已儲存。慢消化，得大智慧"; break;
+                case 'resonance': textFeedback = "💡 已投遞「深有同感」貼紙"; emoji = "💡"; break;
+                case 'rethink': textFeedback = "🤔 已投遞「促我深思」貼紙"; emoji = "🤔"; break;
+                case 'inspire': textFeedback = "✨ 已投遞「啟迪思維」貼紙"; emoji = "✨"; break;
+                case 'bookmark': textFeedback = "📌 已成功儲存此章節"; emoji = "📌"; break;
+                case 'digest': textFeedback = "☕ 已儲存。慢消化，得大智慧"; emoji = "☕"; break;
             }
             displayInlineToast(textFeedback);
+
+            // 於書頁紙張上產生一個隨機飄浮位置的貼紙
+            const rx = (Math.random() * 60 + 20).toFixed(2); // 限制在中間區段 20%~80% 內，防止超出邊框
+            const ry = (Math.random() * 60 + 20).toFixed(2);
+            const rot = Math.floor(Math.random() * 16) - 8;
+            
+            const newStamp = {
+                id: 'stamp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                type: type, // 用於取消時精確查找
+                x: rx,
+                y: ry,
+                emoji: emoji,
+                text: type === 'resonance' ? '深有同感' : type === 'rethink' ? '促我深思' : type === 'inspire' ? '啟迪思維' : type === 'bookmark' ? '收藏待讀' : '值得慢嚼',
+                rotation: rot
+            };
+
+            if (!chapterStamps[activeChapterId]) {
+                chapterStamps[activeChapterId] = [];
+            }
+            chapterStamps[activeChapterId].push(newStamp);
+            saveStampsToStorage();
+            renderStampsForChapter(activeChapterId);
         }
 
         try {
@@ -934,7 +1008,6 @@
         const list = document.getElementById('modal-rank-list');
         list.innerHTML = "";
 
-        // Sort by total reactions count descending
         const sorted = [...articleData].sort((a, b) => {
             const sumA = Object.values(a.reactions).reduce((acc, curr) => acc + curr, 0);
             const sumB = Object.values(b.reactions).reduce((acc, curr) => acc + curr, 0);
@@ -973,7 +1046,6 @@
 
 <script>
     function setupInteractions() {
-        // Dynamic keystroke binding
         document.addEventListener('keydown', (e) => {
             const readerView = document.getElementById('view-reader');
             if (readerView && !readerView.classList.contains('hidden')) {
@@ -987,6 +1059,7 @@
     }
 
     window.onload = function() {
+        loadStampsFromStorage();
         renderChapterGrid();
         setupInteractions();
     }
