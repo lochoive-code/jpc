@@ -935,12 +935,16 @@
         refreshImpressionCounts();
         renderStampsForChapter(activeChapterId);
 
+        // 限制僅能於已解鎖篇章（CH 01）之間導航，阻擋導向 COMING SOON 的篇章
         const currIndex = articleData.findIndex(x => x.id === articleId);
-        document.getElementById('btn-chapter-prev').disabled = (currIndex === 0);
-        document.getElementById('btn-chapter-next').disabled = (currIndex === articleData.length - 1);
+        const hasPrev = (currIndex > 0 && articleData[currIndex - 1].id === "ch-1");
+        const hasNext = (currIndex < articleData.length - 1 && articleData[currIndex + 1].id === "ch-1");
+
+        document.getElementById('btn-chapter-prev').disabled = !hasPrev;
+        document.getElementById('btn-chapter-next').disabled = !hasNext;
         
-        document.getElementById('btn-chapter-prev').style.opacity = (currIndex === 0) ? "0.3" : "1";
-        document.getElementById('btn-chapter-next').style.opacity = (currIndex === articleData.length - 1) ? "0.3" : "1";
+        document.getElementById('btn-chapter-prev').style.opacity = hasPrev ? "1" : "0.3";
+        document.getElementById('btn-chapter-next').style.opacity = hasNext ? "1" : "0.3";
 
         switchView('view-reader');
     }
@@ -951,6 +955,10 @@
         const targetIndex = currIndex + offset;
         
         if (targetIndex >= 0 && targetIndex < articleData.length) {
+            // 阻擋透過按鈕或方向鍵進入未解鎖的 COMING SOON 篇章
+            if (articleData[targetIndex].id !== "ch-1") {
+                return;
+            }
             loadAndReadChapter(articleData[targetIndex].id);
         }
     }
@@ -1102,26 +1110,46 @@
             const position = String(index + 1).padStart(2, '0');
             
             const itemRow = document.createElement('div');
-            itemRow.className = "flex items-center justify-between p-3 border border-slate-100 hover:border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl cursor-pointer transition-all";
-            itemRow.onclick = () => {
-                closeStatsModal();
-                loadAndReadChapter(item.id);
-            };
-
-            itemRow.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] font-mono font-bold flex items-center justify-center">
-                        ${position}
-                    </span>
-                    <div>
-                        <span class="text-[9px] text-slate-400 font-bold block uppercase">${item.num} • ${item.dept}</span>
-                        <h4 class="serif-heading text-xs text-slate-700 leading-tight">${item.title}</h4>
+            
+            // 若為未開放的 COMING SOON 篇章，於排行中隱藏標題、部門，並不可被點擊
+            if (item.id !== "ch-1") {
+                itemRow.className = "flex items-center justify-between p-3 border border-slate-100 bg-slate-50/40 rounded-xl cursor-not-allowed opacity-60";
+                itemRow.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-400 text-[10px] font-mono font-bold flex items-center justify-center">
+                            ${position}
+                        </span>
+                        <div>
+                            <span class="text-[9px] text-slate-400 font-bold block uppercase">${item.num} • 敬請期待</span>
+                            <h4 class="serif-heading text-xs text-slate-400 leading-tight">COMING SOON ✨</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="flex items-center gap-1 bg-white border border-slate-200 rounded px-2 py-0.5">
-                    <span class="text-[9px] text-slate-500 font-mono">${totalSum} 張</span>
-                </div>
-            `;
+                    <div class="flex items-center gap-1 bg-white border border-slate-200 rounded px-2 py-0.5">
+                        <span class="text-[9px] text-slate-400 font-mono">0 張</span>
+                    </div>
+                `;
+            } else {
+                itemRow.className = "flex items-center justify-between p-3 border border-slate-100 hover:border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl cursor-pointer transition-all";
+                itemRow.onclick = () => {
+                    closeStatsModal();
+                    loadAndReadChapter(item.id);
+                };
+
+                itemRow.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] font-mono font-bold flex items-center justify-center">
+                            ${position}
+                        </span>
+                        <div>
+                            <span class="text-[9px] text-slate-400 font-bold block uppercase">${item.num} • ${item.dept}</span>
+                            <h4 class="serif-heading text-xs text-slate-700 leading-tight">${item.title}</h4>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1 bg-white border border-slate-200 rounded px-2 py-0.5">
+                        <span class="text-[9px] text-slate-500 font-mono">${totalSum} 張</span>
+                    </div>
+                `;
+            }
             list.appendChild(itemRow);
         });
     }
