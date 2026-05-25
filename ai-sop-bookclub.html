@@ -13,17 +13,17 @@
     
     <style>
         :root {
-            --color-bg-desk: #FFFFFF; /* 強制設定為純白背景 */
-            --color-paper-base: #FAF8F5; /* 紙張基礎色 */
+            --color-bg-desk: #FFFFFF; /* 純白背景 */
+            --color-paper-base: #FAF8F5; /* Cozy premium warm book page cream */
             --color-paper-border: #E6DFD5;
-            --color-ink-primary: #1C1C1E; /* 深炭色文字 */
-            --color-ink-muted: #636366; /* 靜謐灰文字 */
-            --color-accent-blue: #3A6073; /* 靜謐藍 */
+            --color-ink-primary: #1C1C1E; /* Soft charcoal for reading comfort */
+            --color-ink-muted: #636366; /* Elegant slate grey */
+            --color-accent-blue: #3A6073; /* Serene slate blue */
         }
 
         body {
             font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
-            background-color: #FFFFFF; /* 統一設定背景為純白 */
+            background-color: var(--color-bg-desk);
             color: var(--color-ink-primary);
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
@@ -49,7 +49,6 @@
             transform-origin: left center;
             transition: transform 1.4s cubic-bezier(0.25, 1, 0.5, 1);
             transform-style: preserve-3d;
-            box-shadow: 10px 15px 35px rgba(0, 0, 0, 0.12);
         }
 
         .book-open .cover-left {
@@ -381,7 +380,7 @@
 </script>
 
 <!-- Main Container holding the entire serene workbook environment -->
-<main class="flex-grow w-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 relative bg-white">
+<main class="flex-grow w-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 relative">
 
     <!-- ================= VIEW 0: QUIET COVER SECTION ================= -->
     <section id="view-cover" class="transition-view flex flex-col items-center justify-center max-w-xl w-full text-center space-y-12 py-12">
@@ -389,7 +388,7 @@
         <!-- Book Image Representation (Retaining JS/CSS structure for animation compatibility) -->
         <div class="book-perspective w-56 sm:w-64 cursor-pointer group" onclick="openBookAndShowMenu()">
             <div id="spine-pivot" class="book-container w-full h-full relative">
-                <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="cover-left w-full h-auto object-contain shadow-2xl relative z-10" />
+                <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="cover-left w-full h-auto object-contain relative z-10" />
             </div>
         </div>
 
