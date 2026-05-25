@@ -115,6 +115,16 @@
         .transition-view {
             transition: opacity 0.6s ease-in-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        
+        /* Error Shake Animation for Password Field */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-4px); }
+            40%, 80% { transform: translateX(4px); }
+        }
+        .error-shake {
+            animation: shake 0.4s ease-in-out;
+        }
     </style>
 </head>
 <body class="selection:bg-slate-200 selection:text-slate-900 h-full flex flex-col justify-between">
@@ -137,7 +147,7 @@
             tagColor: "bg-[#3A6073] text-white",
             content: `
                 <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">許多企業導入 AI 時，都犯了「讓員工各憑本事摸索」的通病。本書開篇第一響就敲醒大家：如果沒有將 AI 行動化為<strong>標準作業流程（SOP）</strong>，效率提升只會是天邊流星，無法複製！</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">作者陳泳睿老師深入剖析，真正厲害的組織會將 AI 設定為「第一線員工的引導大腦」。不論是企劃構想還是龐大數據分析，都能在一套精準的對話模板內迅速到位。</p>
+                <p class="mb-6 leading-relaxed text-base text-slate-600">作者陳泳睿老師深入剖析，真正厲害的組織會將 AI 設定為「第一線員工的引導大腦」。不論是企劃構想還是龐大數據 analysis，都能在一套精準的對話模板內迅速到位。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">在我們企劃室實測後發現，以前分析市場競品要痛苦熬夜三天，現在套用 AI 協同 SOP 後，竟然<b>只要半個下午</b>就能生出極富創意的初稿！剩下來的時間，我們終於可以去喝杯咖啡、做更有深度的策略規劃了！</p>
             `,
             takeaways: [
@@ -182,7 +192,7 @@
             colorClass: "bg-[#3A6073]/5 border-[#3A6073]/10",
             tagColor: "bg-[#3A6073] text-white",
             content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">每天身處在數據與業績轟炸的營運前端，決策錯誤的成本是巨大的。過去，經理人們常常靠「敏銳直覺」賭一把；而第三章介紹的「決策 AI 化」讓我們看到了更優雅的答案。</p>
+                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">每天身處在數據與業績轟炸的營運前端，決策錯誤的成本是巨大的。過去，經理人們常常靠「敏銳直覺」賭一把；而第三章介紹的「決策 AI化」讓我們看到了更優雅的答案。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">建立決策 SOP 後，AI 可以在數秒內幫你生成三種不同情境的利弊分析、成本預算與風險預測。這並不是剝奪經理人的大腦，而是幫我們掃除雜音，讓我們能專注在最有價值的事情上：對市場的洞察與對人的關懷。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">AI 是最佳的『決策副駕駛』。有了它冷靜客觀的數據防護網，再搭配我們人類在江湖打滾多年的敏銳直覺，團隊再也沒做過後悔的決策！</p>
             `,
@@ -276,7 +286,7 @@
             content: `
                 <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">在培訓同仁時，我們最怕買到寫滿艱澀學術術語、看完了卻不知道明早第一步該做什麼的書籍。而陳泳睿老師這本《AI × SOP》，是我見過最沒有贅肉、含金量最高的實戰聖經！</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">書中分享的 20 組 Prompt 模板，背後是他歷時三年、走訪無數大小企業，在最真實的商業泥淖中反覆打磨、修正出來的無價之寶。不論你面對的是刁鑽的客戶投訴、繁瑣的合約，還是天馬行空的行銷案，書裡都有即插即用的黃金解法。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">看這本書，就像是有一位身價百萬的顧問直接坐在你旁邊，手把手帶領你跨越對 AI 的迷航期。它給予員工的不只是工具，而是無比強大的自信心！</p>
+                <p class="mb-6 leading-relaxed text-base text-slate-600">看這本書，就像是有一位身價百萬的顧問直接坐在你旁邊，手把手帶領你跨越對 AI 的迷航期。它給予員工的不裝腔作勢，而是無比強大的自信心！</p>
             `,
             takeaways: [
                 "實戰派教授的極致魅力：沒有空泛的大話，只有一條條驗證有效、精準打中痛點的落地 SOP。",
@@ -322,7 +332,7 @@
                 <p class="mb-6 leading-relaxed text-base text-slate-600">書中提到：AI 最擅長的是重複性高、消耗靈魂的例行工作。而我運用書中的 Prompt 精髓，把每天最頭痛、花掉兩小時整理排版的報表工作自動化之後，我終於能走出辦公室，跟客戶深度訪談、構思極具創意的行銷戰略。我沒有被取代，我是被『升級』成更有價值的行銷大師！這是一場溫柔無比的工作革命。</p>
             `,
             takeaways: [
-                "擺退科技焦慮，把 AI 當作你的最佳助理，放手把雜務拋給它！",
+                "擺脫科技焦慮，把 AI 當作你的最佳助理，放手把雜務拋給它！",
                 "人類獨有的創意、同理心與情感連結，是機器永遠無法跨越的溫暖護城河。"
             ],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
@@ -351,7 +361,8 @@
         }
     ];
 
-    const STORAGE_KEY = 'ai_sop_reader_serene_v5_reset';
+    // Using clean version storage keys to ensure a fresh clean zeroed start
+    const STORAGE_KEY = 'ai_sop_reader_serene_v6_clean';
     let userReactionsState = {};
     let articleData = JSON.parse(JSON.stringify(curatedData)); // Deep copy
 
@@ -419,12 +430,17 @@
             <!-- Dynamically populated via script -->
         </div>
 
-        <!-- Subtle footer to display rankings at the end of index -->
+        <!-- Subtle footer with Reset option -->
         <div class="pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
             <span class="text-xs text-slate-400">這是一場著重思維淬煉的讀後交流展。</span>
-            <button onclick="showQuickRankSummary()" class="text-xs font-bold text-slate-600 hover:text-slate-800 underline uppercase tracking-widest">
-                📊 快速查看讀者共鳴排行
-            </button>
+            <div class="flex items-center gap-4">
+                <button onclick="promptResetPassword()" class="text-xs font-semibold text-slate-400 hover:text-red-500 transition-colors uppercase tracking-widest flex items-center gap-1">
+                    🔄 數據歸零
+                </button>
+                <button onclick="showQuickRankSummary()" class="text-xs font-bold text-slate-600 hover:text-slate-800 underline uppercase tracking-widest">
+                    📊 快速查看讀者共鳴排行
+                </button>
+            </div>
         </div>
     </section>
 
@@ -548,6 +564,33 @@
             <p class="text-[10px] text-slate-400 mt-6 border-t border-slate-100 pt-3">
                 點選條目可直接跳轉至對應章節閱讀。
             </p>
+
+            <!-- Secured Reset Button (Invokes password validation instead of direct drop) -->
+            <button onclick="closeStatsModal(); promptResetPassword();" class="mt-4 text-[10px] text-slate-400 hover:text-red-500 font-semibold tracking-wider uppercase transition-colors">
+                🔄 重設所有互動數據與貼紙
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= VIEW 4: SECURED PASSWORD MODAL ================= -->
+    <div id="password-modal" class="fixed inset-0 bg-slate-900/40 z-[60] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-xs w-full p-6 text-center shadow-xl relative transform scale-95 transition-transform duration-300 flex flex-col" id="password-modal-content">
+            <h3 class="serif-heading text-base text-slate-800 mb-2">管理驗證</h3>
+            <p class="text-xs text-slate-500 mb-4">此操作將永久清除所有讀者貼紙與排行計數，請輸入管理員密碼：</p>
+            
+            <input type="password" id="reset-password-input" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-slate-400 mb-2 transition-all" placeholder="請輸入密碼">
+            
+            <!-- Dynamic Inline error display -->
+            <div id="password-error-msg" class="text-red-500 text-[10px] mb-3 hidden">⚠️ 密碼錯誤，請再試一次</div>
+            
+            <div class="flex gap-2">
+                <button onclick="closePasswordModal()" class="w-1/2 py-2 border border-slate-200 rounded-lg text-xs font-semibold text-slate-500 hover:bg-slate-50 transition-colors">
+                    取消
+                </button>
+                <button onclick="verifyResetPassword()" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold transition-colors">
+                    確認重設
+                </button>
+            </div>
         </div>
     </div>
 </main>
@@ -664,9 +707,10 @@
 <script>
     let activeChapterId = "ch-1"; 
     let chapterStamps = {}; 
+    const RESET_PASSWORD = "admin888"; // Set your administrator password here
 
     function loadStampsFromStorage() {
-        const saved = localStorage.getItem('book_review_stamps_sync');
+        const saved = localStorage.getItem('book_review_stamps_sync_v6_clean');
         if (saved) {
             try {
                 chapterStamps = JSON.parse(saved);
@@ -678,7 +722,7 @@
     }
 
     function saveStampsToStorage() {
-        localStorage.setItem('book_review_stamps_sync', JSON.stringify(chapterStamps));
+        localStorage.setItem('book_review_stamps_sync_v6_clean', JSON.stringify(chapterStamps));
     }
 
     function renderStampsForChapter(chapterId) {
@@ -1042,10 +1086,84 @@
             list.appendChild(itemRow);
         });
     }
+
+    // Beautiful inline Zeroing and Reset Mechanism (No browser alert/confirm used)
+    function resetAllData() {
+        // 1. Clear LocalStorage keys
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem('book_review_stamps_sync_v6_clean');
+        
+        // 2. Reset runtime variables
+        userReactionsState = {};
+        chapterStamps = {};
+        
+        // 3. Re-initialize dataset with fresh 0 values
+        articleData = JSON.parse(JSON.stringify(curatedData));
+        
+        // 4. Update and refresh active UI panels
+        renderChapterGrid();
+        refreshImpressionCounts();
+        renderStampsForChapter(activeChapterId);
+        buildRankListing();
+        
+        // 5. Friendly inline notification
+        displayInlineToast("🧹 所有貼紙與計數已成功歸零重置！");
+        triggerTactileSound('soft_tap');
+    }
+
+    // Secure verification functions
+    function promptResetPassword() {
+        triggerTactileSound('soft_tap');
+        const modal = document.getElementById('password-modal');
+        const content = document.getElementById('password-modal-content');
+        const input = document.getElementById('reset-password-input');
+        
+        // Reset state
+        input.value = '';
+        input.classList.remove('border-red-400', 'error-shake');
+        document.getElementById('password-error-msg').classList.add('hidden');
+        
+        // Show modal
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+        
+        // Autofocus input
+        setTimeout(() => input.focus(), 150);
+    }
+
+    function closePasswordModal() {
+        const modal = document.getElementById('password-modal');
+        const content = document.getElementById('password-modal-content');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        content.classList.add('scale-95');
+        content.classList.remove('scale-100');
+    }
+
+    function verifyResetPassword() {
+        const inputField = document.getElementById('reset-password-input');
+        const errorMsg = document.getElementById('password-error-msg');
+        const content = document.getElementById('password-modal-content');
+        
+        if (inputField.value === RESET_PASSWORD) {
+            closePasswordModal();
+            resetAllData();
+        } else {
+            triggerTactileSound('soft_tap');
+            inputField.classList.add('border-red-400', 'error-shake');
+            errorMsg.classList.remove('hidden');
+            
+            // Remove shaking animation class after trigger to allow reuse
+            setTimeout(() => {
+                inputField.classList.remove('error-shake');
+            }, 400);
+        }
+    }
 </script>
 
 <script>
     function setupInteractions() {
+        // Arrow key listeners
         document.addEventListener('keydown', (e) => {
             const readerView = document.getElementById('view-reader');
             if (readerView && !readerView.classList.contains('hidden')) {
@@ -1054,6 +1172,13 @@
                 } else if (e.key === 'ArrowRight') {
                     jumpToAdjacentChapter(1);
                 }
+            }
+        });
+
+        // Enter key to verify password inside modal
+        document.getElementById('reset-password-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                verifyResetPassword();
             }
         });
     }
