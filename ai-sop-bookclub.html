@@ -13,12 +13,12 @@
     
     <style>
         :root {
-            --color-bg-desk: #FFFFFF; /* 純白背景 */
-            --color-paper-base: #FAF8F5; /* Cozy premium warm book page cream */
-            --color-paper-border: #E6DFD5;
-            --color-ink-primary: #1C1C1E; /* Soft charcoal for reading comfort */
-            --color-ink-muted: #636366; /* Elegant slate grey */
-            --color-accent-blue: #3A6073; /* Serene slate blue */
+            --color-bg-desk: #F8FAFC; /* 乾淨極淺灰藍背景，增加空間的呼吸感 */
+            --color-paper-base: #FFFFFF; /* 純白書頁，提升整體的清爽度 */
+            --color-paper-border: #E2E8F0; /* 柔和的邊框色 */
+            --color-ink-primary: #1E293B; /* 降低對比的深灰藍文字，閱讀更舒適不刺眼 */
+            --color-ink-muted: #64748B;
+            --color-accent-blue: #475569;
         }
 
         body {
@@ -58,8 +58,8 @@
         /* Pure Paper shadows and textures */
         .paper-layout {
             background-color: var(--color-paper-base);
-            box-shadow: inset 0 0 40px rgba(220, 215, 205, 0.25), 0 10px 30px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.04), 0 5px 15px -5px rgba(0, 0, 0, 0.02); /* 更加乾淨、現代的輕陰影 */
+            border: 1px solid var(--color-paper-border);
         }
 
         /* Beautiful 180deg Flip Card Animation */
@@ -455,17 +455,17 @@
             </div>
 
             <!-- Main Big Title -->
-            <h1 class="serif-heading text-2xl sm:text-3xl text-[#1C1C1E] leading-snug tracking-wide mb-6" id="reader-title">
+            <h1 class="serif-heading text-2xl sm:text-3xl text-slate-800 leading-snug tracking-wide mb-6" id="reader-title">
                 從工具到系統：讓 AI 成為企業大腦
             </h1>
 
             <!-- Beautiful Minimalist Pull Quote Block -->
-            <div class="my-6 pl-5 border-l-2 border-slate-400 italic text-slate-600 text-sm sm:text-base leading-relaxed" id="reader-quote">
+            <div class="my-6 pl-5 border-l-2 border-slate-300 italic text-slate-500 text-sm sm:text-base leading-relaxed" id="reader-quote">
                 「當我們把 AI 從單點工具升級為自動工作流，企業就像是突然多了一萬個高材生助理！」
             </div>
 
             <!-- Natural body text container (flexible, no fixed height constraints) -->
-            <div class="text-[#2C2C2E] text-sm sm:text-base leading-relaxed space-y-6 mt-6 border-t border-slate-100 pt-6" id="reader-body">
+            <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-6 mt-6 border-t border-slate-100 pt-6" id="reader-body">
                 <!-- Rich text injected dynamically -->
             </div>
 
@@ -617,7 +617,7 @@
         triggerTactileSound('stamp_placement');
         canvas.classList.remove('hidden');
         sparkGroup = [];
-        const subtleColors = ['#3A6073', '#5D6D7E', '#A2B9C8', '#D1DCE4', '#CBD5E1'];
+        const subtleColors = ['#94A3B8', '#CBD5E1', '#E2E8F0', '#F1F5F9', '#64748B']; // 更純粹、乾淨的灰藍色系
         
         for (let i = 0; i < 45; i++) {
             sparkGroup.push({
@@ -740,7 +740,7 @@
                     </div>
                     
                     <!-- Card Back Face / Beautiful editorial summary -->
-                    <div class="absolute inset-0 rotate-y-180 backface-hidden p-5 bg-[#F9F7F2] rounded-xl flex flex-col justify-between border border-slate-200/60" onclick="performMenuCardFlip(event, '${item.id}')">
+                    <div class="absolute inset-0 rotate-y-180 backface-hidden p-5 bg-slate-50 rounded-xl flex flex-col justify-between border border-slate-200/60" onclick="performMenuCardFlip(event, '${item.id}')">
                         <div class="flex-grow flex items-center justify-center">
                             <p class="text-slate-600 text-[11px] leading-relaxed italic text-center font-serif">
                                 "${item.summary}"
