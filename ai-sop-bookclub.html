@@ -345,14 +345,26 @@
 <main class="flex-grow w-full max-w-5xl mx-auto px-6 py-10 sm:py-16 flex flex-col items-center justify-center relative z-10">
 
     <!-- ================= VIEW 0: MODERN HERO & COVER SECTION ================= -->
-    <section id="view-cover" class="fade-in-view flex flex-col md:flex-row items-center justify-between w-full gap-12 md:gap-16 py-4">
-        <!-- Elegant Left Hero Intro -->
-        <div class="flex-1 text-left space-y-6 md:pr-4">
+    <section id="view-cover" class="fade-in-view flex flex-col md:flex-row items-center justify-center w-full gap-8 md:gap-10 py-4 max-w-4xl mx-auto">
+        
+        <!-- Book Image Presentation (Moved to Left) -->
+        <div class="flex-1 flex justify-center md:justify-end items-center md:pr-4">
+            <div class="book-wrapper w-56 sm:w-64 cursor-pointer" onclick="openBookAndShowMenu()">
+                <div id="spine-pivot" class="book-3d w-full h-auto relative rounded-r-lg">
+                    <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="w-full h-auto object-contain rounded-r-lg" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Elegant Right Hero Intro (Moved to Right) -->
+        <div class="flex-1 text-left space-y-6 md:pl-2">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-zinc-100 text-zinc-800 border border-zinc-200">
                 ✨ 線上讀書會 · 實務沉澱
             </span>
-            <h1 class="font-serif font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-900 leading-[1.15] tracking-tight">
-                第一線 Prompt 驅動打造企業高效 SOP
+            <!-- Explicit two-line title with no wrap and increased line spacing -->
+            <h1 class="font-serif font-black text-[1.75rem] sm:text-3xl md:text-4xl lg:text-[2.75rem] text-zinc-900 leading-[1.4] tracking-tight space-y-2">
+                <span class="block whitespace-nowrap">第一線 Prompt</span>
+                <span class="block whitespace-nowrap">驅動打造企業高效 SOP</span>
             </h1>
             <p class="text-zinc-500 text-base max-w-lg leading-relaxed">
                 跳脫工具單點思維，透過同仁們的智慧共學，將實戰流程沉澱為高品質的管理工作流。歡迎進入線上導讀空間。
@@ -364,14 +376,6 @@
             </div>
         </div>
 
-        <!-- Book Image Presentation -->
-        <div class="flex-1 flex justify-center items-center">
-            <div class="book-wrapper w-56 sm:w-64 cursor-pointer" onclick="openBookAndShowMenu()">
-                <div id="spine-pivot" class="book-3d w-full h-auto relative rounded-r-lg">
-                    <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="w-full h-auto object-contain rounded-r-lg" />
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- ================= VIEW 0.5: BOOK INTRODUCTION ================= -->
@@ -468,10 +472,10 @@
 
         <!-- Modern Content Header -->
         <div class="max-w-2xl space-y-3">
-            <h2 class="font-serif font-bold text-3xl sm:text-4xl text-zinc-900 leading-normal tracking-tight">
+            <h2 class="font-serif font-bold text-xl sm:text-3xl lg:text-4xl text-zinc-900 leading-normal tracking-tight whitespace-nowrap">
                 一本書，十種觀點 — AI × SOP 線上導讀會
             </h2>
-            <p class="text-zinc-500 text-sm leading-relaxed max-w-xl">
+            <p class="text-zinc-500 text-sm leading-relaxed whitespace-nowrap">
                 請點選以下開放的心得專區。透過同仁在第一線的深刻實作視角，理解生成式 AI 在不同部門落地的核心脈絡。
             </p>
         </div>
