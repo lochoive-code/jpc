@@ -1,138 +1,111 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="h-full">
+<html lang="zh-TW" class="h-full scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AI × SOP生成式AI工作流：第一線Prompt驅動，打造企業SOP</title>
+    <title>AI × SOP 生成式AI工作流：線上導讀會</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Premium Elegant Serifs and Sans for comfortable reading -->
+    
+    <!-- Premium Fonts: Noto Serif TC (Elegant Serif) & Inter/Noto Sans TC (Sleek Sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..600&family=Noto+Serif+TC:wght@300;500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                        serif: ['Noto Serif TC', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         :root {
-            --color-bg-desk: #F8FAFC; /* 乾淨極淺灰藍背景，增加空間的呼吸感 */
-            --color-paper-base: #FFFFFF; /* 純白書頁，提升整體的清爽度 */
-            --color-paper-border: #E2E8F0; /* 柔和的邊框色 */
-            --color-ink-primary: #1E293B; /* 降低對比的深灰藍文字，閱讀更舒適不刺眼 */
-            --color-ink-muted: #64748B;
-            --color-accent-blue: #475569;
+            --color-bg: #FFFFFF; /* Changed to white */
+            --color-card-bg: #FFFFFF;
+            --color-primary: #18181B; /* Zinc-900 */
+            --color-secondary: #52525B; /* Zinc-600 */
+            --color-accent: #4F46E5; /* Indigo-600 */
         }
 
         body {
-            font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
-            background-color: var(--color-bg-desk);
-            color: var(--color-ink-primary);
+            background-color: var(--color-bg);
+            color: var(--color-primary);
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        .serif-heading {
-            font-family: 'Noto Serif TC', serif;
-            font-weight: 700;
+        /* Subtle modern editorial card borders & shadows */
+        .editorial-card {
+            background: var(--color-card-bg);
+            border: 1px solid rgba(228, 228, 231, 0.6); /* Zinc-200 with transparency */
+            box-shadow: 0 4px 20px -2px rgba(24, 24, 27, 0.02);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .editorial-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 70, 229, 0.25);
+            box-shadow: 0 20px 40px -10px rgba(24, 24, 27, 0.05);
         }
 
-        /* 3D Realistic Book Perspective and Layout */
-        .book-perspective {
-            perspective: 1600px;
+        /* Book Mockup 3D Effect */
+        .book-wrapper {
+            perspective: 1200px;
         }
-
-        .book-container {
+        .book-3d {
             transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Removed animation and transition */
+        }
+        /* Removed hover effect for book-3d */
+
+        /* High-quality fade transition */
+        .fade-in-view {
+            animation: fadeInView 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeInView {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Clean cover spine simulation - No Shadow */
-        .cover-left {
-            transform-origin: left center;
-            transition: transform 1.4s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-style: preserve-3d;
+        /* Micro-interactions: Pop animated sticker feedback */
+        .sticker-scale {
+            animation: popSticker 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes popSticker {
+            from { transform: scale(0.6) rotate(-10deg); opacity: 0; }
+            to { transform: scale(1) rotate(var(--rot, 0deg)); opacity: 1; }
         }
 
-        .book-open .cover-left {
-            transform: rotateY(-145deg);
-        }
-
-        /* Pure Paper shadows and textures */
-        .paper-layout {
-            background-color: var(--color-paper-base);
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.04), 0 5px 15px -5px rgba(0, 0, 0, 0.02); /* 更加乾淨、現代的輕陰影 */
-            border: 1px solid var(--color-paper-border);
-            position: relative; /* 確保絕對定位的貼紙能準確相對於書頁定位 */
-        }
-
-        /* Beautiful 180deg Flip Card Animation */
-        .card-perspective {
-            perspective: 1000px;
-        }
-
-        .flip-card-inner {
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-
-        .flip-card-inner.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .backface-hidden {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        .rotate-y-180 {
-            transform: rotateY(180deg);
-        }
-
-        /* Custom Scrollbar for serene layout */
-        .custom-scrollbar::-webkit-scrollbar {
+        /* Minimal scrollbar */
+        .custom-scroll::-webkit-scrollbar {
             width: 4px;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
+        .custom-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #D1D1D6;
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #E4E4E7;
             border-radius: 99px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #8E8E93;
-        }
-
-        /* Confetti elements layer */
-        #confetti-canvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        /* Soft fade animation */
-        .transition-view {
-            transition: opacity 0.6s ease-in-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        /* Error Shake Animation for Password Field */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-4px); }
-            40%, 80% { transform: translateX(4px); }
-        }
-        .error-shake {
-            animation: shake 0.4s ease-in-out;
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #D4D4D8;
         }
     </style>
 </head>
-<body class="selection:bg-slate-200 selection:text-slate-900 h-full flex flex-col justify-between">
+<body class="selection:bg-indigo-50 selection:text-indigo-900 h-full flex flex-col justify-between antialiased font-sans">
 
-<!-- Canvas for sticker interactions -->
-<canvas id="confetti-canvas" class="hidden"></canvas>
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-50 hidden"></canvas>
 
 <script>
+    // Chapter data perfectly preserved with Chapter 2 updated as requested (Pure content, no takeaways, no image)
     const curatedData = [
         {
             id: "ch-1",
@@ -143,45 +116,45 @@
             author: "Ami",
             summary: "AI 並非取代人的經驗，而是加速前人智慧的傳承。懂得描述情境與提問，AI 就是最強的決策夥伴！🔑",
             quote: "「AI 不是答案，但會成為每一位管理者最強大的決策夥伴。」",
-            colorClass: "bg-[#3A6073]/5 border-[#3A6073]/10",
-            tagColor: "bg-[#3A6073] text-white",
+            colorClass: "bg-indigo-50/40 text-indigo-700 border-indigo-100/80",
+            tagColor: "bg-indigo-600 text-white",
             content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">過去二十多年來，在企業經營與團隊管理的過程中，我們累積了無數經驗。從建立制度、撰寫表單、設計流程，到處理客訴、品質異常、跨部門協調，每一套 SOP 的背後，都可能是前輩們花了數年甚至數十年踩過無數坑才有辦法整理出來的智慧。</p>
+                <p class="mb-8 leading-relaxed text-lg text-slate-800 font-medium font-serif">過去二十多年來，在企業經營與團隊管理的過程中，我們累積了無數經驗。從建立制度、撰寫表單、設計流程，到處理客訴、品質異常、跨部門協調，每一套 SOP 的背後，都可能是前輩們花了數年甚至數十年踩過無數坑才有辦法整理出來的智慧。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">而今，<strong>AI 正在改變這件事</strong>。這本書最有價值的地方，不是在教你如何下 Prompt，而是在告訴你如何把過去需要二十年累積的管理知識，透過 AI 在短時間內快速調用出來。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">情境引導，使用案例，每個單位都可扎實去體驗去感受，各自崗位上如何善用 AI 的價值，駕馭它使用它，進而幫助自己與團隊都可以更好。</p>
                 
-                <div class="mt-8 mb-4 border-t border-slate-100 pt-6">
-                    <h3 class="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <span class="text-slate-400 font-mono text-sm">一、</span> AI 最大的價值：縮短管理經驗的累積時間
+                <div class="mt-10 mb-4 border-t border-slate-100 pt-8">
+                    <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <span class="text-indigo-500 font-mono text-sm">一、</span> AI 最大的價值：縮短管理經驗的累積時間
                     </h3>
                 </div>
                 <p class="mb-4 leading-relaxed text-base text-slate-600">以前遇到問題時，我們可能需要找資深主管討論、上課學習管理工具、參考顧問公司的架構、查閱大量資料，甚至自己建立分析模型。書中提到企業管理的八大面向：</p>
-                <div class="grid grid-cols-2 gap-2 mb-4 pl-4 text-slate-600 text-sm sm:text-base">
-                    <div>• 產（生產管理）</div>
-                    <div>• 銷（銷售管理）</div>
-                    <div>• 人（人力資源）</div>
-                    <div>• 發（研發管理）</div>
-                    <div>• 財（財務管理）</div>
-                    <div>• 資（資源管理）</div>
-                    <div>• 環（環境管理）</div>
-                    <div>• 策（策略管理）</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6 p-4 rounded-xl bg-slate-50/50 text-slate-600 text-sm border border-slate-100/80">
+                    <div class="font-medium">• 產（生產管理）</div>
+                    <div class="font-medium">• 銷（銷售管理）</div>
+                    <div class="font-medium">• 人（人力資源）</div>
+                    <div class="font-medium">• 發（研發管理）</div>
+                    <div class="font-medium">• 財（財務管理）</div>
+                    <div class="font-medium">• 資（資源管理）</div>
+                    <div class="font-medium">• 環（環境管理）</div>
+                    <div class="font-medium">• 策（策略管理）</div>
                 </div>
                 <p class="mb-4 leading-relaxed text-base text-slate-600">過去每個領域都需要不同專家協助，也需要很多時間的累績與堆疊。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">如今 AI 可以同時扮演：<b>顧問、分析師、教練、秘書、行銷</b>等，甚至也可是企業內部知識庫的角色。能讓管理者在更短時間內看見更多可能性，做出更完整的判斷。現在只要懂得描述情境、提出正確問題，AI 就能快速提供 SOP 範本、管理制度、KPI 架構、人才培育制度、績效考核表、客訴處理流程、專案管理架構與策略分析工具。</p>
                 
                 <div class="mt-8 mb-4 border-t border-slate-100 pt-6">
-                    <h3 class="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <span class="text-slate-400 font-mono text-sm">二、</span> 善用 AI，更會放大管理者能力
+                    <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <span class="text-indigo-500 font-mono text-sm">二、</span> 善用 AI，更會放大管理者能力
                     </h3>
                 </div>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">AI 可以同時扮演顧問、分析、教練、秘書、助理，甚至是企業內部知識庫的角色。它不能代替管理者做決定，但能讓管理者在更短時間內看見更多可能性，做出更完整的判斷。</p>
                 
                 <div class="mt-8 mb-4 border-t border-slate-100 pt-6">
-                    <h3 class="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <span class="text-slate-400 font-mono text-sm">三、</span> 我最有感的是問題分析工具
+                    <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <span class="text-indigo-500 font-mono text-sm">三、</span> 我最有感的是問題分析工具
                     </h3>
                 </div>
-                <p class="mb-4 leading-relaxed text-base text-slate-600">魚骨圖、柏拉圖、5 Why分析法</b>、管制圖與流程圖，都是品質與管理工作的重要工具。過去需要多年累積才能熟練掌握，現在 AI 可以快速協助建立分析架構，引導新人學習與解決問題。</p>
+                <p class="mb-4 leading-relaxed text-base text-slate-600">魚骨圖、柏拉圖、5 Why分析法、管制圖與流程圖，都是品質與管理工作的重要工具。過去需要多年累積才能熟練掌握，現在 AI 可以快速協助建立分析架構，引導新人學習與解決問題。</p>
                 <p class="mb-4 leading-relaxed text-base text-slate-600">許多企業導入 AI 後，仍停留在寫 Email、做簡報與修飾文案的階段。真正的價值其實在於協作討論、建立制度、分析問題、優化流程、加速決策與知識傳承。</p>
                 <p class="mb-6 leading-relaxed text-base text-slate-600">未來企業的競爭力，不時候只是人才競爭，而是誰能更快把經驗轉換成系統。過去老師傅的經驗留在腦中，現在可以透過 AI 轉化成 SOP；過去新人需要五年養成，未來可能一年就能建立基本判斷能力。</p>
             `,
@@ -196,23 +169,19 @@
             id: "ch-2",
             type: "chapter",
             num: "CH 02",
-            title: "Prompt 驅動學：精準提問的藝術",
-            dept: "💻 技術研發部",
-            author: "Brian Lin",
-            summary: "AI 聽不懂你說話？那是因為你少了標準化的對話接口！學會這招，溝通成本直接歸零！⚡",
-            quote: "「問對好問題，事情就解決了一半。對 AI 寫好 Prompt，就是現代人最值錢的特異功能！」",
-            colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
-            tagColor: "bg-[#5D6D7E] text-white",
+            title: "從單點工具到流程思維，重新定義 IT 戰略價值！",
+            dept: "💻 IT",
+            author: "Dickson",
+            summary: "本書點出 AI 導入不能僅停留在個人的單點工具，而應朝向流程標準化思考。IT 部門未來的戰略價值不只是買軟體、維護硬體，而是要扮演「企業 AI 基礎建設的架構師與流程顧問」，引領各廠區先理順流程再用 AI 加速，在堅實的資安防護下，真正將科技轉化為實質營運戰力。",
+            quote: "「企業 AI 基礎建設的架構師與流程顧問」",
+            colorClass: "bg-emerald-50/40 text-emerald-700 border-emerald-100/80",
+            tagColor: "bg-emerald-600 text-white",
             content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">以前大家覺得寫程式碼是工程師專屬，但現在「人類自然語言」就是最新的高階程式碼！第二章揭曉的『Prompt 驅動學』簡則是所有不擅長溝通之人的救星。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">書中大方公開了研發團隊實證有效的 20 組黃金 Prompt 模板。以前行銷、業務向工程團隊提需求，總是像「隔山打牛」般雞同鴨講；現在雙方套用書中的溝通框架，就能先與 AI 進行完美對接，吐出結構分明的架構！</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">標準化的對話模式，就像為全公司裝上了统一的萬能 API 接口。它不只讓 AI 的產出準確率飆升，還無形中強迫我們理清自己的邏輯思考，真是一舉兩得！</p>
+                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">本書點出 AI 導入不能僅停留在個人的單點工具，而應朝向流程標準化思考。IT 部門未來的戰略價值不只是買軟體、維護硬體，而是要扮演「企業 AI 基礎建設的架構師與流程顧問」，引領各廠區先理順流程再用 AI 加速，在堅實的資安防護下，真正將科技轉化為實質營運戰力。</p>
             `,
-            takeaways: [
-                "這年頭，不會下 Prompt 就像不會用搜尋引擎一樣，效率會拉開十倍落差！",
-                "書中分享的 20 組實戰範本是現成大禮包，直接拷貝使用免摸索！",
-                "寫好提示詞的過程，本質上就是自我思維的極致排毒與重整。"
-            ],
+            takeawaysTitle: "",
+            takeaways: [], // Empty takeaways to hide the section for Ch 2
+            image: "", // Explicitly empty image to hide the image container
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -224,18 +193,10 @@
             author: "Celine Wu",
             summary: "AI 負責沙盤推演，人類負責拍板決策！不用再賭直覺，讓科學化大腦幫你把關！🎯",
             quote: "「將繁雜的推演丟給 AI，把珍貴的感性與人性溫度留給自己。這就是高階決策者的生存之道。」",
-            colorClass: "bg-[#3A6073]/5 border-[#3A6073]/10",
-            tagColor: "bg-[#3A6073] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">每天身處在數據與業績轟炸的營運前端，決策錯誤的成本是巨大的。過去，經理人們常常靠「敏銳直覺」賭一把；而第三章介紹的「決策 AI化」讓我們看到了更優雅的答案。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">建立決策 SOP 後，AI 可以在數秒內幫你生成三種不同情境的利弊分析、成本預算與風險預測。這並不是剝奪經理人的大腦，而是幫我們掃除雜音，讓我們能專注在最有價值的事情上：對市場的洞察與對人的關懷。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">AI 是最佳的『決策副駕駛』。有了它冷靜客觀的數據防護網，再搭配我們人類在江湖打滾多年的敏銳直覺，團隊再也沒做過後悔的決策！</p>
-            `,
-            takeaways: [
-                "人機協同的精髓：冷酷理性的數據分析交給 AI，溫暖感性的價值判斷交給人類。",
-                "利用 AI 設定不同角色（黑帽/白帽）進行多視角壓力測試，決策更周延！",
-                "拒絕擁抱 AI 的管理者，終將被學會用 AI 降低決策成本的對手降維打擊。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -247,18 +208,10 @@
             author: "David Hsu",
             summary: "看不見的流程卡點，就是企業最大的資金黑洞！用 AI 擠出隱形利潤，直接轉為淨利！💵",
             quote: "「不花一毛行銷預算就能提升利潤？沒錯，只要將那些惱人的行政流程全部 AI 自動化！」",
-            colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
-            tagColor: "bg-[#5D6D7E] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">從財務數據來看，許多公司拼命追求營收成長，卻忽略了流程延宕帶來的巨大『行政隱形成本』。本書第四章提出的『管理財』概念，簡直一針見血！</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">當重複的報表審核、合約對比、供應商報價通知，都可以轉化為 AI 自動跑的工作流時，省下來的絕對不是只有時間，而是實打實的人工成本。這些釋放的珍貴工時，可以被引導去開發新客戶或做高毛利的創新業務。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">這本書把原本枯燥的流程改善，包裝得像是在企業內部尋寶。每一次找到可以被 AI × SOP 取代的卡點，就等同於為公司挖出一個聚寶盆！這才是精實管理最迷人的地方。</p>
-            `,
-            takeaways: [
-                "精實管理的極致：在不增加額外行銷費用的情況下，藉由流程優化提高公司獲利率！",
-                "日常表單、重覆回信、數據比對是 AI 最棒的狩獵場，應列為最先自動化對象。",
-                "時間就是金錢，幫同仁省下日常庶務時間，就是最棒的無形調薪。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -270,18 +223,10 @@
             author: "Eva Yang",
             summary: "不用懂程式！用超簡單的『填空題』引導，讓資深行政姐姐也能一秒玩轉高科技！🎈",
             quote: "「科技不該是象牙塔裡的玩具。當全公司最基層、最怕電腦的人都愛上 AI，轉型就成功了！」",
-            colorClass: "bg-[#3A6073]/5 border-[#3A6073]/10",
-            tagColor: "bg-[#3A6073] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">推動數位轉型最怕什麼？就是員工排斥、覺得這跟我無關。第五章完全打破了這個技術高牆，主打超高親和力的『全員降門檻』概念。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">作者陳泳睿老師設計了非常有趣的『填空式 SOP』。同仁不需要知道高深的底層原理，只需要像玩填字遊戲一樣，輸入業務背景、限制條件與期待產出，AI 就會生成高水準文案或會議記錄。這種立即回饋的幸福感，讓大家都迷上了！</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">我們在內部舉辦了幾次共學工作坊，看到原本對 AI 敬而遠之的行政姐姐們，如今能開心地在後台互相切磋 Prompt 祕技，我就知道這本書的影響力已經深植人心。轉型不再痛苦，而是一場趣味競賽！</p>
-            `,
-            takeaways: [
-                "降低恐懼是轉型的第一步！用簡單、有趣的工具體驗取代教條式的培訓。",
-                "利用『玩遊戲』的心態，建立互相分享 Prompt 的共學社群，效果奇佳！",
-                "當每個人都獲得 AI 工具的加持，基層的戰鬥力將會全面向上翻倍。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -293,18 +238,10 @@
             author: "Frank Zhao",
             summary: "AI 轉型不是採購，是重組企業 DNA 的重大戰略！這需要你有超越工具的領袖視野！🚀",
             quote: "「別把 AI 當作一般的打雜工。你需要用管理高級人才、重整組織架構的 CEO 格局來看待它。」",
-            colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
-            tagColor: "bg-[#5D6D7E] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">許多老闆以為給員工買個 ChatGPT 帳號就叫 AI 轉型，這真是太小看這場革命了。第六章特別針對經營層，點出必須從 Top-Down（自上而下）推動的思維硬傷。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">唯有 CEO 層級站在全局高度，通盤檢視業務卡點、排除部門間的推諉、並提撥專門預算進行工作流改造，AI 系統才能真正發揮千萬價值。這是一場涉及權益與流程重組的組織演化，絕非 IT 部門單打獨鬥能搞定。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">看完這章，我們重新擬定了高階藍圖。AI 對我們來說不再是一套軟體，而是直接名列組織圖中、隨時待命的虛擬新部門！這種視野格局的翻轉，讓人熱血沸騰。</p>
-            `,
-            takeaways: [
-                "CEO 必須是 AI 工作流轉型的第一推手，自上而下的意志能掃除一切落地的阻礙。",
-                "不能僅用舊的指標評估 AI，要著眼於流程的縮短與組織核心反應速度的提升。",
-                "將 AI 定位為公司的數位智慧中樞，讓每個新員工都能插即用、立即發揮即戰力。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -316,18 +253,10 @@
             author: "Grace Lee",
             summary: "市面上最接地氣的教科書！拒絕高空理論，這是一本明早上班就能直接拔刀上陣的祕笈！⚔️",
             quote: "「最棒的智慧，就是能把高深玄妙的科學，轉化成巷口阿嬤也能輕易照著做的家常食譜。」",
-            colorClass: "bg-[#3A6073]/5 border-[#3A6073]/10",
-            tagColor: "bg-[#3A6073] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">在培訓同仁時，我們最怕買到寫滿艱澀學術術語、看完了卻不知道明早第一步該做什麼的書籍。而陳泳睿老師這本《AI × SOP》，是我見過最沒有贅肉、含金量最高的實戰聖經！</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">書中分享的 20 組 Prompt 模板，背後是他歷時三年、走訪無數大小企業，在最真實的商業泥淖中反覆打磨、修正出來的無價之寶。不論你面對的是刁鑽的客戶投訴、繁瑣的合約，還是天馬行空的行銷案，書裡都有即插即用的黃金解法。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">看這本書，就像是有一位身價百萬的顧問直接坐在你旁邊，手把手帶領你跨越對 AI 的迷航期。它給予員工的不裝腔作勢，而是無比強大的自信心！</p>
-            `,
-            takeaways: [
-                "實戰派教授的極致魅力：沒有空泛的大話，只有一條條驗證有效、精準打中痛點的落地 SOP。",
-                "歷時三年反覆淬煉的範本，能幫企業省下高昂無比的摸索時間與慘痛試錯成本。",
-                "掌握主動權！不要等技術找上你，現在就照著書中食譜在自己業務中插旗。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -339,16 +268,10 @@
             author: "編輯部精選",
             summary: "單槍匹馬的時代已經結束！有了這套 SOP，你隨時隨地都有一個智商 180 的智囊團隨行！🧙‍♂️",
             quote: "「不要只是問 AI 可以做什麼，要用你的 SOP 當作咒語，命令它幫你召喚奇蹟！」",
-            colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
-            tagColor: "bg-[#5D6D7E] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">許多人以為 AI 只是幫忙抓錯字、改潤文筆的文書機器，這簡直是大材小用！本書特別篇教導我們如何透過完美的人設與脈絡賦能，將 AI 升級為你貼身的百萬級專業顧問。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">不管是難懂的法規合約初步篩選，還是要策劃一場全新的跨國快閃活動，只要套用正確的 SOP 人設框架，AI 就能從各領域大師的視角提供你多元、犀利且客觀的前瞻建言。在它的輔佐下，你就像是統御萬軍的軍師，再也不是一個人孤軍奮戰！</p>
-            `,
-            takeaways: [
-                "透過角色扮演（Role-playing）技巧，AI 的專業度會瞬間暴增、表現驚人！",
-                "AI 軍師的深度完全取決於你的問題維度，好的 SOP 引導是啟發它的最強鑰匙。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -360,16 +283,10 @@
             author: "匿名行銷同仁",
             summary: "與其每天擔心飯碗不保，不如早點把無聊的日常工作推給 AI，自己去做更有靈魂的事！🌟",
             quote: "「會淘汰你的從來都不是人工智慧，而是比你早一步在咖啡廳用 AI 自動化把事情做完的人！」",
-            colorClass: "bg-[#3A6073]/5 border-[#3A6073]/10",
-            tagColor: "bg-[#3A6073] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">當初聽聞公司要推動全面導入 AI 時，我心裡滿是焦慮：我好不容易學會的技能，是不是一夕間就被機器人搶走了？但讀完這本書，我徹底放下了心中的大石頭。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">書中提到：AI 最擅長的是重複性高、消耗靈魂的例行工作。而我運用書中的 Prompt 精髓，把每天最頭痛、花掉兩小時整理排版的報表工作自動化之後，我終於能走出辦公室，跟客戶深度訪談、構思極具創意的行銷戰略。我沒有被取代，我是被『升級』成更有價值的行銷大師！這是一場溫柔無比的工作革命。</p>
-            `,
-            takeaways: [
-                "擺脫科技焦慮，把 AI 當作你的最佳助理，放手把雜務拋給它！",
-                "人類獨有的創意、同理心與情感連結，是機器永遠無法跨越的溫暖護城河。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         },
         {
@@ -381,22 +298,14 @@
             author: "首席分析師",
             summary: "不談花拳繡腿，只講求在殘酷戰場上活下來的真功夫！三年實戰精華，不容錯過！🏆",
             quote: "「大浪淘沙，唯有禁得起三年反覆修改、在實戰戰場上存活下來的工作流，才是真正有價值的黃金法則。」",
-            colorClass: "bg-[#5D6D7E]/5 border-[#5D6D7E]/10",
-            tagColor: "bg-[#5D6D7E] text-white",
-            content: `
-                <p class="mb-6 leading-relaxed text-lg text-slate-800 font-medium font-serif">自從生成式 AI 爆發，市面上講 AI 的書多到氾濫。但大部分都只是表面工具介紹，沒過幾個月就過時。而這本《AI × SOP》最與眾不同、最令人敬佩的，在於它封面印著的『歷時三年研發驗證』。</p>
-                <p class="mb-6 leading-relaxed text-base text-slate-600">這意味著，書裡印著的每一條 Prompt 與 SOP架構，都歷經了多個版本的 AI 疊代，並在無數間大中小型企業的輔導專案中碰壁過、修改過、最終留下的『真正生還者』。它不賣弄花哨的冷門指令，只教你最核心、最扎實、保證有效的商務必勝公式。這本書無疑是企業在這場數位風暴中，最值得信賴的指南針！</p>
-            `,
-            takeaways: [
-                "在喧囂的炒作浪潮中，實戰經驗才是衡量一本書含金量的唯一真理。",
-                "一整套禁得起時間打磨的 SOP 工作流，價值遠勝過幾十個零星的小工具噱頭。",
-                "精裝版工具書，是現代經理人辦公桌上最應該隨時翻閱的降魔利器。"
-            ],
+            colorClass: "bg-slate-50 text-slate-600 border-slate-100",
+            tagColor: "bg-slate-600 text-white",
+            content: `<p>即將開放，敬請期待。</p>`,
+            takeaways: ["未來章節精華"],
             reactions: { resonance: 0, rethink: 0, inspire: 0, bookmark: 0, digest: 0 }
         }
     ];
 
-    // Using clean version storage keys to ensure a fresh clean zeroed start
     const STORAGE_KEY = 'ai_sop_reader_serene_v6_clean';
     let userReactionsState = {};
     let articleData = JSON.parse(JSON.stringify(curatedData)); // Deep copy
@@ -420,214 +329,320 @@
     }
 </script>
 
-<!-- Main Container holding the entire serene workbook environment -->
-<main class="flex-grow w-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 relative">
+<!-- Clean Modern Header Nav -->
+<header class="w-full max-w-5xl mx-auto px-6 py-8 flex justify-between items-center border-b border-zinc-200/50 z-10 relative">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="backToCover()">
+        <span class="font-bold text-zinc-900 tracking-tight text-sm sm:text-base">AI × SOP 共讀交流</span>
+    </div>
+    <div class="flex items-center gap-4">
+        <button onclick="showQuickRankSummary()" class="text-xs font-semibold text-zinc-600 hover:text-zinc-950 flex items-center gap-1.5 bg-white border border-zinc-200/80 px-3.5 py-1.5 rounded-full shadow-sm transition-all hover:bg-zinc-50">
+            📊 <span>共鳴排行</span>
+        </button>
+    </div>
+</header>
 
-    <!-- ================= VIEW 0: QUIET COVER SECTION ================= -->
-    <section id="view-cover" class="transition-view flex flex-col items-center justify-center max-w-xl w-full text-center space-y-12 py-12">
-        
-        <!-- Book Image Representation (No Shadow, Pure Clean Look) -->
-        <div class="book-perspective w-56 sm:w-64 cursor-pointer group" onclick="openBookAndShowMenu()">
-            <div id="spine-pivot" class="book-container w-full h-full relative">
-                <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="cover-left w-full h-auto object-contain relative z-10" />
+<!-- Main Container -->
+<main class="flex-grow w-full max-w-5xl mx-auto px-6 py-10 sm:py-16 flex flex-col items-center justify-center relative z-10">
+
+    <!-- ================= VIEW 0: MODERN HERO & COVER SECTION ================= -->
+    <section id="view-cover" class="fade-in-view flex flex-col md:flex-row items-center justify-between w-full gap-12 md:gap-16 py-4">
+        <!-- Elegant Left Hero Intro -->
+        <div class="flex-1 text-left space-y-6 md:pr-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-zinc-100 text-zinc-800 border border-zinc-200">
+                ✨ 線上讀書會 · 實務沉澱
+            </span>
+            <h1 class="font-serif font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-900 leading-[1.15] tracking-tight">
+                第一線 Prompt 驅動打造企業高效 SOP
+            </h1>
+            <p class="text-zinc-500 text-base max-w-lg leading-relaxed">
+                跳脫工具單點思維，透過同仁們的智慧共學，將實戰流程沉澱為高品質的管理工作流。歡迎進入線上導讀空間。
+            </p>
+            <div class="pt-4 flex flex-wrap gap-4">
+                <button onclick="openBookAndShowMenu()" class="px-7 py-3 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold rounded-full shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                    開啟導讀目錄 ➔
+                </button>
             </div>
         </div>
 
-        <button onclick="openBookAndShowMenu()" class="px-10 py-3.5 bg-slate-800 hover:bg-slate-700 text-white text-xs tracking-[0.15em] font-semibold rounded-full shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0">
-            OPEN BOOK
-        </button>
+        <!-- Book Image Presentation -->
+        <div class="flex-1 flex justify-center items-center">
+            <div class="book-wrapper w-56 sm:w-64 cursor-pointer" onclick="openBookAndShowMenu()">
+                <div id="spine-pivot" class="book-3d w-full h-auto relative rounded-r-lg">
+                    <img src="https://lochoive-code.github.io/jpc/aisopbook.png" alt="AI × SOP Book Cover" class="w-full h-auto object-contain rounded-r-lg" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= VIEW 0.5: BOOK INTRODUCTION ================= -->
+    <section id="view-intro" class="hidden fade-in-view max-w-3xl w-full flex flex-col space-y-8">
+        <div class="flex justify-between items-center border-b border-zinc-200/50 pb-4">
+            <button onclick="backToCover()" class="text-xs font-bold tracking-wider text-zinc-400 hover:text-zinc-600 transition-colors uppercase flex items-center gap-1.5">
+                <span>←</span> 返回首頁
+            </button>
+            <div class="text-[10px] tracking-widest text-zinc-400 uppercase font-semibold">
+                ABOUT / 關於本書
+            </div>
+        </div>
+
+        <!-- Introduction Content Paper -->
+        <div class="editorial-card rounded-2xl p-8 sm:p-12 relative text-zinc-700">
+            <h2 class="font-serif font-bold text-2xl sm:text-3xl text-zinc-950 leading-snug mb-6 text-center">
+                明明擁有最強大的工具，<br class="hidden sm:block">用起來卻像在帶實習生，換來的總是空洞廢話？
+            </h2>
+            <div class="mb-10 text-base leading-relaxed text-zinc-500 text-center max-w-2xl mx-auto">
+                榮獲 <strong class="text-zinc-900 font-semibold">國家磐石獎</strong> 與 <strong class="text-zinc-900 font-semibold">經理人MVP100</strong> 的新呈工業董事長 <strong class="text-zinc-900 font-semibold">陳泳睿</strong>，將 22 年產業底蘊濃縮，首創「AI × SOP 生成式 AI 工作流」，帶你徹底跳脫跟機器人瞎聊的低效迴圈。
+            </div>
+
+            <hr class="border-zinc-100 my-8">
+
+            <div class="mb-10">
+                <h3 class="text-lg font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                    <span class="text-indigo-600">✦</span> 本書核心特色：顛覆傳統的 AI 管理工作流
+                </h3>
+                <ul class="space-y-4 pl-1 sm:pl-4 text-sm sm:text-base text-zinc-600">
+                    <li class="flex items-start gap-3">
+                        <span class="text-indigo-500 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-600 flex-shrink-0"></span>
+                        <p><strong class="text-zinc-800">獨創 AI 主動發問的引導框架：</strong>不要問 AI 問題，讓 AI 問你問題，讓系統主動為你釐清盲點。</p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-indigo-500 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-600 flex-shrink-0"></span>
+                        <p><strong class="text-zinc-800">歷時 3 年實戰驗證：</strong>打造 AI SOP 工作流，徹底跳脫低效瞎聊。</p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-indigo-500 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-600 flex-shrink-0"></span>
+                        <p><strong class="text-zinc-800">附贈完整企業模板：</strong>提供 20 組實戰 Prompt 下載，填空替換關鍵字就能落地應用。</p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-indigo-500 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-600 flex-shrink-0"></span>
+                        <p><strong class="text-zinc-800">融合經典商管模型：</strong>首度將 PEST、SWOT、波特五力等商業框架轉化為生成式指令。</p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-indigo-500 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-600 flex-shrink-0"></span>
+                        <p><strong class="text-slate-800">植入高階管理思維：</strong>精準設定 AI 角色與任務邊界，將個人經驗完美轉化為標準作業流程。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Author Profile -->
+            <div class="bg-zinc-50/50 border border-zinc-100 rounded-2xl p-6 sm:p-8 mt-8">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="text-lg font-bold font-serif text-zinc-900">作者介紹</h3>
+                    <span class="text-zinc-400 font-semibold tracking-wide text-sm">陳泳睿</span>
+                </div>
+                <p class="text-sm text-zinc-500 leading-relaxed mb-4">
+                    新呈工業董事長，並擔任兩家上市櫃公司獨立董事，現任新北市電腦公會理事。擁有製造業 22 年與資訊產業 6 年實戰經驗，長期致力於企業轉型與管理創新。
+                </p>
+                <p class="text-sm text-zinc-500 leading-relaxed mb-6">
+                    成功帶領企業成為業界標竿，並榮獲國家級獎項肯定。近年專注於將 AI 導入企業管理、決策與組織流程、並將實務經驗系統化，協助企業提升競爭力與經營績效。
+                </p>
+                <div class="border-t border-zinc-200/60 pt-5">
+                    <h4 class="text-xs tracking-widest text-zinc-400 font-bold uppercase mb-3">▌學歷</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-sm text-zinc-600 font-medium pl-3 border-l-2 border-indigo-600">
+                        <div>• 台大 EMBA 碩士</div>
+                        <div>• 東吳科技法律</div>
+                        <div>• 人工智慧學校台北第三屆</div>
+                        <div>• 台科大在職博士班</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center pt-2 pb-8">
+            <button onclick="proceedToMenu()" class="px-8 py-3.5 bg-zinc-900 hover:bg-zinc-850 text-white text-sm tracking-wide font-semibold rounded-full shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                進入同仁心得大廳 ➔
+            </button>
+        </div>
     </section>
 
     <!-- ================= VIEW 1: CLEAN CHAPTER MENU ================= -->
-    <section id="view-menu" class="hidden transition-view max-w-5xl w-full flex flex-col space-y-10">
-        <!-- Quiet navigation line -->
-        <div class="flex justify-between items-center border-b border-slate-200 pb-4">
-            <button onclick="backToCover()" class="text-[11px] font-bold tracking-widest text-slate-400 hover:text-slate-600 transition-colors uppercase flex items-center gap-1.5">
-                <span>←</span> 返回封面
+    <section id="view-menu" class="hidden fade-in-view w-full flex flex-col space-y-10">
+        <div class="flex justify-between items-center border-b border-zinc-200/50 pb-4">
+            <button onclick="switchView('view-intro')" class="text-xs font-bold tracking-wider text-zinc-400 hover:text-zinc-600 transition-colors uppercase flex items-center gap-1.5">
+                <span>←</span> 返回簡介
             </button>
-            <div class="text-right text-[10px] tracking-widest text-slate-400 uppercase font-bold">
-                Chapter Index / 共 10 個核心章節
+            <div class="text-[10px] tracking-widest text-zinc-400 uppercase font-semibold">
+                INDEX / 10 個核心章節
             </div>
         </div>
 
-        <!-- Serene Header Introduction for Table of Contents -->
-        <div class="max-w-2xl">
-            <h2 class="serif-heading text-2xl text-slate-800 leading-normal tracking-wide">
-                一本書，十種觀點 — AI × SOP 工作流線上讀書會
+        <!-- Modern Content Header -->
+        <div class="max-w-2xl space-y-3">
+            <h2 class="font-serif font-bold text-3xl sm:text-4xl text-zinc-900 leading-normal tracking-tight">
+                一本書，十種觀點 — AI × SOP 線上導讀會
             </h2>
-            <p class="text-slate-500 text-xs mt-2 leading-relaxed">
-                這是同仁的共學與心得交流
+            <p class="text-zinc-500 text-sm leading-relaxed max-w-xl">
+                請點選以下開放的心得專區。透過同仁在第一線的深刻實作視角，理解生成式 AI 在不同部門落地的核心脈絡。
             </p>
         </div>
 
-        <!-- 10 Chapters grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="chapter-cards-container">
+        <!-- Chapters grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="chapter-cards-container">
             <!-- Dynamically populated via script -->
         </div>
 
         <!-- Subtle footer with Reset option -->
-        <div class="pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <span class="text-xs text-slate-400">這是一場著重思維淬煉的讀後交流展。</span>
+        <div class="pt-8 border-t border-zinc-200/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <span class="text-xs text-zinc-400 font-medium">以實戰流程，激發共識思維。</span>
             <div class="flex items-center gap-4">
-                <button onclick="promptResetPassword()" class="text-xs font-semibold text-slate-400 hover:text-red-500 transition-colors uppercase tracking-widest flex items-center gap-1">
+                <button onclick="promptResetPassword()" class="text-xs font-semibold text-zinc-400 hover:text-red-500 transition-colors uppercase tracking-wider flex items-center gap-1">
                     🔄 數據歸零
                 </button>
-                <button onclick="showQuickRankSummary()" class="text-xs font-bold text-slate-600 hover:text-slate-800 underline uppercase tracking-widest">
-                    📊 快速查看讀者共鳴排行
+                <button onclick="showQuickRankSummary()" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 underline uppercase tracking-wider">
+                    📊 讀者共鳴排行
                 </button>
             </div>
         </div>
     </section>
 
     <!-- ================= VIEW 2: THE IMMERSIVE READER ================= -->
-    <section id="view-reader" class="transition-view hidden max-w-2xl w-full relative z-10 px-4 sm:px-0">
+    <section id="view-reader" class="hidden fade-in-view max-w-2xl w-full relative z-10 px-0">
         
-        <!-- Subtle header back navigation -->
-        <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
-            <button onclick="backToMenu()" class="text-[11px] font-bold text-slate-400 hover:text-slate-700 transition-colors uppercase flex items-center gap-1">
+        <div class="flex justify-between items-center border-b border-zinc-200/50 pb-4 mb-10">
+            <button onclick="backToMenu()" class="text-xs font-bold text-zinc-400 hover:text-zinc-800 transition-colors uppercase flex items-center gap-1">
                 <span>←</span> 返回選單大廳
             </button>
-            <span class="text-[10px] tracking-[0.15em] text-slate-400 uppercase font-mono" id="reader-tracker-num">CH 01</span>
+            <span class="text-[10px] tracking-widest text-zinc-400 uppercase font-bold font-mono" id="reader-tracker-num">CH 01</span>
         </div>
 
-        <!-- Paper Layout with Absolute Coordinates support for Stamps -->
-        <div class="paper-layout rounded-2xl p-6 sm:p-10 md:p-12 relative overflow-hidden mb-6" id="interactive-paper-surface">
+        <!-- Paper Layout with strict modern styling -->
+        <div class="editorial-card rounded-2xl p-6 sm:p-12 relative overflow-hidden mb-8" id="interactive-paper-surface">
             
             <!-- Context Header -->
-            <div class="flex flex-wrap items-center gap-2 mb-6 text-[11px] font-bold">
-                <span id="reader-badge-num" class="px-2.5 py-1 rounded bg-slate-800 text-white font-mono tracking-wider">CH 01</span>
-                <span id="reader-badge-dept" class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600">經營企劃室</span>
-                <span class="text-slate-400 ml-auto" id="reader-author-name">Alex Chen</span>
+            <div class="flex flex-wrap items-center gap-2 mb-8 text-xs font-medium">
+                <span id="reader-badge-num" class="px-2.5 py-1 rounded bg-zinc-900 text-white font-mono tracking-wider text-[10px]">CH 01</span>
+                <span id="reader-badge-dept" class="px-2.5 py-1 rounded border border-zinc-200/80 bg-zinc-50/50 text-zinc-500 text-[10px]">經營企劃室</span>
+                <span class="text-zinc-400 ml-auto text-xs" id="reader-author-name">Alex Chen</span>
             </div>
 
             <!-- Main Big Title -->
-            <h1 class="serif-heading text-2xl sm:text-3xl text-slate-800 leading-snug tracking-wide mb-6" id="reader-title">
+            <h1 class="font-serif font-bold text-2xl sm:text-3.5xl text-zinc-950 leading-tight tracking-tight mb-8" id="reader-title">
                 從工具到系統：讓 AI 成為企業大腦
             </h1>
 
             <!-- Beautiful Minimalist Pull Quote Block -->
-            <div class="my-6 pl-5 border-l-2 border-slate-300 italic text-slate-500 text-sm sm:text-base leading-relaxed" id="reader-quote">
+            <div class="my-8 pl-5 border-l-2 border-indigo-600 italic text-zinc-600 text-base sm:text-lg leading-relaxed font-serif" id="reader-quote">
                 「當我們把 AI 從單點工具升級為自動工作流，企業就像是突然多了一萬個高材生助理！」
             </div>
 
             <!-- Natural body text container -->
-            <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-6 mt-6 border-t border-slate-100 pt-6" id="reader-body">
+            <div class="text-zinc-800 text-base leading-relaxed space-y-6 mt-8 border-t border-zinc-100 pt-8 font-serif" id="reader-body">
                 <!-- Rich text injected dynamically -->
             </div>
 
             <!-- Key Takeaways Zone -->
-            <div class="mt-10 p-5 sm:p-6 bg-slate-50 border border-slate-100 rounded-xl" id="reader-takeaways-box">
-                <h3 class="text-xs tracking-widest text-slate-800 font-bold uppercase mb-4 flex items-center gap-1.5">
+            <div class="mt-12 p-6 sm:p-8 bg-zinc-50 border border-zinc-200/50 rounded-xl" id="reader-takeaways-box">
+                <h3 class="text-xs tracking-widest text-zinc-800 font-bold uppercase mb-4 flex items-center gap-1.5">
                     <span>💡</span> 心得結語 • CONCLUSION
                 </h3>
-                <ul class="space-y-2 text-slate-600 text-xs sm:text-sm pl-4 list-decimal" id="reader-takeaways-list">
+                <ul class="space-y-3 text-zinc-600 text-sm pl-4 list-decimal" id="reader-takeaways-list">
                     <!-- List items injected dynamically -->
                 </ul>
             </div>
 
             <!-- Dynamic Image Container below the Takeaways/Conclusion -->
-            <div id="reader-image-container" class="mt-6 hidden w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-50/50">
-                <img id="reader-image" src="" alt="心得配圖" class="w-full h-auto object-cover max-h-[400px] mx-auto rounded-lg">
+            <div id="reader-image-container" class="mt-8 hidden w-full rounded-xl overflow-hidden border border-zinc-200 bg-zinc-50/50">
+                <img id="reader-image" src="" alt="心得配圖" class="w-full h-auto object-cover max-h-[400px] mx-auto rounded-xl">
             </div>
 
             <!-- Interactive Sticker & Endings Stamp Zone -->
-            <div class="mt-12 pt-8 border-t border-slate-100 flex flex-col items-center">
-                <div class="text-center max-w-md space-y-2 mb-6">
-                    <span class="text-[10px] tracking-[0.2em] text-slate-400 font-bold uppercase block">
+            <div class="mt-16 pt-10 border-t border-zinc-100 flex flex-col items-center">
+                <div class="text-center max-w-md space-y-2 mb-8">
+                    <span class="text-[10px] tracking-[0.2em] text-indigo-600 font-bold uppercase block">
                         READER IMPRESSION
                     </span>
-                    <h4 class="serif-heading text-lg text-slate-800">為此篇導讀按下一枚心靈貼紙</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed font-light mt-2">
-                        您的微小共鳴，都將轉化為此章節在精裝本中的熱烈排行數。
+                    <h4 class="font-serif text-xl font-bold text-zinc-900">為此篇導讀留下你的貼紙共鳴</h4>
+                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                        點擊下方貼紙，將其自由放置在此內容頁面上，傳遞您的閱讀感悟。
                     </p>
                 </div>
 
                 <!-- Pristine minimalist stamp choices -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-lg">
-                    <button onclick="castImpressionSticker('resonance')" class="py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
+                    <button onclick="castImpressionSticker('resonance')" class="py-3 px-4 bg-white hover:bg-zinc-50 border border-zinc-200 hover:border-zinc-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-zinc-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
                         <span class="text-xl">💡</span>
                         <span>深有同感</span>
-                        <span class="text-[10px] font-mono text-slate-400 mt-1" id="stamp-count-resonance">0</span>
+                        <span class="text-[10px] font-mono text-zinc-400 mt-1" id="stamp-count-resonance">0</span>
                     </button>
-                    <button onclick="castImpressionSticker('rethink')" class="py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
+                    <button onclick="castImpressionSticker('rethink')" class="py-3 px-4 bg-white hover:bg-zinc-50 border border-zinc-200 hover:border-zinc-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-zinc-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
                         <span class="text-xl">🤔</span>
                         <span>促我深思</span>
-                        <span class="text-[10px] font-mono text-slate-400 mt-1" id="stamp-count-rethink">0</span>
+                        <span class="text-[10px] font-mono text-zinc-400 mt-1" id="stamp-count-rethink">0</span>
                     </button>
-                    <button onclick="castImpressionSticker('inspire')" class="py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
+                    <button onclick="castImpressionSticker('inspire')" class="py-3 px-4 bg-white hover:bg-zinc-50 border border-zinc-200 hover:border-zinc-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-zinc-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
                         <span class="text-xl">✨</span>
                         <span>啟迪思維</span>
-                        <span class="text-[10px] font-mono text-slate-400 mt-1" id="stamp-count-inspire">0</span>
+                        <span class="text-[10px] font-mono text-zinc-400 mt-1" id="stamp-count-inspire">0</span>
                     </button>
-                    <button onclick="castImpressionSticker('bookmark')" class="py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
+                    <button onclick="castImpressionSticker('bookmark')" class="py-3 px-4 bg-white hover:bg-zinc-50 border border-zinc-200 hover:border-zinc-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-zinc-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative">
                         <span class="text-xl">📌</span>
                         <span>收藏待讀</span>
-                        <span class="text-[10px] font-mono text-slate-400 mt-1" id="stamp-count-bookmark">0</span>
+                        <span class="text-[10px] font-mono text-zinc-400 mt-1" id="stamp-count-bookmark">0</span>
                     </button>
-                    <button onclick="castImpressionSticker('digest')" class="py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative col-span-2 sm:col-span-1">
+                    <button onclick="castImpressionSticker('digest')" class="py-3 px-4 bg-white hover:bg-zinc-50 border border-zinc-200 hover:border-zinc-300 rounded-xl flex flex-col items-center justify-center gap-1 text-xs font-medium text-zinc-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm relative col-span-2 sm:col-span-1">
                         <span class="text-xl">☕</span>
                         <span>值得慢嚼</span>
-                        <span class="text-[10px] font-mono text-slate-400 mt-1" id="stamp-count-digest">0</span>
+                        <span class="text-[10px] font-mono text-zinc-400 mt-1" id="stamp-count-digest">0</span>
                     </button>
                 </div>
 
                 <!-- Toast messaging box built beautifully in line -->
-                <div id="reader-toast" class="mt-4 text-xs font-bold text-slate-500 h-4 opacity-0 transition-opacity duration-300"></div>
+                <div id="reader-toast" class="mt-4 text-xs font-bold text-zinc-500 h-4 opacity-0 transition-opacity duration-300"></div>
             </div>
         </div>
 
         <!-- Floating serene footer inside active reading layout -->
-        <div class="flex justify-between items-center py-4 border-t border-slate-200">
-            <button onclick="jumpToAdjacentChapter(-1)" id="btn-chapter-prev" class="text-xs text-slate-500 hover:text-slate-800 font-bold uppercase transition-colors">
+        <div class="flex justify-between items-center py-4 border-t border-zinc-200/50">
+            <button onclick="jumpToAdjacentChapter(-1)" id="btn-chapter-prev" class="text-xs text-zinc-400 hover:text-zinc-800 font-bold uppercase transition-colors">
                 ← 上一篇
             </button>
-            <button onclick="backToMenu()" class="text-xs text-slate-400 hover:text-slate-600 tracking-wider font-bold uppercase">
+            <button onclick="backToMenu()" class="text-xs text-zinc-400 hover:text-zinc-850 tracking-wider font-bold uppercase">
                 目錄 INDEX
             </button>
-            <button onclick="jumpToAdjacentChapter(1)" id="btn-chapter-next" class="text-xs text-slate-500 hover:text-slate-800 font-bold uppercase transition-colors">
+            <button onclick="jumpToAdjacentChapter(1)" id="btn-chapter-next" class="text-xs text-zinc-400 hover:text-zinc-800 font-bold uppercase transition-colors">
                 下一篇 →
             </button>
         </div>
     </section>
 
     <!-- ================= VIEW 3: SIMPLIFIED MODAL FOR STATS RANKING ================= -->
-    <div id="stats-modal" class="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 text-center shadow-xl relative transform scale-95 transition-transform duration-300 flex flex-col" id="stats-modal-content">
-            <button onclick="closeStatsModal()" class="absolute right-4 top-4 w-7 h-7 rounded-full border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 font-bold text-[10px] flex items-center justify-center">✕</button>
+    <div id="stats-modal" class="fixed inset-0 bg-zinc-900/30 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white border border-zinc-200 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col" id="stats-modal-content">
+            <button onclick="closeStatsModal()" class="absolute right-4 top-4 w-7 h-7 rounded-full border border-zinc-200 bg-white text-zinc-500 hover:bg-zinc-50 font-bold text-[10px] flex items-center justify-center">✕</button>
             
-            <h3 class="serif-heading text-lg text-slate-800 mb-2">讀者累積共鳴排行</h3>
+            <h3 class="font-serif font-bold text-xl text-zinc-900 mb-2">讀者累積共鳴排行</h3>
             
-            <div class="flex-grow overflow-y-auto max-h-[300px] custom-scrollbar space-y-2 text-left" id="modal-rank-list">
+            <div class="flex-grow overflow-y-auto max-h-[300px] custom-scroll space-y-2 text-left" id="modal-rank-list">
                 <!-- Dynamically populated ranking rows -->
             </div>
 
-            <p class="text-[10px] text-slate-400 mt-6 border-t border-slate-100 pt-3">
+            <p class="text-[10px] text-zinc-400 mt-6 border-t border-zinc-100 pt-3">
                 點選條目可直接跳轉至對應章節閱讀。
             </p>
 
-            <!-- Secured Reset Button (Invokes password validation instead of direct drop) -->
-            <button onclick="closeStatsModal(); promptResetPassword();" class="mt-4 text-[10px] text-slate-400 hover:text-red-500 font-semibold tracking-wider uppercase transition-colors">
+            <!-- Secured Reset Button -->
+            <button onclick="closeStatsModal(); promptResetPassword();" class="mt-4 text-[10px] text-zinc-400 hover:text-red-500 font-semibold tracking-wider uppercase transition-colors">
                 🔄 重設所有互動數據與貼紙
             </button>
         </div>
     </div>
 
     <!-- ================= VIEW 4: SECURED PASSWORD MODAL ================= -->
-    <div id="password-modal" class="fixed inset-0 bg-slate-900/40 z-[60] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white border border-slate-200 rounded-2xl max-w-xs w-full p-6 text-center shadow-xl relative transform scale-95 transition-transform duration-300 flex flex-col" id="password-modal-content">
-            <h3 class="serif-heading text-base text-slate-800 mb-2">管理驗證</h3>
-            <p class="text-xs text-slate-500 mb-4">此操作將永久清除所有讀者貼紙與排行計數，請輸入管理員密碼：</p>
+    <div id="password-modal" class="fixed inset-0 bg-zinc-900/40 z-[60] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white border border-zinc-200 rounded-2xl max-w-xs w-full p-6 text-center shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col" id="password-modal-content">
+            <h3 class="font-serif font-bold text-lg text-zinc-900 mb-2">管理驗證</h3>
+            <p class="text-xs text-zinc-400 mb-4">此操作將永久清除所有讀者貼紙與排行計數，請輸入管理員密碼：</p>
             
-            <input type="password" id="reset-password-input" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-slate-400 mb-2 transition-all" placeholder="請輸入密碼">
+            <input type="password" id="reset-password-input" class="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-2 transition-all" placeholder="請輸入密碼">
             
             <!-- Dynamic Inline error display -->
             <div id="password-error-msg" class="text-red-500 text-[10px] mb-3 hidden">⚠️ 密碼錯誤，請再試一次</div>
             
             <div class="flex gap-2">
-                <button onclick="closePasswordModal()" class="w-1/2 py-2 border border-slate-200 rounded-lg text-xs font-semibold text-slate-500 hover:bg-slate-50 transition-colors">
+                <button onclick="closePasswordModal()" class="w-1/2 py-2 border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-400 hover:bg-zinc-50 transition-colors">
                     取消
                 </button>
-                <button onclick="verifyResetPassword()" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold transition-colors">
+                <button onclick="verifyResetPassword()" class="w-1/2 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold transition-colors">
                     確認重設
                 </button>
             </div>
@@ -635,7 +650,15 @@
     </div>
 </main>
 
+<!-- Peaceful Elegant Footer -->
+<footer class="w-full max-w-5xl mx-auto px-6 py-10 border-t border-zinc-200/50 flex flex-col justify-center items-center text-xs text-zinc-400 gap-4">
+    <div class="flex gap-4 font-medium">
+        <span>佳必琪國際股份有限公司 • 同仁學習沉澱空間</span>
+    </div>
+</footer>
+
 <script>
+    // Pure synthesized web audio feedback for organic tactile sensation
     function triggerTactileSound(flavor) {
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -649,33 +672,34 @@
             
             if (flavor === 'page_turn') {
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(140, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.3);
-                gain.gain.setValueAtTime(0.04, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+                osc.frequency.setValueAtTime(120, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.25);
+                gain.gain.setValueAtTime(0.03, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
                 osc.start();
-                osc.stop(ctx.currentTime + 0.3);
+                osc.stop(ctx.currentTime + 0.25);
             } else if (flavor === 'stamp_placement') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(290, ctx.currentTime);
-                osc.frequency.setValueAtTime(440, ctx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.06, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                osc.frequency.setValueAtTime(320, ctx.currentTime);
+                osc.frequency.setValueAtTime(480, ctx.currentTime + 0.06);
+                gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
                 osc.start();
-                osc.stop(ctx.currentTime + 0.2);
+                osc.stop(ctx.currentTime + 0.15);
             } else if (flavor === 'soft_tap') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(200, ctx.currentTime);
-                gain.gain.setValueAtTime(0.02, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(180, ctx.currentTime);
+                gain.gain.setValueAtTime(0.015, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
                 osc.start();
-                osc.stop(ctx.currentTime + 0.1);
+                osc.stop(ctx.currentTime + 0.08);
             }
         } catch(e) {
             console.warn("AudioContext init bypassed or blocked.", e);
         }
     }
 
+    // Modern Particle Confetti Engine for tactile delight
     const canvas = document.getElementById('confetti-canvas');
     const ctx = canvas.getContext('2d');
     let sparkGroup = [];
@@ -692,18 +716,18 @@
         triggerTactileSound('stamp_placement');
         canvas.classList.remove('hidden');
         sparkGroup = [];
-        const subtleColors = ['#94A3B8', '#CBD5E1', '#E2E8F0', '#F1F5F9', '#64748B'];
+        const subtleColors = ['#4F46E5', '#818CF8', '#A5B4FC', '#38BDF8', '#64748B'];
         
-        for (let i = 0; i < 45; i++) {
+        for (let i = 0; i < 40; i++) {
             sparkGroup.push({
                 x: canvas.width / 2,
-                y: canvas.height / 2 + 150,
-                size: Math.random() * 4 + 2,
+                y: canvas.height / 2 + 100,
+                size: Math.random() * 3.5 + 1.5,
                 color: subtleColors[Math.floor(Math.random() * subtleColors.length)],
-                vx: (Math.random() - 0.5) * 10,
-                vy: (Math.random() - 0.75) * 12 - 3,
-                gravity: 0.2,
-                span: 80,
+                vx: (Math.random() - 0.5) * 8,
+                vy: (Math.random() - 0.7) * 10 - 2,
+                gravity: 0.15,
+                span: 70,
                 opacity: 1
             });
         }
@@ -723,7 +747,7 @@
                 p.y += p.vy;
                 p.vy += p.gravity;
                 p.span -= 1;
-                p.opacity = p.span / 80;
+                p.opacity = p.span / 70;
 
                 ctx.save();
                 ctx.translate(p.x, p.y);
@@ -747,7 +771,7 @@
 <script>
     let activeChapterId = "ch-1"; 
     let chapterStamps = {}; 
-    const RESET_PASSWORD = "admin888"; // Set your administrator password here
+    const RESET_PASSWORD = "admin888";
 
     function loadStampsFromStorage() {
         const saved = localStorage.getItem('book_review_stamps_sync_v6_clean');
@@ -765,6 +789,7 @@
         localStorage.setItem('book_review_stamps_sync_v6_clean', JSON.stringify(chapterStamps));
     }
 
+    // Dynamic Editorial Annotation Placement System
     function renderStampsForChapter(chapterId) {
         const paper = document.getElementById('interactive-paper-surface');
         if (!paper) return;
@@ -775,18 +800,18 @@
         const stamps = chapterStamps[chapterId] || [];
         stamps.forEach(stamp => {
             const stampEl = document.createElement('div');
-            stampEl.className = 'placed-stamp-element absolute z-20 select-none cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95 group';
+            stampEl.className = 'placed-stamp-element absolute z-20 select-none cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 group sticker-scale';
             stampEl.style.left = `${stamp.x}%`;
             stampEl.style.top = `${stamp.y}%`;
-            stampEl.style.transform = `translate(-50%, -50%) rotate(${stamp.rotation}deg)`;
+            stampEl.style.setProperty('--rot', `${stamp.rotation}deg`);
             
             stampEl.innerHTML = `
-                <div class="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] text-xs font-semibold text-slate-700 hover:border-slate-300">
+                <div class="flex items-center space-x-1 px-3 py-1.5 rounded bg-white border border-zinc-250 shadow-md text-xs font-semibold text-zinc-800">
                     <span class="text-sm">${stamp.emoji}</span>
-                    <span class="text-[10px] text-slate-500 tracking-wider font-sans">${stamp.text}</span>
+                    <span class="text-[10px] text-zinc-500 tracking-wider font-sans font-medium">${stamp.text}</span>
                 </div>
-                <button class="absolute -top-1.5 -right-1.5 hidden group-hover:flex items-center justify-center w-4 h-4 rounded-full bg-slate-800 text-white text-[8px] border border-white shadow-sm hover:bg-slate-900 transition-colors" onclick="removeStamp(event, '${chapterId}', '${stamp.id}')">
-                    ×
+                <button class="absolute -top-1.5 -right-1.5 hidden group-hover:flex items-center justify-center w-4 h-4 rounded-full bg-zinc-900 text-white text-[9px] border border-white shadow-md hover:bg-zinc-950 transition-colors" onclick="removeStamp(event, '${chapterId}', '${stamp.id}')">
+                    ✕
                 </button>
             `;
             
@@ -805,18 +830,17 @@
     }
 
     function openBookAndShowMenu() {
-        const coverBox = document.getElementById('spine-pivot');
-        coverBox.parentElement.classList.add('book-open');
         triggerTactileSound('page_turn');
+        switchView('view-intro');
+    }
 
-        setTimeout(() => {
-            switchView('view-menu');
-        }, 800);
+    function proceedToMenu() {
+        triggerTactileSound('page_turn');
+        switchView('view-menu');
     }
 
     function backToCover() {
-        const coverBox = document.getElementById('spine-pivot');
-        coverBox.parentElement.classList.remove('book-open');
+        triggerTactileSound('page_turn');
         switchView('view-cover');
     }
 
@@ -826,17 +850,15 @@
     }
 
     function switchView(targetId) {
-        const views = ['view-cover', 'view-menu', 'view-reader'];
+        const views = ['view-cover', 'view-intro', 'view-menu', 'view-reader'];
         views.forEach(vId => {
             const el = document.getElementById(vId);
-            if (vId === targetId) {
-                el.classList.remove('hidden');
-                setTimeout(() => {
-                    el.classList.remove('opacity-0', '-translate-y-2');
-                }, 50);
-            } else {
-                el.classList.add('opacity-0', '-translate-y-2');
-                el.classList.add('hidden');
+            if (el) {
+                if (vId === targetId) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
             }
         });
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -844,83 +866,47 @@
 </script>
 
 <script>
+    // Pure Elegant Content List Grid Design
     function renderChapterGrid() {
         const container = document.getElementById('chapter-cards-container');
         container.innerHTML = "";
 
         articleData.forEach((item, index) => {
             const cardWrapper = document.createElement('div');
-            cardWrapper.className = "card-perspective h-44 cursor-pointer";
+            cardWrapper.className = "flex flex-col justify-between editorial-card rounded-2xl p-6 min-h-[190px] relative cursor-pointer";
             
-            if (index > 0) {
-                // 第2篇至第10篇：維持所有原本的翻轉動畫與排版，僅替換內容文字為預告模式
+            if (index > 1) { 
                 cardWrapper.innerHTML = `
-                    <div class="flip-card-inner relative w-full h-full rounded-xl border border-slate-200/60 shadow-sm bg-white" id="menu-card-${item.id}">
-                        <!-- Card Front Face -->
-                        <div class="backface-hidden absolute inset-0 p-5 flex flex-col justify-between" onclick="performMenuCardFlip(event, '${item.id}')">
-                            <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-[9px] font-bold tracking-widest text-slate-400 uppercase">${item.num}</span>
-                                </div>
-                                <div class="flex justify-center items-center pt-6">
-                                    <h3 class="font-sans font-bold text-base text-slate-400 tracking-wider">
-                                        COMING SOON ✨
-                                    </h3>
-                                </div>
+                    <div class="flex flex-col justify-between h-full opacity-50">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-[10px] font-bold tracking-widest text-zinc-400 font-mono">${item.num}</span>
+                                <span class="text-[9px] font-bold text-zinc-400 bg-zinc-100 px-2 py-0.5 rounded uppercase">COMING SOON</span>
                             </div>
-                            <div class="flex justify-end items-center text-[10px] text-slate-400 border-t border-slate-100 pt-2.5">
-                                <span class="underline">展開摘要 ➔</span>
-                            </div>
+                            <h3 class="font-serif font-bold text-base text-zinc-300 leading-snug pt-1">
+                                精彩內容敬請期待
+                            </h3>
                         </div>
-                        
-                        <!-- Card Back Face -->
-                        <div class="absolute inset-0 rotate-y-180 backface-hidden p-5 bg-slate-50 rounded-xl flex flex-col justify-between border border-slate-200/60" onclick="performMenuCardFlip(event, '${item.id}')">
-                            <div class="flex-grow flex items-center justify-center">
-                                <p class="text-slate-500 text-[11px] leading-relaxed text-center font-medium tracking-wide">
-                                    更多 AI × SOP 心得即將登場
-                                </p>
-                            </div>
-                            <div class="flex gap-2 border-t border-slate-200/50 pt-2.5">
-                                <button onclick="event.stopPropagation();" class="w-full py-1.5 bg-slate-200 text-slate-400 rounded-md text-[10px] tracking-widest font-bold uppercase cursor-not-allowed">
-                                    尚未開放
-                                </button>
-                            </div>
+                        <div class="flex items-center text-xs text-zinc-300 pt-4 mt-auto border-t border-zinc-100/50">
+                            <span>未來章節</span>
                         </div>
                     </div>
                 `;
             } else {
-                // 第1篇：保留完整原始顯示狀態與進入閱讀按鈕
                 cardWrapper.innerHTML = `
-                    <div class="flip-card-inner relative w-full h-full rounded-xl border border-slate-200/60 shadow-sm bg-white" id="menu-card-${item.id}">
-                        <!-- Card Front Face -->
-                        <div class="backface-hidden absolute inset-0 p-5 flex flex-col justify-between" onclick="performMenuCardFlip(event, '${item.id}')">
-                            <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-[9px] font-bold tracking-widest text-slate-400 uppercase">${item.num}</span>
-                                    <span class="text-[9px] text-slate-500 font-medium px-1.5 py-0.5 rounded bg-slate-50 border border-slate-100">${item.dept}</span>
-                                </div>
-                                <h3 class="serif-heading text-sm text-slate-800 leading-snug group-hover:text-slate-900 transition-colors pt-2">
-                                    ${item.title}
-                                </h3>
+                    <div class="flex flex-col justify-between h-full group" onclick="loadAndReadChapter('${item.id}')">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-[10px] font-bold tracking-widest text-indigo-600 font-mono">${item.num}</span>
+                                <span class="text-[9px] font-semibold text-zinc-700 bg-zinc-100 px-2.5 py-0.5 rounded-full">${item.dept}</span>
                             </div>
-                            <div class="flex justify-between items-center text-[10px] text-slate-400 border-t border-slate-100 pt-2.5">
-                                <span class="font-medium">導讀者：${item.author}</span>
-                                <span class="underline">展開摘要 ➔</span>
-                            </div>
+                            <h3 class="font-serif font-bold text-zinc-900 text-lg group-hover:text-indigo-600 transition-colors leading-snug pt-1">
+                                ${item.title}
+                            </h3>
                         </div>
-                        
-                        <!-- Card Back Face -->
-                        <div class="absolute inset-0 rotate-y-180 backface-hidden p-5 bg-slate-50 rounded-xl flex flex-col justify-between border border-slate-200/60" onclick="performMenuCardFlip(event, '${item.id}')">
-                            <div class="flex-grow flex items-center justify-center">
-                                <p class="text-slate-600 text-[11px] leading-relaxed italic text-center font-serif">
-                                    "${item.summary}"
-                                </p>
-                            </div>
-                            <div class="flex gap-2 border-t border-slate-200/50 pt-2.5">
-                                <button onclick="event.stopPropagation(); loadAndReadChapter('${item.id}')" class="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-md text-[10px] tracking-widest font-bold uppercase transition-all">
-                                    進入全文閱讀 ➔
-                                </button>
-                            </div>
+                        <div class="flex justify-between items-center text-xs text-zinc-400 pt-4 mt-auto border-t border-zinc-100/50">
+                            <span class="font-medium text-zinc-500">導讀人：${item.author}</span>
+                            <span class="text-zinc-900 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all font-semibold inline-flex items-center gap-0.5">閱讀全文 ➔</span>
                         </div>
                     </div>
                 `;
@@ -929,26 +915,10 @@
             container.appendChild(cardWrapper);
         });
     }
-
-    function performMenuCardFlip(e, articleId) {
-        if (e.target.tagName === 'BUTTON') return;
-        
-        const innerNode = document.getElementById(`menu-card-${articleId}`);
-        const isCurrentlyFlipped = innerNode.classList.contains('flipped');
-        triggerTactileSound('soft_tap');
-
-        if (isCurrentlyFlipped) {
-            innerNode.classList.remove('flipped');
-        } else {
-            document.querySelectorAll('.flip-card-inner.flipped').forEach(fEl => {
-                fEl.classList.remove('flipped');
-            });
-            innerNode.classList.add('flipped');
-        }
-    }
 </script>
 
 <script>
+    // FIXED: Correctly declared function without commenting out the header line.
     function loadAndReadChapter(articleId) {
         triggerTactileSound('page_turn');
         const article = articleData.find(x => x.id === articleId);
@@ -964,36 +934,39 @@
         document.getElementById('reader-quote').textContent = article.quote;
         document.getElementById('reader-body').innerHTML = article.content;
 
+        const takeawaysBox = document.getElementById('reader-takeaways-box');
         const takeawaysBoxTitle = document.querySelector('#reader-takeaways-box h3');
         const takeList = document.getElementById('reader-takeaways-list');
         takeList.innerHTML = "";
 
-        if (article.takeawaysTitle === "心得結語" || article.takeawaysTitle === "💡 心得結語" || article.id === "ch-1") {
-            // Apply a beautiful paragraph typography for the narrative conclusion
-            if (takeawaysBoxTitle) {
-                takeawaysBoxTitle.innerHTML = `<span>💡</span> 心得結語 • CONCLUSION`;
+        if (article.takeaways && article.takeaways.length > 0) {
+            takeawaysBox.classList.remove('hidden');
+            if (article.takeawaysTitle === "心得結語" || article.takeawaysTitle === "💡 心得結語" || article.id === "ch-1" || article.id === "ch-2") {
+                if (takeawaysBoxTitle) {
+                    takeawaysBoxTitle.innerHTML = `<span>💡</span> 心得結語 • CONCLUSION`;
+                }
+                takeList.className = "space-y-3 text-zinc-700 text-sm leading-relaxed font-sans font-normal";
+                article.takeaways.forEach(p => {
+                    const para = document.createElement('p');
+                    para.className = "indent-0";
+                    para.textContent = p;
+                    takeList.appendChild(para);
+                });
+            } else {
+                if (takeawaysBoxTitle) {
+                    takeawaysBoxTitle.innerHTML = `<span>🏆</span> 重點精華 • KEY TAKEAWAYS`;
+                }
+                takeList.className = "space-y-2 text-zinc-500 text-sm pl-4 list-decimal font-sans";
+                article.takeaways.forEach(p => {
+                    const li = document.createElement('li');
+                    li.textContent = p;
+                    takeList.appendChild(li);
+                });
             }
-            takeList.className = "space-y-3 text-slate-700 text-sm leading-relaxed font-normal";
-            article.takeaways.forEach(p => {
-                const para = document.createElement('p');
-                para.className = "indent-0";
-                para.textContent = p;
-                takeList.appendChild(para);
-            });
         } else {
-            // Revert to pristine numerical points list for other summaries
-            if (takeawaysBoxTitle) {
-                takeawaysBoxTitle.innerHTML = `<span>🏆</span> 重點精華 • KEY TAKEAWAYS`;
-            }
-            takeList.className = "space-y-2 text-slate-600 text-xs sm:text-sm pl-4 list-decimal";
-            article.takeaways.forEach(p => {
-                const li = document.createElement('li');
-                li.textContent = p;
-                takeList.appendChild(li);
-            });
+            takeawaysBox.classList.add('hidden');
         }
 
-        // 動態判定並載入章節配圖
         const imgContainer = document.getElementById('reader-image-container');
         const imgEl = document.getElementById('reader-image');
         if (article.image) {
@@ -1006,10 +979,9 @@
         refreshImpressionCounts();
         renderStampsForChapter(activeChapterId);
 
-        // 限制僅能於已解鎖篇章（CH 01）之間導航，阻擋導向 COMING SOON 的篇章
         const currIndex = articleData.findIndex(x => x.id === articleId);
-        const hasPrev = (currIndex > 0 && articleData[currIndex - 1].id === "ch-1");
-        const hasNext = (currIndex < articleData.length - 1 && articleData[currIndex + 1].id === "ch-1");
+        const hasPrev = (currIndex > 0 && (articleData[currIndex - 1].id === "ch-1" || articleData[currIndex - 1].id === "ch-2"));
+        const hasNext = (currIndex < articleData.length - 1 && (articleData[currIndex + 1].id === "ch-1" || articleData[currIndex + 1].id === "ch-2"));
 
         document.getElementById('btn-chapter-prev').disabled = !hasPrev;
         document.getElementById('btn-chapter-next').disabled = !hasNext;
@@ -1026,8 +998,7 @@
         const targetIndex = currIndex + offset;
         
         if (targetIndex >= 0 && targetIndex < articleData.length) {
-            // 阻擋透過按鈕或方向鍵進入未解鎖的 COMING SOON 篇章
-            if (articleData[targetIndex].id !== "ch-1") {
+            if (articleData[targetIndex].id !== "ch-1" && articleData[targetIndex].id !== "ch-2") {
                 return;
             }
             loadAndReadChapter(articleData[targetIndex].id);
@@ -1049,9 +1020,9 @@
             const btn = badge.parentElement;
             const stateKey = `${activeChapterId}_${type}`;
             if (userReactionsState[stateKey]) {
-                btn.classList.add('bg-slate-100', 'border-slate-400');
+                btn.classList.add('bg-zinc-100', 'border-zinc-400');
             } else {
-                btn.classList.remove('bg-slate-100', 'border-slate-400');
+                btn.classList.remove('bg-zinc-100', 'border-zinc-400');
             }
         });
     }
@@ -1075,7 +1046,6 @@
             userReactionsState[stateKey] = false;
             displayInlineToast("已悄悄撕下貼紙。");
             
-            // 同步移除紙張上對應的隨機絕對定位貼紙標記
             if (chapterStamps[activeChapterId]) {
                 const idx = chapterStamps[activeChapterId].findIndex(s => s.type === type);
                 if (idx !== -1) {
@@ -1099,14 +1069,13 @@
             }
             displayInlineToast(textFeedback);
 
-            // 於書頁紙張上產生一個隨機飄浮位置的貼紙
-            const rx = (Math.random() * 60 + 20).toFixed(2); // 限制在中間區段 20%~80% 內，防止超出邊框
+            const rx = (Math.random() * 60 + 20).toFixed(2);
             const ry = (Math.random() * 60 + 20).toFixed(2);
             const rot = Math.floor(Math.random() * 16) - 8;
             
             const newStamp = {
                 id: 'stamp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                type: type, // 用於取消時精確查找
+                type: type,
                 x: rx,
                 y: ry,
                 emoji: emoji,
@@ -1182,25 +1151,24 @@
             
             const itemRow = document.createElement('div');
             
-            // 若為未開放的 COMING SOON 篇章，於排行中隱藏標題、部門，並不可被點擊
-            if (item.id !== "ch-1") {
-                itemRow.className = "flex items-center justify-between p-3 border border-slate-100 bg-slate-50/40 rounded-xl cursor-not-allowed opacity-60";
+            if (item.id !== "ch-1" && item.id !== "ch-2") { 
+                itemRow.className = "flex items-center justify-between p-3 border border-zinc-100 bg-zinc-50/40 rounded-xl cursor-not-allowed opacity-50";
                 itemRow.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-400 text-[10px] font-mono font-bold flex items-center justify-center">
+                        <span class="w-6 h-6 rounded-full bg-zinc-200 text-zinc-400 text-[10px] font-mono font-bold flex items-center justify-center">
                             ${position}
                         </span>
                         <div>
-                            <span class="text-[9px] text-slate-400 font-bold block uppercase">${item.num} • 敬請期待</span>
-                            <h4 class="serif-heading text-xs text-slate-400 leading-tight">COMING SOON ✨</h4>
+                            <span class="text-[9px] text-zinc-400 font-bold block uppercase">${item.num} • 敬請期待</span>
+                            <h4 class="font-serif font-bold text-xs text-zinc-400 leading-tight">COMING SOON ✨</h4>
                         </div>
                     </div>
-                    <div class="flex items-center gap-1 bg-white border border-slate-200 rounded px-2 py-0.5">
-                        <span class="text-[9px] text-slate-400 font-mono">0 張</span>
+                    <div class="flex items-center gap-1 bg-white border border-zinc-200 rounded px-2 py-0.5">
+                        <span class="text-[9px] text-zinc-400 font-mono">0 張</span>
                     </div>
                 `;
             } else {
-                itemRow.className = "flex items-center justify-between p-3 border border-slate-100 hover:border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl cursor-pointer transition-all";
+                itemRow.className = "flex items-center justify-between p-3 border border-zinc-100 hover:border-zinc-200 bg-zinc-50/50 hover:bg-zinc-50 rounded-xl cursor-pointer transition-all";
                 itemRow.onclick = () => {
                     closeStatsModal();
                     loadAndReadChapter(item.id);
@@ -1208,16 +1176,16 @@
 
                 itemRow.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] font-mono font-bold flex items-center justify-center">
+                        <span class="w-6 h-6 rounded-full bg-zinc-900 text-white text-[10px] font-mono font-bold flex items-center justify-center">
                             ${position}
                         </span>
                         <div>
-                            <span class="text-[9px] text-slate-400 font-bold block uppercase">${item.num} • ${item.dept}</span>
-                            <h4 class="serif-heading text-xs text-slate-700 leading-tight">${item.title}</h4>
+                            <span class="text-[9px] text-zinc-400 font-bold block uppercase">${item.num} • ${item.dept}</span>
+                            <h4 class="font-serif font-bold text-xs text-zinc-700 leading-tight">${item.title}</h4>
                         </div>
                     </div>
-                    <div class="flex items-center gap-1 bg-white border border-slate-200 rounded px-2 py-0.5">
-                        <span class="text-[9px] text-slate-500 font-mono">${totalSum} 張</span>
+                    <div class="flex items-center gap-1 bg-white border border-zinc-200 rounded px-2 py-0.5">
+                        <span class="text-[9px] text-zinc-500 font-mono">${totalSum} 張</span>
                     </div>
                 `;
             }
@@ -1225,48 +1193,38 @@
         });
     }
 
-    // Beautiful inline Zeroing and Reset Mechanism (No browser alert/confirm used)
     function resetAllData() {
-        // 1. Clear LocalStorage keys
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem('book_review_stamps_sync_v6_clean');
         
-        // 2. Reset runtime variables
         userReactionsState = {};
         chapterStamps = {};
         
-        // 3. Re-initialize dataset with fresh 0 values
         articleData = JSON.parse(JSON.stringify(curatedData));
         
-        // 4. Update and refresh active UI panels
         renderChapterGrid();
         refreshImpressionCounts();
         renderStampsForChapter(activeChapterId);
         buildRankListing();
         
-        // 5. Friendly inline notification
         displayInlineToast("🧹 所有貼紙與計數已成功歸零重置！");
         triggerTactileSound('soft_tap');
     }
 
-    // Secure verification functions
     function promptResetPassword() {
         triggerTactileSound('soft_tap');
         const modal = document.getElementById('password-modal');
         const content = document.getElementById('password-modal-content');
         const input = document.getElementById('reset-password-input');
         
-        // Reset state
         input.value = '';
         input.classList.remove('border-red-400', 'error-shake');
         document.getElementById('password-error-msg').classList.add('hidden');
         
-        // Show modal
         modal.classList.remove('opacity-0', 'pointer-events-none');
         content.classList.remove('scale-95');
         content.classList.add('scale-100');
         
-        // Autofocus input
         setTimeout(() => input.focus(), 150);
     }
 
@@ -1281,7 +1239,6 @@
     function verifyResetPassword() {
         const inputField = document.getElementById('reset-password-input');
         const errorMsg = document.getElementById('password-error-msg');
-        const content = document.getElementById('password-modal-content');
         
         if (inputField.value === RESET_PASSWORD) {
             closePasswordModal();
@@ -1291,7 +1248,6 @@
             inputField.classList.add('border-red-400', 'error-shake');
             errorMsg.classList.remove('hidden');
             
-            // Remove shaking animation class after trigger to allow reuse
             setTimeout(() => {
                 inputField.classList.remove('error-shake');
             }, 400);
@@ -1301,7 +1257,6 @@
 
 <script>
     function setupInteractions() {
-        // Arrow key listeners
         document.addEventListener('keydown', (e) => {
             const readerView = document.getElementById('view-reader');
             if (readerView && !readerView.classList.contains('hidden')) {
@@ -1313,7 +1268,6 @@
             }
         });
 
-        // Enter key to verify password inside modal
         document.getElementById('reset-password-input').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 verifyResetPassword();
