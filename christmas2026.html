@@ -1,254 +1,1311 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JPC EV High-Voltage System Interactive Guide</title>
-    <!-- 引入 Tailwind CSS -->
+    <title>12 Days of JPC — A Christmas Story</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 Vue.js (用於單檔案互動邏輯) -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- 引入 Lucide 圖標 -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jpc: {
+                            red: '#C8102E',
+                            darkRed: '#9B0B21',
+                            charcoal: '#111111',
+                            grey: '#4A4A4A',
+                            lightGrey: '#F8F8FA',
+                            border: '#E5E5EA',
+                            gold: '#D4AF37',
+                            softGold: '#FAF0CA'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        html, body {
+            min-height: 100%;
+            height: 100%;
+            width: 100%;
+            background-color: #FAFAFC;
+            color: #111111;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+            overflow-x: hidden;
         }
 
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #E5E7EB;
-            border-radius: 20px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #EF4444;
+        .serif-title {
+            font-family: "Noto Serif TC", Georgia, serif;
         }
 
-        [v-cloak] { display: none; }
-
-        @keyframes ping-slow {
-            0% { transform: scale(1); opacity: 0.8; }
-            70%, 100% { transform: scale(2); opacity: 0; }
+        .header-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.92);
         }
-        .animate-ping-slow {
-            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+        /* View Container Transition System */
+        .page-view {
+            display: none;
+            opacity: 0;
+            width: 100%;
+            min-height: calc(100vh - 3.5rem);
+            transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+            transform: translateY(6px);
+            z-index: 10;
+            position: relative;
+        }
+
+        .page-view.active-view {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 20;
+        }
+
+        /* Star Glow and Subtle Twinkle Effects */
+        .star-glow {
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.9));
+        }
+
+        .star-inactive {
+            filter: grayscale(100%) opacity(0.25);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .star-active {
+            filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.95));
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: softTwinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes softTwinkle {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.85)); opacity: 0.92; }
+            50% { filter: drop-shadow(0 0 16px rgba(212, 175, 55, 1)); opacity: 1; }
+        }
+
+        @keyframes pulseNewStar {
+            0% { transform: scale(0.6); opacity: 0; filter: drop-shadow(0 0 0px rgba(212, 175, 55, 0)); }
+            60% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 22px rgba(212, 175, 55, 1)); }
+            100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.9)); }
+        }
+
+        .animate-new-star {
+            animation: pulseNewStar 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Tree Light String Pulse Animation */
+        @keyframes treeStrandGlow {
+            0%, 100% { stroke: #E5E5EA; stroke-opacity: 0.4; stroke-width: 1.5; }
+            50% { stroke: #D4AF37; stroke-opacity: 0.95; stroke-width: 2.5; filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6)); }
+        }
+
+        .tree-strand-active {
+            animation: treeStrandGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translate(-50%, 20px) scale(0.95); }
+            to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+        }
+
+        .animate-toast {
+            animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Gift Box Card Hover Effects */
+        .gift-box-card {
+            perspective: 1000px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gift-box-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+        }
+
+        .gift-box-card.is-read {
+            border-color: rgba(212, 175, 55, 0.8) !important;
+            box-shadow: 0 8px 20px -4px rgba(212, 175, 55, 0.2);
+            background-color: #FFFFFF !important;
+        }
+
+        .gift-box-card.is-locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(80%);
+        }
+
+        .gift-box-card.is-locked:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .gift-svg-element * {
+            transition: fill 0.35s ease, stroke 0.35s ease, filter 0.35s ease;
+        }
+
+        @keyframes unboxLid {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-16px) rotate(-6deg) scale(1.05); opacity: 0.8; }
+            100% { transform: translateY(-30px) rotate(12deg) scale(0.85); opacity: 0; }
+        }
+
+        .animate-open-gift .gift-lid {
+            animation: unboxLid 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes pulseGlowRed {
+            0%, 100% { box-shadow: 0 4px 16px rgba(200, 16, 46, 0.15), 0 0 0 1px rgba(200, 16, 46, 0.3); }
+            50% { box-shadow: 0 10px 26px rgba(200, 16, 46, 0.3), 0 0 0 2px rgba(200, 16, 46, 0.6); }
+        }
+
+        .gift-today-glow {
+            animation: pulseGlowRed 2.5s infinite ease-in-out;
+        }
+
+        .editorial-quote-mark {
+            font-family: Georgia, serif;
+            line-height: 0.7;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-tree-modal {
+            animation: fadeInModal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* High-End Editorial Styling Rules */
+        .magazine-body {
+            line-height: 1.85;
+            letter-spacing: 0.02em;
+        }
+
+        .qa-divider {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.25) 0%, rgba(229, 229, 234, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
         }
     </style>
 </head>
-<body class="bg-[#F5F5F7]">
+<body class="min-h-full h-full w-full relative selection:bg-jpc-red selection:text-white flex flex-col bg-[#FAFAFC]">
 
-    <div id="app" v-cloak class="w-full h-screen overflow-hidden flex items-center justify-center relative p-2 md:p-4">
-        
-        <!-- 互動地圖主容器 -->
-        <div class="relative w-full max-w-5xl aspect-video bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-white/50 overflow-hidden group/main">
-            
-            <div class="relative w-full h-full flex items-center justify-center">
-                 <!-- EV 底盤背景圖 -->
-                 <img 
-                   src="https://lochoive-code.github.io/jpc/EV.jpg" 
-                   alt="EV Chassis Structure"
-                   class="w-full h-full object-contain opacity-95 scale-[1.05] md:scale-100"
-                 />
+    <canvas id="heroCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
 
-                <!-- 互動點位區 -->
-                <div class="absolute inset-0 scale-[1.05] md:scale-100">
-                    <div 
-                        v-for="prod in products" 
-                        :key="prod.id"
-                        :style="{ top: prod.top, left: prod.left }"
-                        class="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
-                        @click="activeProduct = prod"
-                    >
-                        <div class="relative flex items-center justify-center">
-                            <!-- 圓點按鈕 -->
-                            <div class="relative z-30">
-                                <div :class="[
-                                    'w-2.5 h-2.5 md:w-3 md:h-3 rounded-full border-[1.5px] border-white shadow-lg transition-all duration-500',
-                                    activeProduct?.id === prod.id ? 'bg-red-600 scale-125' : 'bg-red-500 group-hover:bg-red-600 group-hover:scale-110'
-                                ]"></div>
-                                <!-- 呼吸動畫 -->
-                                <div class="absolute inset-0 w-full h-full bg-red-500 rounded-full animate-ping-slow opacity-20 scale-125 group-hover:opacity-40"></div>
-                            </div>
-                              
-                            <!-- 產品名稱標籤 -->
-                            <div :class="getLabelClass(prod.labelPos)">
-                                {{ prod.name }}
-                            </div>
-                        </div>
+    <!-- Global Header Bar -->
+    <header class="sticky top-0 z-50 h-14 border-b border-jpc-border/80 header-blur flex-shrink-0 w-full shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <button onclick="switchView('page-welcome')" class="flex items-center space-x-2 focus:outline-none group">
+                    <div class="flex items-center justify-center bg-jpc-charcoal group-hover:bg-jpc-red transition-colors text-white font-bold text-xs tracking-widest px-3 py-1.5 rounded-sm">
+                        JPC
                     </div>
-                </div>
+                    <span class="text-xs tracking-widest uppercase text-gray-600 font-semibold hidden sm:inline-block">
+                        | Intranet Storytelling
+                    </span>
+                </button>
             </div>
 
-            <!-- 右下角說明 -->
-            <div class="absolute bottom-6 right-8 text-[9px] text-gray-400 font-bold uppercase tracking-widest hidden md:block opacity-60">
-                JPC Interconnect • High-Voltage Solutions
+            <div class="text-center">
+                <span class="text-xs font-extrabold tracking-widest uppercase text-jpc-red">12 Days of JPC</span>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <div class="hidden sm:flex items-center space-x-2 bg-gray-100/90 px-3 py-1 rounded-full border border-gray-300">
+                    <span class="w-2 h-2 rounded-full bg-jpc-red animate-pulse"></span>
+                    <span class="text-[11px] font-mono text-gray-700 tracking-wide font-medium">DECEMBER 2026</span>
+                </div>
+                <!-- Dev Preview Reset / Unlock Button -->
+                <button onclick="toggleDevModeReset()" title="Dev Reset Progress" class="p-1.5 sm:px-3 sm:py-1 rounded-full bg-white hover:bg-gray-100 border border-gray-300 text-gray-700 transition-colors text-xs flex items-center space-x-1 shadow-sm font-medium">
+                    <svg class="w-3.5 h-3.5 text-jpc-gold" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span class="hidden md:inline text-[11px] font-mono">Dev Preview Mode</span>
+                </button>
             </div>
         </div>
+    </header>
 
-        <!-- 產品詳情彈窗 (Overlay) -->
-        <transition 
-            enter-active-class="transition duration-300 ease-out"
-            enter-from-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="transition duration-200 ease-in"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
-            <div v-if="activeProduct" class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/20 backdrop-blur-xl">
-                <div class="bg-white w-full max-w-5xl h-full max-h-[90vh] md:max-h-[85vh] rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_50px_120px_rgba(0,0,0,0.15)] border border-white overflow-hidden flex flex-col relative transform transition-all">
+    <!-- Toast Notification Banner -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden bg-jpc-charcoal text-white px-5 py-2.5 rounded-full shadow-xl text-xs font-mono tracking-wider animate-toast flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-jpc-gold"></span>
+        <span id="toastMessage">已更新閱讀進度</span>
+    </div>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <div class="flex-grow flex flex-col w-full relative z-10">
+
+        <!-- VIEW 1: PAGE WELCOME INVITATION -->
+        <div id="page-welcome" class="page-view flex-col justify-center">
+            <main class="flex-grow flex items-center max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 sm:py-12">
+                <div class="w-full flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-12 my-auto">
                     
-                    <div class="absolute top-0 left-0 right-0 h-2 bg-red-600"></div>
-
-                    <!-- 彈窗頂部 -->
-                    <div class="px-8 py-8 md:px-14 md:py-12 flex justify-between items-start bg-white">
-                        <div>
-                            <h3 class="text-3xl md:text-5xl font-extrabold text-[#1A1A1A] tracking-tight mb-2">
-                                {{ activeProduct.name }}
-                            </h3>
-                            <p class="text-gray-400 text-sm md:text-base font-medium">點擊組件卡片查看官網詳細資訊</p>
+                    <div class="w-full md:w-[52%] flex flex-col items-center md:items-start text-center md:text-left space-y-6 max-w-xl mx-auto md:mx-0">
+                        <div class="space-y-3 w-full">
+                            <span class="inline-block text-xs font-mono font-bold tracking-widest text-jpc-red uppercase bg-red-100/80 px-3.5 py-1 rounded-full border border-jpc-red/30">
+                                JPC CHRISTMAS STORY
+                            </span>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-jpc-charcoal tracking-tight leading-tight">
+                                12 Days of JPC
+                            </h1>
+                            <p class="serif-title italic text-gray-700 text-2xl sm:text-3xl font-semibold pt-1">
+                                A Christmas Story
+                            </p>
                         </div>
-                        <button 
-                            @click="activeProduct = null"
-                            class="w-10 h-10 md:w-14 md:h-14 bg-gray-50 hover:bg-red-50 text-gray-400 hover:text-red-600 rounded-full flex items-center justify-center transition-all duration-300 border border-gray-100 mt-1"
-                        >
-                            <i data-lucide="x" class="w-6 h-6"></i>
-                        </button>
+
+                        <div class="border-y border-gray-300 py-5 space-y-2 w-full">
+                            <p class="text-lg sm:text-2xl text-jpc-charcoal font-medium leading-relaxed">
+                                「這個聖誕節，每天認識一位 JPC 的夥伴。」
+                            </p>
+                            <p class="text-xs sm:text-sm font-mono text-gray-600 uppercase tracking-wider font-medium">
+                                This Christmas, discover the people behind JPC.
+                            </p>
+                        </div>
+
+                        <div class="pt-2 w-full md:w-auto">
+                            <button onclick="switchView('page-home')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-jpc-charcoal hover:bg-jpc-red text-white py-4 px-9 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-md hover:shadow-xl group">
+                                <span>Open the Invitation｜開啟聖誕邀請</span>
+                                <svg class="w-4 h-4 text-jpc-gold group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- 產品網格列表 -->
-                    <div class="px-8 pb-10 md:px-14 md:pb-16 overflow-y-auto flex-1 custom-scrollbar">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-                            <div 
-                                v-for="(item, i) in activeProduct.items" 
-                                :key="i"
-                                @click="openLink(item.url)"
-                                class="group flex flex-col p-3 bg-white border border-gray-100 transition-all duration-500 rounded-[2rem] text-left outline-none relative hover:border-red-200 hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)] cursor-pointer"
-                            >
-                                <div class="w-full aspect-square bg-[#FBFBFB] rounded-[1.5rem] overflow-hidden mb-5 border border-gray-50 relative">
-                                    <img 
-                                        :src="item.img" 
-                                        :alt="item.name" 
-                                        class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-all duration-1000"
-                                    />
-                                    <div v-if="item.spec" class="absolute top-3 right-3">
-                                        <span class="text-[10px] md:text-[11px] font-bold text-white bg-red-600 px-3 py-1.5 rounded-full shadow-lg">
-                                            {{ item.spec }}
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <div class="px-3 pb-3">
-                                    <h4 class="text-sm md:text-base font-bold text-[#1A1A1A] group-hover:text-red-600 transition-colors leading-snug mb-2">
-                                        {{ item.name }}
-                                    </h4>
-                                    <div class="flex items-center text-[10px] md:text-[11px] font-bold text-red-500 tracking-wider transition-all transform translate-y-1 group-hover:translate-y-0 opacity-70 group-hover:opacity-100">
-                                        查看詳情 <span class="ml-1 transition-transform group-hover:translate-x-1">→</span>
-                                    </div>
-                                </div>
+                    <div class="w-full md:w-[45%] h-[380px] sm:h-[480px] flex items-center justify-center relative bg-gradient-to-b from-white/90 via-white/60 to-amber-50/20 rounded-3xl border border-gray-300 shadow-lg p-6 backdrop-blur-sm overflow-hidden">
+                        <svg class="w-full h-full max-h-[440px]" viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="treeLineGrad" x1="160" y1="40" x2="160" y2="360" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#D4AF37"/>
+                                    <stop offset="50%" stop-color="#C8102E"/>
+                                    <stop offset="100%" stop-color="#111111"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path d="M160 50 L210 120 L110 120 Z" stroke="#D4AF37" stroke-width="2" fill="rgba(212, 175, 55, 0.08)"/>
+                            <path d="M160 105 L245 205 L75 205 Z" stroke="#8E8E93" stroke-width="2" fill="rgba(200, 200, 210, 0.12)"/>
+                            <path d="M160 185 L285 315 L35 315 Z" stroke="#111111" stroke-width="2" fill="rgba(17, 17, 17, 0.04)"/>
+
+                            <line x1="160" y1="40" x2="160" y2="345" stroke="url(#treeLineGrad)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                            <line x1="160" y1="315" x2="160" y2="350" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/>
+                            <ellipse cx="160" cy="350" rx="38" ry="6" fill="#D1D1D6"/>
+
+                            <circle cx="160" cy="120" r="4.5" fill="#C8102E"/>
+                            <circle cx="210" cy="120" r="4" fill="#D4AF37"/>
+                            <circle cx="110" cy="120" r="4" fill="#D4AF37"/>
+                            
+                            <circle cx="160" cy="205" r="5" fill="#D4AF37"/>
+                            <circle cx="245" cy="205" r="4.5" fill="#C8102E"/>
+                            <circle cx="75" cy="205" r="4.5" fill="#C8102E"/>
+
+                            <circle cx="100" cy="260" r="4" fill="#D4AF37"/>
+                            <circle cx="220" cy="260" r="4" fill="#D4AF37"/>
+                            <circle cx="285" cy="315" r="5" fill="#111111"/>
+                            <circle cx="35" cy="315" r="5" fill="#111111"/>
+
+                            <g>
+                                <circle cx="160" cy="40" r="16" fill="#FAF0CA" opacity="0.95"/>
+                                <path d="M160 24L163.5 34L173 34L165.5 39.5L168.5 49.5L160 44L151.5 49.5L154.5 39.5L147 34L156.5 34Z" fill="#D4AF37"/>
+                            </g>
+
+                            <circle cx="160" cy="180" r="75" stroke="#C7C7CC" stroke-width="1" stroke-dasharray="2 4" fill="none"/>
+                            <circle cx="160" cy="220" r="120" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="4 6" fill="none"/>
+                        </svg>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- VIEW 2: PAGE HOME & 12 GIFTS CALENDAR GRID -->
+        <div id="page-home" class="page-view flex-col justify-between">
+            <main class="flex-grow flex flex-col justify-between max-w-7xl w-full mx-auto px-4 sm:px-8 py-5">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-gray-300 pb-3 mb-4">
+                    <div class="flex items-center space-x-3 text-center sm:text-left">
+                        <button onclick="switchView('page-welcome')" class="p-2 rounded-full border border-gray-300 hover:border-gray-500 bg-white shadow-sm transition-colors text-jpc-charcoal" title="返回首頁">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                            </svg>
+                        </button>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h2 class="text-xl sm:text-2xl font-extrabold text-jpc-charcoal tracking-tight">12 Days of JPC</h2>
+                                <span class="text-xs font-mono font-bold text-jpc-red uppercase">/ 12 Stories. 12 Gifts.</span>
+                            </div>
+                            <p class="text-xs text-gray-700 font-medium mt-0.5">
+                                「每天打開一份故事禮物，認識一位 JPC 的夥伴。」
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2 bg-white border border-gray-300 px-3.5 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-jpc-gold star-glow" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span id="starCounterText" class="text-xs font-mono font-bold text-jpc-charcoal tracking-wider">
+                            00 / 12 Stars Lit
+                        </span>
+                    </div>
+                </div>
+
+                <div id="storiesGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 my-auto py-1">
+                </div>
+
+                <div class="text-center text-[11px] text-gray-500 py-3 font-mono border-t border-gray-200 mt-4">
+                    點擊已解鎖的故事禮物盒以開始閱讀 • JPC Intranet 2026
+                </div>
+            </main>
+        </div>
+
+        <!-- VIEW 3: PAGE STORY READER (High-End Apple Keynote x Editorial Style) -->
+        <div id="page-story" class="page-view flex-col justify-between min-h-full bg-[#FCFCFD]">
+            <main class="flex-grow flex flex-col max-w-5xl w-full mx-auto px-5 sm:px-12 py-8 sm:py-12 space-y-10 sm:space-y-16">
+                
+                <!-- Editorial Top Header Navigation -->
+                <div class="flex items-center justify-between pb-5 border-b border-gray-200/80 flex-shrink-0">
+                    <div class="flex items-center space-x-3 sm:space-x-4">
+                        <span class="text-[10px] sm:text-[11px] font-mono tracking-widest text-jpc-charcoal font-semibold uppercase bg-gray-100/80 px-3 py-1 rounded-full border border-gray-200/80">
+                            PEOPLE & STORIES
+                        </span>
+                        <span class="text-gray-300 font-light">/</span>
+                        <span id="readerDayTag" class="text-xs sm:text-sm font-mono font-bold tracking-widest text-jpc-red uppercase">
+                            DAY 01
+                        </span>
+                    </div>
+
+                    <div>
+                        <button onclick="finishAndReturnHome()" class="inline-flex items-center space-x-2 text-xs font-medium tracking-wider text-gray-600 hover:text-jpc-charcoal transition-colors py-1.5 px-4 rounded-full border border-gray-200 bg-white shadow-xs hover:border-gray-400">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                            </svg>
+                            <span>返回目錄</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Editorial Header Block (Magazine Double Column Layout for Desktop) -->
+                <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+                    
+                    <!-- Left: Profile Image Frame (Keeps Original Uncropped Aspect Ratio) -->
+                    <div class="md:col-span-5 lg:col-span-4 flex justify-center md:justify-start">
+                        <div class="relative w-56 sm:w-64 md:w-full aspect-square max-w-[300px] rounded-2xl p-1.5 bg-gradient-to-b from-gray-100 via-white to-gray-200/60 shadow-sm border border-gray-200/80">
+                            <div class="w-full h-full rounded-xl overflow-hidden bg-gray-50 relative flex items-center justify-center">
+                                <img id="readerPhoto" src="" alt="JPC Team Member" class="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105">
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-md border border-gray-200/80 shadow-xs flex items-center space-x-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-jpc-gold star-glow"></span>
+                                <span class="text-[9px] font-mono tracking-widest text-gray-600 font-bold uppercase">JPC SPOTLIGHT</span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Right: Title, Role, Profile Meta & Standout Quote -->
+                    <div class="md:col-span-7 lg:col-span-8 space-y-6 text-left">
+                        <div class="space-y-2">
+                            <p id="readerRole" class="text-xs sm:text-sm font-mono font-medium tracking-wider text-jpc-red uppercase">
+                                [ 部門 / 職稱 ]
+                            </p>
+                            <h2 id="readerName" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-jpc-charcoal tracking-tight leading-tight">
+                                [ 同仁姓名 ]
+                            </h2>
+                            <h3 id="readerTitle" class="text-base sm:text-xl font-bold text-gray-700 pt-1 leading-snug">
+                                [ 專訪標題 ]
+                            </h3>
+                        </div>
+
+                        <!-- Highlight Quote Accent Block -->
+                        <div class="pt-2">
+                            <div class="relative pl-5 sm:pl-6 border-l-2 border-jpc-gold/80 space-y-1">
+                                <span class="editorial-quote-mark absolute -top-3 -left-1.5 text-2xl text-jpc-gold/40 select-none">“</span>
+                                <blockquote id="readerQuote" class="serif-title text-base sm:text-lg lg:text-xl font-medium text-jpc-charcoal leading-relaxed italic">
+                                    「[ 精選人物採訪引言預留欄位 ]」
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-        </transition>
+
+                <!-- Editorial Article Section: Clean Q&A Magazine Flow -->
+                <div class="w-full max-w-3xl mx-auto pt-6 border-t border-gray-200/80 space-y-12 sm:space-y-14">
+                    
+                    <div class="flex items-center justify-between pb-2">
+                        <div class="flex items-center space-x-2.5">
+                            <span class="w-2 h-2 rounded-full bg-jpc-charcoal"></span>
+                            <span class="text-xs font-mono tracking-widest text-gray-500 uppercase font-bold">INTERVIEW CONVERSATION</span>
+                        </div>
+                        <span class="text-[11px] font-mono text-gray-400">JPC INTRANET FEATURE</span>
+                    </div>
+
+                    <!-- Interview Q&A Container -->
+                    <div id="allQuestionsContainer" class="space-y-10 sm:space-y-12">
+                        <!-- Injected via JavaScript with clean editorial typography -->
+                    </div>
+
+                </div>
+
+                <!-- Bottom Action & Completion Section -->
+                <div class="pt-8 border-t border-gray-200/80 flex flex-col sm:flex-row items-center justify-between gap-5 flex-shrink-0 pb-12 max-w-3xl mx-auto w-full">
+                    <div class="flex items-center space-x-2.5 text-center sm:text-left">
+                        <span class="w-2.5 h-2.5 rounded-full bg-jpc-gold star-glow flex-shrink-0"></span>
+                        <span id="bottomReadNotice" class="text-xs font-mono text-gray-600 font-medium">
+                            閱讀完成點擊右側按鈕，將自動返回日曆並點亮專屬星光
+                        </span>
+                    </div>
+
+                    <div class="w-full sm:w-auto">
+                        <button onclick="finishAndReturnHome()" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-8 py-3.5 rounded-full text-xs font-mono font-bold uppercase tracking-widest bg-jpc-charcoal hover:bg-jpc-red text-white transition-all duration-300 shadow-md hover:shadow-lg group">
+                            <span>完成閱讀並點亮星光</span>
+                            <svg class="w-4 h-4 text-jpc-gold group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- VIEW 4: PAGE FINALE CELEBRATION -->
+        <div id="page-finale" class="page-view flex-col justify-between">
+            <main class="flex-grow flex flex-col justify-between max-w-4xl w-full mx-auto px-4 sm:px-8 py-8 text-center">
+                <div class="space-y-3">
+                    <span class="inline-block text-xs font-mono font-bold tracking-widest text-jpc-gold uppercase bg-amber-100/80 px-4 py-1.5 rounded-full border border-jpc-gold/40 star-glow">
+                        ★ ALL 12 STORIES COMPLETED ★
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-jpc-charcoal tracking-tight">
+                        12 個故事，點亮屬於 JPC 的聖誕
+                    </h2>
+                    <p class="serif-title text-base sm:text-2xl font-bold italic text-jpc-red pt-1">
+                        12 Stories. One JPC. Together, We Make the Story.
+                    </p>
+                </div>
+
+                <div class="relative w-full max-w-xs sm:max-w-md mx-auto aspect-square flex items-center justify-center my-auto p-6 bg-gradient-to-b from-amber-50/60 via-white to-amber-50/30 rounded-3xl border border-jpc-gold/60 shadow-xl overflow-hidden">
+                    <canvas id="finaleParticlesCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
+                    <svg class="w-full h-full relative z-10" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path id="fStrand1" class="tree-strand-active" d="M180 20 L240 80 L120 80 Z" stroke="#D4AF37" stroke-width="2" fill="none"/>
+                        <path id="fStrand2" class="tree-strand-active" d="M180 70 L280 150 L80 150 Z" stroke="#D4AF37" stroke-width="2" fill="none"/>
+                        <path id="fStrand3" class="tree-strand-active" d="M180 140 L320 200 L40 200 Z" stroke="#D4AF37" stroke-width="2" fill="none"/>
+                        <line x1="180" y1="200" x2="180" y2="218" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/>
+
+                        <g class="star-active star-glow"><circle cx="180" cy="20" r="12" fill="#FAF0CA"/><path d="M180 13L182 18L187 18L183 21L184 26L180 23L176 26L177 21L173 18L178 18Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="210" cy="50" r="10" fill="#FAF0CA"/><path d="M210 44L211.5 48L216 48L212.5 50.5L213.5 55L210 52.5L206.5 55L207.5 50.5L204 48L208.5 48Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="150" cy="50" r="10" fill="#FAF0CA"/><path d="M150 44L151.5 48L156 48L152.5 50.5L153.5 55L150 52.5L146.5 55L147.5 50.5L144 48L148.5 48Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="120" cy="80" r="10" fill="#FAF0CA"/><path d="M120 74L121.5 78L126 78L122.5 80.5L123.5 85L120 82.5L116.5 85L117.5 80.5L114 78L118.5 78Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="240" cy="80" r="10" fill="#FAF0CA"/><path d="M240 74L241.5 78L246 78L242.5 80.5L243.5 85L240 82.5L236.5 85L237.5 80.5L234 78L238.5 78Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="180" cy="110" r="11" fill="#FAF0CA"/><path d="M180 103L181.8 107.5L186.5 107.5L182.8 110.2L184.2 115L180 112.2L175.8 115L177.2 110.2L173.5 107.5L178.2 107.5Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="110" cy="120" r="10" fill="#FAF0CA"/><path d="M110 114L111.5 118L116 118L112.5 120.5L113.5 125L110 122.5L106.5 125L107.5 120.5L104 118L108.5 118Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="250" cy="120" r="10" fill="#FAF0CA"/><path d="M250 114L251.5 118L256 118L252.5 120.5L253.5 125L250 122.5L246.5 125L247.5 120.5L244 118L248.5 118Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="80" cy="150" r="10" fill="#FAF0CA"/><path d="M80 144L81.5 148L86 148L82.5 150.5L83.5 155L80 152.5L76.5 155L77.5 150.5L74 148L78.5 148Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="280" cy="150" r="10" fill="#FAF0CA"/><path d="M280 144L281.5 148L286 148L282.5 150.5L283.5 155L280 152.5L76.5 155L77.5 150.5L74 148L78.5 148Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="130" cy="175" r="10" fill="#FAF0CA"/><path d="M130 169L131.5 173L136 173L132.5 175.5L133.5 180L130 177.5L126.5 180L127.5 175.5L124 173L128.5 173Z" fill="#D4AF37"/></g>
+                        <g class="star-active star-glow"><circle cx="230" cy="175" r="10" fill="#FAF0CA"/><path d="M230 169L231.5 173L236 173L232.5 175.5L233.5 180L230 177.5L226.5 180L227.5 175.5L224 173L228.5 173Z" fill="#D4AF37"/></g>
+                    </svg>
+                </div>
+
+                <div class="space-y-4 max-w-lg mx-auto">
+                    <p class="text-xs sm:text-sm text-jpc-charcoal font-medium leading-relaxed">
+                        12 個故事，點亮屬於 JPC 的聖誕。感謝每一位夥伴的熱情與貢獻，祝大家聖誕快樂！
+                    </p>
+                    <div class="flex items-center justify-center space-x-3">
+                        <button onclick="switchView('page-home')" class="bg-jpc-charcoal hover:bg-jpc-red text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-md">
+                            返回故事日曆
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
 
     </div>
 
+    <!-- Tree Lighting Ritual Overlay Modal for Homepage Return -->
+    <div id="treeModalOverlay" class="fixed inset-0 z-50 bg-black/45 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-gray-200 text-center space-y-5 animate-tree-modal relative pointer-events-auto">
+            <div>
+                <span id="modalTreeTag" class="text-[10px] font-mono font-bold tracking-widest text-jpc-red uppercase bg-red-50 px-3 py-1 rounded-full border border-jpc-red/20">
+                    CHRISTMAS RITUAL
+                </span>
+                <h3 id="modalTreeTitle" class="text-xl sm:text-2xl font-extrabold text-jpc-charcoal tracking-tight pt-2">
+                    點亮聖誕星光
+                </h3>
+                <p id="modalTreeSub" class="text-xs text-gray-500 font-mono pt-0.5">
+                    12 Days of JPC — A Christmas Story
+                </p>
+            </div>
+
+            <div class="relative w-60 sm:w-68 aspect-square mx-auto p-4 bg-gradient-to-b from-amber-50/40 via-neutral-50 to-amber-50/20 rounded-2xl border border-gray-200 flex items-center justify-center shadow-inner overflow-hidden">
+                <canvas id="modalStardustCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
+                <svg id="modalTreeSvg" class="w-full h-full relative z-10" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="mStrand1" class="transition-all duration-700" d="M180 20 L240 80 L120 80 Z" stroke="#C7C7CC" stroke-width="1.5" fill="none"/>
+                    <path id="mStrand2" class="transition-all duration-700" d="M180 70 L280 150 L80 150 Z" stroke="#C7C7CC" stroke-width="1.5" fill="none"/>
+                    <path id="mStrand3" class="transition-all duration-700" d="M180 140 L320 200 L40 200 Z" stroke="#C7C7CC" stroke-width="1.5" fill="none"/>
+                    <line x1="180" y1="200" x2="180" y2="218" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+
+                    <g id="mStar-12" class="star-inactive transition-all duration-500"><circle cx="180" cy="20" r="12" fill="#FAF0CA"/><path d="M180 13L182 18L187 18L183 21L184 26L180 23L176 26L177 21L173 18L178 18Z" fill="#D4AF37"/></g>
+                    <g id="mStar-1" class="star-inactive transition-all duration-500"><circle cx="210" cy="50" r="10" fill="#FAF0CA"/><path d="M210 44L211.5 48L216 48L212.5 50.5L213.5 55L210 52.5L206.5 55L207.5 50.5L204 48L208.5 48Z" fill="#D4AF37"/></g>
+                    <g id="mStar-2" class="star-inactive transition-all duration-500"><circle cx="150" cy="50" r="10" fill="#FAF0CA"/><path d="M150 44L151.5 48L156 48L152.5 50.5L153.5 55L150 52.5L146.5 55L147.5 50.5L144 48L148.5 48Z" fill="#D4AF37"/></g>
+                    <g id="mStar-3" class="star-inactive transition-all duration-500"><circle cx="120" cy="80" r="10" fill="#FAF0CA"/><path d="M120 74L121.5 78L126 78L122.5 80.5L123.5 85L120 82.5L116.5 85L117.5 80.5L114 78L118.5 78Z" fill="#D4AF37"/></g>
+                    <g id="mStar-4" class="star-inactive transition-all duration-500"><circle cx="240" cy="80" r="10" fill="#FAF0CA"/><path d="M240 74L241.5 78L246 78L242.5 80.5L243.5 85L240 82.5L236.5 85L237.5 80.5L234 78L238.5 78Z" fill="#D4AF37"/></g>
+                    <g id="mStar-5" class="star-inactive transition-all duration-500"><circle cx="180" cy="110" r="11" fill="#FAF0CA"/><path d="M180 103L181.8 107.5L186.5 107.5L182.8 110.2L184.2 115L180 112.2L175.8 115L177.2 110.2L173.5 107.5L178.2 107.5Z" fill="#D4AF37"/></g>
+                    <g id="mStar-6" class="star-inactive transition-all duration-500"><circle cx="110" cy="120" r="10" fill="#FAF0CA"/><path d="M110 114L111.5 118L116 118L112.5 120.5L113.5 125L110 122.5L106.5 125L107.5 120.5L104 118L108.5 118Z" fill="#D4AF37"/></g>
+                    <g id="mStar-7" class="star-inactive transition-all duration-500"><circle cx="250" cy="120" r="10" fill="#FAF0CA"/><path d="M250 114L251.5 118L256 118L252.5 120.5L253.5 125L250 122.5L246.5 125L247.5 120.5L244 118L248.5 118Z" fill="#D4AF37"/></g>
+                    <g id="mStar-8" class="star-inactive transition-all duration-500"><circle cx="80" cy="150" r="10" fill="#FAF0CA"/><path d="M80 144L81.5 148L86 148L82.5 150.5L83.5 155L80 152.5L76.5 155L77.5 150.5L74 148L78.5 148Z" fill="#D4AF37"/></g>
+                    <g id="mStar-9" class="star-inactive transition-all duration-500"><circle cx="280" cy="150" r="10" fill="#FAF0CA"/><path d="M280 144L281.5 148L286 148L282.5 150.5L283.5 155L280 152.5L76.5 155L77.5 150.5L74 148L78.5 148Z" fill="#D4AF37"/></g>
+                    <g id="mStar-10" class="star-inactive transition-all duration-500"><circle cx="130" cy="175" r="10" fill="#FAF0CA"/><path d="M130 169L131.5 173L136 173L132.5 175.5L133.5 180L130 177.5L126.5 180L127.5 175.5L124 173L128.5 173Z" fill="#D4AF37"/></g>
+                    <g id="mStar-11" class="star-inactive transition-all duration-500"><circle cx="230" cy="175" r="10" fill="#FAF0CA"/><path d="M230 169L231.5 173L236 173L232.5 175.5L233.5 180L230 177.5L226.5 180L227.5 175.5L224 173L228.5 173Z" fill="#D4AF37"/></g>
+                </svg>
+            </div>
+
+            <p id="modalTreeHint" class="text-xs text-gray-700 font-medium">
+                ✨ 專屬星光點亮中...
+            </p>
+        </div>
+    </div>
+
     <script>
-        const { createApp, ref, onMounted, nextTick } = Vue;
+        const READ_STORAGE_KEY = 'jpc_christmas_read_stars_v5';
 
-        createApp({
-            setup() {
-                const activeProduct = ref(null);
-                
-                const products = [
-                    {
-                        id: 'inverter',
-                        name: 'Inverter 逆變器',
-                        top: '25%', left: '35%', labelPos: 'left',
-                        items: [
-                            { name: 'TL200 Series', spec: '200A', img: 'https://lochoive-code.github.io/jpc/1648538235_TL200-3.jpg', url: 'https://www.jpcco.com/lang/tw/product/find/TL200_High_Power_Connector' },
-                            { name: 'TL300 High-Power', spec: '250A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/find/TL300_High_Power_Connector' },
-                            { name: 'TL-X Heavy Duty', spec: '350A', img: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/category/EV_Connectors' }
-                        ]
-                    },
-                    {
-                        id: 'pdu',
-                        name: 'On-Board Charger 車載充電器',
-                        top: '60%', left: '67%', labelPos: 'right',
-                        items: [
-                            { name: 'XL602 3P Series', spec: '23A', img: 'https://images.unsplash.com/photo-1635332829082-c15d4821a44f?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/category/EV_Connectors' }
-                        ]
-                    },
-                    {
-                        id: 'rearMotor',
-                        name: 'Rear Motor 後驅電機',
-                        top: '55%', left: '59%', labelPos: 'top',
-                        items: [
-                            { name: 'XLP200 Motor Adapter', spec: '200A', img: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/category/EV_Connectors' }
-                        ]
-                    },
-                    {
-                        id: 'batteryPack',
-                        name: 'Battery System 電池系統',
-                        top: '55%', left: '45%', labelPos: 'bottom',
-                        items: [
-                            { name: 'Mini MSD Switch', spec: '400A', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/category/EV_Connectors' }
-                        ]
-                    },
-                    {
-                        id: 'frontMotor',
-                        name: 'Front Motor 前驅電機',
-                        top: '38%', left: '31%', labelPos: 'bottom',
-                        items: [
-                            { name: 'XLP200 Compact', spec: '200A', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/category/EV_Connectors' }
-                        ]
-                    },
-                    {
-                        id: 'mcu',
-                        name: 'Motor Control Unit 電控單元',
-                        top: '20%', left: '38%', labelPos: 'right',
-                        items: [
-                            { name: 'XL203 Signal Control', spec: '32A', img: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=400', url: 'https://www.jpcco.com/lang/tw/product/category/EV_Connectors' }
-                        ]
-                    }
-                ];
+        // High-end Christmas Color Palettes for Unread Gifts
+        const GIFT_PALETTES = {
+            1:  { box: '#1C2541', ribbon: '#D4AF37', border: '#3A506B' },
+            2:  { box: '#FAFAFC', ribbon: '#C8102E', border: '#E5E5EA' },
+            3:  { box: '#9B0B21', ribbon: '#FAF0CA', border: '#7A0819' },
+            4:  { box: '#111111', ribbon: '#D4AF37', border: '#333333' },
+            5:  { box: '#1A3A2A', ribbon: '#D4AF37', border: '#2D5A42' },
+            6:  { box: '#FAF0CA', ribbon: '#C8102E', border: '#E6D79C' },
+            7:  { box: '#2B2D42', ribbon: '#8D99AE', border: '#4A4E69' },
+            8:  { box: '#C8102E', ribbon: '#111111', border: '#9B0B21' },
+            9:  { box: '#E5E5EA', ribbon: '#111111', border: '#D1D1D6' },
+            10: { box: '#3D0C11', ribbon: '#D4AF37', border: '#5C131A' },
+            11: { box: '#1C3144', ribbon: '#D00000', border: '#2C4960' },
+            12: { box: '#D4AF37', ribbon: '#111111', border: '#B59226' }
+        };
 
-                const getLabelClass = (pos) => {
-                    const base = "absolute px-2.5 py-1 md:px-3.5 md:py-1.5 bg-white/95 backdrop-blur-md text-[#1A1A1A] border border-gray-100 rounded-lg text-[8.5px] md:text-[9.5px] font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-xl z-50 group-hover:translate-y-[-1px]";
-                    let position = "";
-                    switch(pos) {
-                        case 'top': position = 'bottom-5 md:bottom-6 left-1/2 -translate-x-1/2'; break;
-                        case 'bottom': position = 'top-5 md:top-6 left-1/2 -translate-x-1/2'; break;
-                        case 'right': position = 'left-5 md:left-6 top-1/2 -translate-y-1/2'; break;
-                        case 'left': position = 'right-5 md:right-6 top-1/2 -translate-y-1/2'; break;
-                    }
-                    return `${base} ${position}`;
-                };
+        // Permanent Read State Palette (Warm Champagne Gold)
+        const READ_PALETTE = {
+            box: '#FFFDF0',
+            ribbon: '#D4AF37',
+            border: '#E8C860',
+            accent: '#9B0B21'
+        };
 
-                const openLink = (url) => {
-                    if (url) window.open(url, '_blank');
-                };
-
-                onMounted(() => {
-                    lucide.createIcons();
-                });
-
-                // 當 activeProduct 改變後，重新渲染圖標
-                Vue.watch(activeProduct, () => {
-                    nextTick(() => lucide.createIcons());
-                });
-
-                return { products, activeProduct, getLabelClass, openLink };
+        function getSavedReadState() {
+            try {
+                const data = localStorage.getItem(READ_STORAGE_KEY);
+                return data ? JSON.parse(data) : {};
+            } catch (e) {
+                return {};
             }
-        }).mount('#app');
+        }
+
+        function saveReadState(readMap) {
+            try {
+                localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(readMap));
+            } catch (e) {}
+        }
+
+        // Check unlocked day according to real current date in December (or default to current day)
+        function getCurrentUnlockedDay() {
+            const now = new Date();
+            // December 2026 check (if current month is Dec, use date; otherwise fallback to unlocked 12 for dev or demo)
+            if (now.getMonth() === 11) {
+                return Math.min(Math.max(now.getDate(), 1), 12);
+            }
+            return 12; // Unlocks up to day 12 for general preview unless dev mode restricts
+        }
+
+        let devUnlockedAll = false;
+
+        let storiesData = [
+            {
+                day: 1,
+                name: '張哲銘 Ray Chang',
+                role: '前沿技術部 / Senior Tech Lead',
+                title: '探索前沿技術的實踐之路',
+                quote: '每一個微小的技術創新，都是推動團隊跨越極限的關鍵能量。',
+                // 示意照片：專業男士工程師，自然光，自然寫實風格
+                photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/111111/FFFFFF?text=Ray+Chang',
+                interview: [
+                    { question: 'Q1: 在 JPC 團隊中，主要負責哪方面的核心工作與技術挑戰？', answer: '主要負責核心系統架構優化與前沿技術研究。如何在維持高穩定度的前提下不斷引進創新技術，是每天最具挑戰但也最有成就感的事。' },
+                    { question: 'Q2: 關於團隊合作，今年最令你印象深刻的一刻是什麼？', answer: '今年跨部門攻堅專案時，大家連續幾天跨時區緊密協作，最終順利按時上線。那一刻深切感受到 JPC 夥伴間無條件的信任與凝聚力。' },
+                    { question: 'Q3: 給 JPC 夥伴們的聖誕祝福與新年度的展望？', answer: '感謝所有夥伴一路上的互相支持！希望新的一年大家都能在技術與專業上持續突破，一起打造更卓越的產品！' }
+                ]
+            },
+            {
+                day: 2,
+                name: '林雅婷 Emily Lin',
+                role: '產品設計部 / Product Designer',
+                title: '極致工藝細節與使用者體驗',
+                quote: '設計不只是外觀，更是我們對品質與使用者承諾的終極體現。',
+                // 示意照片：專業女性設計師，簡約明亮
+                photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/C8102E/FFFFFF?text=Emily+Lin',
+                interview: [
+                    { question: 'Q1: 設計過程中，如何將品牌精神融入每一個產品細節？', answer: '我們追求簡潔、精準且充滿質感的視覺體驗。每一個微小的間距與顏色調配，都代表著 JPC 對極致品質的堅持與執著。' },
+                    { question: 'Q2: 在跨部門合作設計專案時，最重要的溝通秘訣是什麼？', answer: '站在使用者與工程夥伴的雙重角度思考，用視覺同理心搭起橋樑，讓美感與實用性達成完美的均衡。' },
+                    { question: 'Q3: 給 JPC 夥伴們的聖誕祝福與展望？', answer: '祝大家聖誕快樂！希望新的一年我們能繼續激發出更多精采的設計靈感，一起創造令人驚豔的作品！' }
+                ]
+            },
+            {
+                day: 3,
+                name: '王建宏 Kevin Wang',
+                role: '系統工程部 / Senior Infrastructure Engineer',
+                title: '穩定背後的默默守護者',
+                quote: '看不見的基礎建設，往往是支撐每位夥伴順利前行的最強後盾。',
+                // 示意照片：成熟男性工程師，沈穩專業
+                photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/111111/FFFFFF?text=Kevin+Wang',
+                interview: [
+                    { question: 'Q1: 每天面對龐大的系統流量與架構，最大的挑戰是什麼？', answer: '確保 99.99% 的高可用性與流暢體驗。我們需要隨時預判各種高壓情境，讓全球用戶都能順暢使用。' },
+                    { question: 'Q2: 今年團隊在架構升級上最大的收穫是什麼？', answer: '成功完成零停機雲端遷移專案，這展現了團隊成員在技術規劃與執行力上的完美默契。' },
+                    { question: 'Q3: 聖誕佳節之際想對團隊說的話？', answer: '謝謝大家對基礎設施團隊的信任，祝大家聖誕快樂，系統永遠穩定順暢！' }
+                ]
+            },
+            {
+                day: 4,
+                name: '李欣怡 Cindy Lee',
+                role: '品牌行銷部 / Brand Communications Lead',
+                title: '傳遞 JPC 獨一無二的品牌溫度',
+                quote: '好的故事能夠觸動人心，拉近人與人之間的距離。',
+                // 示意照片：自信知性女性行銷主管
+                photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/C8102E/FFFFFF?text=Cindy+Lee',
+                interview: [
+                    { question: 'Q1: 行銷溝通中，最核心的價值觀是什麼？', answer: '真誠與共鳴。我們希望透過每一次的專案與活動，將 JPC 追求卓越與人文關懷的初衷傳遞給所有人。' },
+                    { question: 'Q2: 籌備大型專案時最感動的時刻？', answer: '看到夥伴們在活動現場露出笑容，並且收到社群熱烈的正面迴響，所有的辛苦都值得了。' },
+                    { question: 'Q3: 給 JPC 夥伴們的佳節祝福？', answer: '願大家在這個聖誕節好好放鬆，充電後一起迎接更精采的一年！' }
+                ]
+            },
+            {
+                day: 5,
+                name: '趙家豪 Howard Chao',
+                role: '資料科學部 / Lead Data Analyst',
+                title: '從數據洞察中發掘未來方向',
+                quote: '數字會說話，而我們的任務是聽懂它們傳遞的未來趨勢。',
+                // 示意照片：年輕男性分析師，專注認真
+                photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80' == 'xxx' ? '' : 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/111111/FFFFFF?text=Howard+Chao',
+                interview: [
+                    { question: 'Q1: 日常數據分析工作中，如何協助團隊做出更好的決策？', answer: '透過精準模型與即時數據儀表板，將複雜的數據轉化為清晰易懂的洞察，協助產品與行銷團隊迅速調整方向。' },
+                    { question: 'Q2: 今年數據團隊最具突破性的專案？', answer: '建立全新的用戶行為預測模型，大幅提升了服務推薦的精準度與使用者體驗。' },
+                    { question: 'Q3: 聖誕節最想對夥伴們說的一句話？', answer: '數據無價，夥伴無敵！祝大家聖誕佳節愉快！' }
+                ]
+            },
+            {
+                day: 6,
+                name: '周詩涵 Sharon Chou',
+                role: '人資與文化部 / People & Culture Partner',
+                title: '打造溫暖而充滿活力的職場生態',
+                quote: '人才是 JPC 最珍貴的資產，照顧好夥伴就是照顧好我們的未來。',
+                // 示意照片：親切溫暖女性 HR
+                photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/C8102E/FFFFFF?text=Sharon+Chou',
+                interview: [
+                    { question: 'Q1: 在推動企業文化與員工關懷上，今年有哪些創新亮點？', answer: '我們推出了更彈性的工作方案與多元的內部成長工作坊，讓每一位夥伴都能在 JPC 找到歸屬感與發揮空間。' },
+                    { question: 'Q2: 看到新進夥伴快速融入團隊時的心情？', answer: '非常有成就感！就像看到一棵小樹在肥沃的土壤中茁壯成長。' },
+                    { question: 'Q3: 給 JPC 全體夥伴的聖誕祝福？', answer: '謝謝大家一年來的辛勞，願大家在這個溫馨的季節收穫滿滿的愛與祝福！' }
+                ]
+            },
+            {
+                day: 7,
+                name: '吳承翰 Brian Wu',
+                role: '資訊安全部 / Security Operations Lead',
+                title: '堅守資訊防線，守護每一位用戶的信任',
+                quote: '資安沒有妥協的空間，防護每一次信任的連結。',
+                // 示意照片：俐落男性資安專家
+                photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/111111/FFFFFF?text=Brian+Wu',
+                interview: [
+                    { question: 'Q1: 資安團隊在日常營運中扮演什麼樣的角色？', answer: '我們是隱形的守護者，24小時監控並預防潛在風險，確保所有系統與用戶資料的安全無虞。' },
+                    { question: 'Q2: 面對日新月異的資安挑戰，團隊如何保持敏銳度？', answer: '持續進行模擬演練與技術研究，保持對最新威脅的最高警覺性。' },
+                    { question: 'Q3: 聖誕節想對大家說的安心承諾？', answer: '有我們在，大家可以安心過節！祝各位聖誕快樂！' }
+                ]
+            },
+            {
+                day: 8,
+                name: '蔡佩玲 Kelly Tsai',
+                role: '客戶成功部 / Customer Success Manager',
+                title: '傾聽真實聲音，成就卓越口碑',
+                quote: '每一次認真的傾聽，都是產品變得更好的最佳契機。',
+                // 示意照片：開朗專業女性客戶成功經理
+                photo: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/C8102E/FFFFFF?text=Kelly+Tsai',
+                interview: [
+                    { question: 'Q1: 客戶成功團隊與用戶互動時最重視的是什麼？', answer: '同理心與即時解決問題的能力。我們站在第一線，將用戶的真實心聲帶回產品與研發團隊。' },
+                    { question: 'Q2: 今年印象最深刻的客戶回饋故事？', answer: '有長期合作的客戶特地寫信感謝我們的協助，並稱讚 JPC 是他們見過最專業且溫暖的團隊。' },
+                    { question: 'Q3: 給 JPC 夥伴們的聖誕祝福？', answer: '感謝研發與設計夥伴們的強力支援，讓我們能給客戶最好的服務！' }
+                ]
+            },
+            {
+                day: 9,
+                name: '許家豪 Jason Hsu',
+                role: '移動應用研發部 / Mobile Tech Lead',
+                title: '掌上的極致流暢與創新互動',
+                quote: '在行動裝置的方寸之間，創造無限可能的驚喜體驗。',
+                // 示意照片：科技感男性工程師
+                photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/111111/FFFFFF?text=Jason+Hsu',
+                interview: [
+                    { question: 'Q1: 開發跨平台行動應用時，最堅持的技術原則是什麼？', answer: '效能與流暢度。我們希望用戶在打開 App 的那一瞬間，就能感受到絲滑流暢的頂級體驗。' },
+                    { question: 'Q2: 團隊今年在 App 優化上有什麼重大突破？', answer: '成功將載入時間縮短了 40%，並大幅降低了電池耗電量。' },
+                    { question: 'Q3: 聖誕佳節想對夥伴們說的話？', answer: '祝大家聖誕快樂，新的一年繼續在掌上世界發光發熱！' }
+                ]
+            },
+            {
+                day: 10,
+                name: '郭怡君 Jessica Kuo',
+                role: '財務與營運部 / Financial Operations Manager',
+                title: '穩健的資源配置與永續成長',
+                quote: '嚴謹的財務規劃，是團隊大膽創新與開疆拓土的最佳後盾。',
+                // 示意照片：專業女性財務主管
+                photo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/C8102E/FFFFFF?text=Jessica+Kuo',
+                interview: [
+                    { question: 'Q1: 財務與營運規劃如何支持 JPC 的長遠發展？', answer: '我們確保每一項資源的配置都能發揮最高效益，在穩健中尋求創新與成長。' },
+                    { question: 'Q2: 今年與各部門協作最大的心得？', answer: '跨部門的透明溝通讓我們能更精準地評估專案價值，達成共創雙贏。' },
+                    { question: 'Q3: 聖誕節與新年度的期許？', answer: '祝大家佳節愉快，財務穩健，新的一年業績與夢想雙贏！' }
+                ]
+            },
+            {
+                day: 11,
+                name: '黃志偉 William Huang',
+                role: '品質保證部 / QA Engineering Lead',
+                title: '严苛的品質把關與完美主義',
+                quote: '把每一個 Bug 阻絕在發布之前，是對用戶最真誠的尊重。',
+                // 示意照片：嚴謹專注男性 QA 主管
+                photo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/111111/FFFFFF?text=William+Huang',
+                interview: [
+                    { question: 'Q1: QA 團隊在產品上線前扮演什麼關鍵角色？', answer: '我們是最後的守門人。透過自動化測試與嚴格情境模擬，確保每個版本都完美無瑕。' },
+                    { question: 'Q2: 與研發團隊合作時最棒的默契是什麼？', answer: '大家目標一致——追求卓越品質，每一次發現問題都是團隊共同成長的機會。' },
+                    { question: 'Q3: 給 JPC 夥伴們的聖誕祝福？', answer: '祝大家測試全過、專案順利、聖誕快樂！' }
+                ]
+            },
+            {
+                day: 12,
+                name: '陳冠宇 Alex Chen',
+                role: '研發核心團隊 / Lead Engineer',
+                title: '凝聚力量，成就卓越故事',
+                quote: '每一份專業與努力，都讓 JPC 的故事更加完整。',
+                // 示意照片：資深核心技術主管
+                photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80',
+                fallbackPhoto: 'https://placehold.co/300x300/D4AF37/111111?text=Alex+Chen',
+                interview: [
+                    { question: 'Q1: 觀看 12 天故事歷程，對 JPC 團隊最深刻的感受是什麼？', answer: '這 12 天的故事代表著我們每一位夥伴在不同崗位上的熱情與奉獻。正是因為有大家的並肩作戰，JPC 才能不斷突破與茁壯。' },
+                    { question: 'Q2: 面對快速變化的產業環境，團隊保持核心競爭力的關鍵？', answer: '終身學習的態度與極致的執行力。我們從不畏懼嘗試新技術，並能快速將挑戰轉化為成長養分。' },
+                    { question: 'Q3: 聖誕節之際，最想對大家說的一句話？', answer: '感謝有你們同行！願這個溫馨的節日帶給大家滿滿的能量，我們明年繼續攜手向前！' }
+                ]
+            }
+        ];
+
+        function switchView(pageId) {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active-view');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+            if (!toast || !toastMsg) return;
+            toastMsg.innerText = msg;
+            toast.classList.remove('hidden');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
+
+        function toggleDevModeReset() {
+            const savedMap = getSavedReadState();
+            const litCount = Object.keys(savedMap).length;
+
+            if (litCount < 12) {
+                // Instantly mark all as read for dev preview
+                const fullMap = {};
+                for (let i = 1; i <= 12; i++) fullMap[i] = true;
+                saveReadState(fullMap);
+                renderCalendar();
+                showToast("Dev Mode: 全部故事已標記為已閱讀！");
+                triggerGrandFinaleRitual();
+            } else {
+                // Reset progress
+                localStorage.removeItem(READ_STORAGE_KEY);
+                renderCalendar();
+                showToast("Dev Mode: 已重設所有閱讀進度");
+            }
+        }
+
+        function createGiftBoxSvg(day, isRead, isLocked) {
+            const basePalette = GIFT_PALETTES[day] || GIFT_PALETTES[1];
+            
+            // Strictly apply warm gold palette once read, else original palette
+            const palette = isRead ? READ_PALETTE : basePalette;
+            const boxColor = palette.box;
+            const ribbonColor = palette.ribbon;
+            const strokeColor = palette.border;
+
+            return `
+                <svg class="gift-svg-element w-full h-full max-h-[110px] mx-auto overflow-visible" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="80" cy="128" rx="50" ry="8" fill="#111111" fill-opacity="${isRead ? '0.12' : '0.08'}"/>
+
+                    <rect x="25" y="55" width="110" height="68" rx="8" fill="${boxColor}" stroke="${strokeColor}" stroke-width="${isRead ? '2' : '1.2'}"/>
+                    
+                    <rect x="71" y="55" width="18" height="68" fill="${ribbonColor}"/>
+                    <rect x="71" y="55" width="18" height="68" fill="white" fill-opacity="0.15"/>
+
+                    <rect x="25" y="82" width="110" height="15" fill="${ribbonColor}"/>
+                    <rect x="25" y="82" width="110" height="15" fill="white" fill-opacity="0.15"/>
+
+                    <g class="gift-lid">
+                        <rect x="20" y="42" width="120" height="18" rx="4" fill="${boxColor}" stroke="${strokeColor}" stroke-width="${isRead ? '2' : '1.2'}"/>
+                        <rect x="71" y="42" width="18" height="18" fill="${ribbonColor}"/>
+                        
+                        <path d="M80 42 C65 22, 40 32, 71 42 Z" fill="${ribbonColor}"/>
+                        <path d="M80 42 C95 22, 120 32, 89 42 Z" fill="${ribbonColor}"/>
+                        <circle cx="80" cy="42" r="5" fill="${isRead ? '#FFFFFF' : ribbonColor}" stroke="${strokeColor}" stroke-width="0.8"/>
+                    </g>
+
+                    ${isLocked ? `
+                        <!-- Lock Icon for unreached days -->
+                        <g transform="translate(68, 68)">
+                            <rect x="2" y="10" width="20" height="15" rx="3" fill="#111111" fill-opacity="0.75"/>
+                            <path d="M6 10 V6 A6 6 0 0 1 18 6 V10" stroke="#111111" stroke-width="2.5" stroke-opacity="0.75" fill="none"/>
+                            <circle cx="12" cy="16" r="2" fill="#FFFFFF"/>
+                        </g>
+                    ` : ''}
+
+                    ${isRead ? `
+                        <g class="star-glow animate-new-star">
+                            <circle cx="130" cy="38" r="14" fill="#FAF0CA" stroke="#D4AF37" stroke-width="1.5"/>
+                            <path d="M130 31L132 35.5L136.5 35.5L133 38.2L134.5 43L130 40.2L125.5 43L127 38.2L123.5 35.5L128 35.5Z" fill="#D4AF37"/>
+                        </g>
+                    ` : ''}
+                </svg>
+            `;
+        }
+
+        function renderCalendar() {
+            const container = document.getElementById('storiesGrid');
+            if (!container) return;
+
+            const readMap = getSavedReadState();
+            const maxUnlockedDay = getCurrentUnlockedDay();
+            const litCount = Object.keys(readMap).length;
+
+            const counterEl = document.getElementById('starCounterText');
+            if (counterEl) {
+                counterEl.innerText = `${String(litCount).padStart(2, '0')} / 12 Stars Lit`;
+            }
+
+            container.innerHTML = storiesData.map(item => {
+                const dayFormatted = String(item.day).padStart(2, '0');
+                const isRead = !!readMap[item.day];
+                const isLocked = item.day > maxUnlockedDay;
+
+                let cardClasses = `gift-box-card group relative bg-white border rounded-2xl p-3.5 flex flex-col justify-between transition-all duration-300 min-h-[150px] `;
+                
+                if (isLocked) {
+                    cardClasses += 'is-locked border-gray-200 bg-gray-50/50';
+                } else if (isRead) {
+                    cardClasses += 'is-read cursor-pointer';
+                } else {
+                    cardClasses += 'border-gray-300 hover:border-gray-500 hover:shadow-md cursor-pointer';
+                }
+
+                return `
+                    <div id="gift-card-${item.day}" onclick="handleGiftClick(${item.day})" class="${cardClasses}">
+                        <div class="flex items-center justify-between z-10">
+                            <span class="text-xs font-mono font-bold tracking-wider ${isRead ? 'text-jpc-red' : (isLocked ? 'text-gray-400' : 'text-gray-700')} transition-colors">
+                                DAY ${dayFormatted}
+                            </span>
+                            ${isRead ? '<span class="text-[10px] font-mono text-jpc-gold font-bold">READ ★</span>' : ''}
+                            ${isLocked ? '<span class="text-[10px] font-mono text-gray-400">LOCKED</span>' : ''}
+                        </div>
+
+                        <div class="my-auto py-1 flex items-center justify-center">
+                            ${createGiftBoxSvg(item.day, isRead, isLocked)}
+                        </div>
+
+                        <div class="text-center text-[11px] font-mono font-bold tracking-wide z-10 transition-colors ${isRead ? 'text-jpc-gold' : (isLocked ? 'text-gray-400' : 'text-gray-600 group-hover:text-jpc-charcoal')}">
+                            ${isLocked ? '未解鎖' : (isRead ? '重溫故事 ★' : '點擊開啟故事 →')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleGiftClick(day) {
+            const maxUnlockedDay = getCurrentUnlockedDay();
+            if (day > maxUnlockedDay) {
+                showToast(`Day ${String(day).padStart(2, '0')} 尚未到達解鎖日期！`);
+                return;
+            }
+
+            const story = storiesData.find(s => s.day === day);
+            if (!story) return;
+
+            const cardEl = document.getElementById(`gift-card-${day}`);
+            if (cardEl) {
+                cardEl.classList.add('animate-open-gift');
+                setTimeout(() => {
+                    cardEl.classList.remove('animate-open-gift');
+                    openStoryReader(story.day);
+                }, 350);
+            } else {
+                openStoryReader(story.day);
+            }
+        }
+
+        function openStoryReader(day) {
+            const story = storiesData.find(s => s.day === day);
+            if (!story) return;
+
+            currentReadingDay = day;
+
+            // Automatically register first-time read state upon opening story interview
+            const savedMap = getSavedReadState();
+            const isFirstTimeRead = !savedMap[day];
+
+            if (isFirstTimeRead) {
+                savedMap[day] = true;
+                saveReadState(savedMap);
+                renderCalendar(); // Color turns to Warm Gold permanently right here
+            }
+
+            document.getElementById('readerDayTag').innerText = `DAY ${String(story.day).padStart(2, '0')}`;
+            document.getElementById('readerName').innerText = story.name;
+            document.getElementById('readerRole').innerText = story.role;
+            document.getElementById('readerTitle').innerText = story.title || 'JPC 人物故事專訪';
+            document.getElementById('readerQuote').innerText = `「${story.quote.replace(/[「」]/g, '')}」`;
+            
+            // Photo loading with anti-broken fallback protection
+            const photoEl = document.getElementById('readerPhoto');
+            photoEl.onerror = function() {
+                this.onerror = null;
+                this.src = story.fallbackPhoto;
+            };
+            photoEl.src = story.photo;
+
+            // Render High-End Editorial Q&A Layout
+            const qContainer = document.getElementById('allQuestionsContainer');
+            if (qContainer && story.interview) {
+                qContainer.innerHTML = story.interview.map((item, index) => {
+                    const qMatch = item.question.match(/^(Q\d+:?)\s*(.*)$/);
+                    const qTag = qMatch ? qMatch[1].replace(':', '') : `Q${index + 1}`;
+                    const qText = qMatch ? qMatch[2] : item.question;
+
+                    return `
+                        <div class="space-y-4 group">
+                            <div class="flex items-start space-x-3 sm:space-x-4">
+                                <span class="inline-flex items-center justify-center text-xs font-mono font-bold text-jpc-red bg-red-50 border border-jpc-red/20 px-2.5 py-1 rounded-md flex-shrink-0 mt-0.5">
+                                    ${qTag}
+                                </span>
+                                <h4 class="text-base sm:text-lg font-bold text-jpc-charcoal leading-snug tracking-tight">
+                                    ${qText}
+                                </h4>
+                            </div>
+
+                            <div class="pl-3 sm:pl-11 pr-2">
+                                <p class="magazine-body text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
+                                    ${item.answer}
+                                </p>
+                            </div>
+
+                            ${index < story.interview.length - 1 ? '<div class="qa-divider h-[1px] w-full mt-8"></div>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            switchView('page-story');
+        }
+
+        function finishAndReturnHome() {
+            if (!currentReadingDay) {
+                switchView('page-home');
+                return;
+            }
+
+            const savedMap = getSavedReadState();
+            const totalLit = Object.keys(savedMap).length;
+
+            switchView('page-home');
+
+            // Trigger ritual feedback without duplicate counting
+            if (totalLit === 12) {
+                triggerGrandFinaleRitual();
+            } else {
+                triggerModalTreeRitual(currentReadingDay);
+            }
+        }
+
+        /* Single Star Lighting Ritual */
+        function triggerModalTreeRitual(targetDay) {
+            const overlay = document.getElementById('treeModalOverlay');
+            const hint = document.getElementById('modalTreeHint');
+            const title = document.getElementById('modalTreeTitle');
+            const tag = document.getElementById('modalTreeTag');
+            if (!overlay) return;
+
+            tag.innerText = "CHRISTMAS RITUAL";
+            title.innerText = "點亮聖誕星光";
+
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+
+            const readMap = getSavedReadState();
+            const totalLit = Object.keys(readMap).length;
+
+            // Reset strands
+            ['mStrand1', 'mStrand2', 'mStrand3'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.setAttribute('stroke', '#C7C7CC'); el.setAttribute('stroke-width', '1.5'); }
+            });
+
+            for (let d = 1; d <= 12; d++) {
+                const node = document.getElementById(`mStar-${d}`);
+                if (node) {
+                    node.classList.remove('star-active', 'star-glow', 'star-inactive', 'animate-new-star');
+                    if (readMap[d] && d !== targetDay) {
+                        node.classList.add('star-active');
+                    } else {
+                        node.classList.add('star-inactive');
+                    }
+                }
+            }
+
+            hint.innerText = `✨ 正在為 Day ${String(targetDay).padStart(2, '0')} 點亮專屬星星...`;
+
+            setTimeout(() => {
+                const targetNode = document.getElementById(`mStar-${targetDay}`);
+                if (targetNode) {
+                    targetNode.classList.remove('star-inactive');
+                    targetNode.classList.add('star-active', 'star-glow', 'animate-new-star');
+                }
+                hint.innerText = `★ Day ${String(targetDay).padStart(2, '0')} 星光已成功點亮！ (${totalLit}/12)`;
+            }, 400);
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+            }, 1800);
+        }
+
+        /* Full 12-Story Grand Finale Lighting Ritual */
+        function triggerGrandFinaleRitual() {
+            const overlay = document.getElementById('treeModalOverlay');
+            const hint = document.getElementById('modalTreeHint');
+            const title = document.getElementById('modalTreeTitle');
+            const tag = document.getElementById('modalTreeTag');
+
+            if (!overlay) {
+                switchView('page-finale');
+                return;
+            }
+
+            tag.innerText = "GRAND FINALE RITUAL";
+            title.innerText = "12 個故事，點亮屬於 JPC 的聖誕";
+            hint.innerText = "✨ 故事已全部完成，點亮聖誕樹最後的光芒...";
+
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+
+            for (let d = 1; d <= 12; d++) {
+                const node = document.getElementById(`mStar-${d}`);
+                if (node) {
+                    node.classList.remove('star-active', 'star-glow', 'animate-new-star');
+                    node.classList.add('star-inactive');
+                }
+            }
+
+            initModalStardust();
+
+            setTimeout(() => {
+                const topStar = document.getElementById('mStar-12');
+                if (topStar) {
+                    topStar.classList.remove('star-inactive');
+                    topStar.classList.add('star-active', 'star-glow', 'animate-new-star');
+                }
+                const strand1 = document.getElementById('mStrand1');
+                if (strand1) { strand1.setAttribute('stroke', '#D4AF37'); strand1.setAttribute('stroke-width', '2.5'); }
+            }, 400);
+
+            setTimeout(() => {
+                [1, 2, 3, 4].forEach(id => {
+                    const node = document.getElementById(`mStar-${id}`);
+                    if (node) {
+                        node.classList.remove('star-inactive');
+                        node.classList.add('star-active', 'star-glow');
+                    }
+                });
+                const strand2 = document.getElementById('mStrand2');
+                if (strand2) { strand2.setAttribute('stroke', '#D4AF37'); strand2.setAttribute('stroke-width', '2.5'); }
+            }, 1000);
+
+            setTimeout(() => {
+                [5, 6, 7, 8, 9, 10, 11].forEach(id => {
+                    const node = document.getElementById(`mStar-${id}`);
+                    if (node) {
+                        node.classList.remove('star-inactive');
+                        node.classList.add('star-active', 'star-glow');
+                    }
+                });
+                const strand3 = document.getElementById('mStrand3');
+                if (strand3) { strand3.setAttribute('stroke', '#D4AF37'); strand3.setAttribute('stroke-width', '2.5'); }
+                title.innerText = "12 顆聖誕星光完美點亮！";
+            }, 1600);
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+                switchView('page-finale');
+                initFinaleCanvas();
+            }, 2700);
+        }
+
+        function initModalStardust() {
+            const canvas = document.getElementById('modalStardustCanvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = canvas.offsetWidth;
+            let h = canvas.height = canvas.offsetHeight;
+
+            const dusts = Array.from({ length: 24 }, () => ({
+                x: w / 2 + (Math.random() - 0.5) * 80,
+                y: 30 + Math.random() * 40,
+                r: Math.random() * 1.8 + 0.6,
+                opacity: Math.random() * 0.8 + 0.2,
+                vy: Math.random() * 0.8 + 0.4,
+                vx: (Math.random() - 0.5) * 0.6
+            }));
+
+            let animId;
+            function drawDust() {
+                ctx.clearRect(0, 0, w, h);
+                dusts.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
+                    ctx.fill();
+
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    p.opacity -= 0.005;
+
+                    if (p.opacity <= 0 || p.y > h) {
+                        p.y = 20 + Math.random() * 30;
+                        p.x = w / 2 + (Math.random() - 0.5) * 100;
+                        p.opacity = Math.random() * 0.8 + 0.2;
+                    }
+                });
+                animId = requestAnimationFrame(drawDust);
+            }
+            drawDust();
+
+            setTimeout(() => {
+                cancelAnimationFrame(animId);
+            }, 2800);
+        }
+
+        function initFinaleCanvas() {
+            const finaleCanvas = document.getElementById('finaleParticlesCanvas');
+            if (!finaleCanvas) return;
+
+            const ctx = finaleCanvas.getContext('2d');
+            let w = finaleCanvas.width = finaleCanvas.offsetWidth;
+            let h = finaleCanvas.height = finaleCanvas.offsetHeight;
+
+            const fParticles = Array.from({ length: 35 }, () => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 2 + 0.8,
+                opacity: Math.random() * 0.7 + 0.3,
+                vy: -(Math.random() * 0.35 + 0.15)
+            }));
+
+            function drawFinaleParticles() {
+                ctx.clearRect(0, 0, w, h);
+                fParticles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
+                    ctx.fill();
+
+                    p.y += p.vy;
+                    if (p.y < -5) {
+                        p.y = h + 5;
+                        p.x = Math.random() * w;
+                    }
+                });
+                requestAnimationFrame(drawFinaleParticles);
+            }
+            drawFinaleParticles();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCalendar();
+            switchView('page-welcome');
+
+            const canvas = document.getElementById('heroCanvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const particles = Array.from({ length: 30 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 1.5 + 0.5,
+                opacity: Math.random() * 0.4 + 0.1,
+                speedY: Math.random() * 0.2 + 0.1
+            }));
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, width, height);
+                
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(160, 160, 175, ${p.opacity})`;
+                    ctx.fill();
+
+                    p.y += p.speedY;
+                    if (p.y > height) {
+                        p.y = -5;
+                        p.x = Math.random() * width;
+                    }
+                });
+
+                requestAnimationFrame(animateCanvas);
+            }
+
+            animateCanvas();
+        });
     </script>
 </body>
 </html>
