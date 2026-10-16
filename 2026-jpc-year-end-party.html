@@ -486,6 +486,32 @@
         </section>
 
         <!-- ========================================== -->
+        <!-- LIGHTBOX MODAL FOR POLAROID PHOTOS         -->
+        <!-- ========================================== -->
+        <div id="lightbox" class="fixed inset-0 bg-[#2A1F17]/80 z-[100] hidden items-center justify-center p-3 sm:p-6" onclick="closeLightbox()">
+            <div class="vintage-card p-4 sm:p-6 max-w-md w-full rounded shadow-2xl relative text-center max-h-[92dvh] overflow-y-auto flex flex-col justify-between" onclick="event.stopPropagation()">
+                <button onclick="closeLightbox()" class="absolute top-2 right-3 text-[#A8372C] font-black text-xl hover:text-[#2A1F17] z-10" aria-label="關閉視窗">×</button>
+                <div class="mb-2">
+                    <span id="lightbox-counter" class="text-[10px] font-serif text-[#A8372C] font-bold block">1 / 6</span>
+                    <h3 id="lightbox-title" class="font-serif font-bold text-base sm:text-lg text-[#2A1F17] mt-0.5">照片標題</h3>
+                </div>
+                <div class="my-2 p-1 bg-[#FFFDF9] border border-[#D8A23E] rounded shadow-inner flex flex-col items-center justify-center">
+                    <div id="lightbox-svg" class="w-full aspect-[4/3] bg-[#E5D4B2]/60 rounded-sm overflow-hidden flex items-center justify-center relative">
+                        <!-- Populated dynamically -->
+                    </div>
+                    <div class="w-full pt-3 pb-1 px-1 text-center">
+                        <p id="lightbox-desc" class="text-xs sm:text-sm text-[#2F5446] font-sans leading-relaxed">照片詳細描述</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center pt-3 border-t border-[#D8A23E]/50 mt-1">
+                    <button onclick="prevLightboxItem()" class="secondary-btn px-3 py-1.5 text-xs text-[#2A1F17] flex items-center gap-1">◀ 上一張</button>
+                    <button onclick="closeLightbox()" class="stamp-btn px-5 py-1.5 text-xs">關閉檢視</button>
+                    <button onclick="nextLightboxItem()" class="secondary-btn px-3 py-1.5 text-xs text-[#2A1F17] flex items-center gap-1">下一張 ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
         <!-- SCENE 5: Countdown (第四幕)                 -->
         <!-- ========================================== -->
         <section id="scene-5" class="scene w-full vignette p-3 sm:p-5 flex flex-col justify-between" aria-hidden="true">
@@ -650,37 +676,37 @@
                     title: "秀英｜復古波浪捲與立領洋裝",
                     shortDesc: "優雅波浪短髮與珍珠項鍊",
                     fullDesc: "精緻的 50 年代復古波浪短髮搭配典雅立領洋裝，頸間點綴溫潤珍珠項鍊，展現當時台灣都會女性的知性與優雅氣質。",
-                    imageUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+                    imageUrl: "https://lochoive-code.github.io/jpc/retro-outfits-01.jpeg"
                 },
                 {
                     title: "美惠｜俏皮點點圓裙穿搭",
                     shortDesc: "圓點洋裝與收腰皮帶",
                     fullDesc: "經典黑白波卡圓點棉布洋裝，搭配細緻腰帶勾勒出優美曲線，展現活潑迷人的 50 年代復古派對風情。",
-                    imageUrl: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80"
+                    imageUrl: "https://lochoive-code.github.io/jpc/retro-outfits-02.jpeg"
                 },
                 {
                     title: "志豪｜斯文膠框眼鏡與背心",
                     shortDesc: "復古背心與立體分髮造型",
                     fullDesc: "細框眼鏡與經典三七分油頭，搭配復古針織背心與襯衫，散發濃厚文藝氣息與溫文儒雅的紳士風範。",
-                    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+                    imageUrl: "https://lochoive-code.github.io/jpc/retro-outfits-03.jpeg"
                 },
                 {
                     title: "明哲｜高腰西裝褲與挺拔白襯衫",
                     shortDesc: "高腰西裝褲與手工皮鞋",
                     fullDesc: "挺拔的白襯衫紮入高腰打褶西裝褲內，搭配皮質腰帶與擦得發亮的皮鞋，是當時最體面的紳士聚會裝扮。",
-                    imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"
+                    imageUrl: "https://lochoive-code.github.io/jpc/retro-outfits-04.jpeg"
                 },
                 {
                     title: "阿建｜報童帽與率性吊帶裝",
                     shortDesc: "復古鴨舌帽與休閒吊帶",
                     fullDesc: "充滿眷村日常感的短袖襯衫搭配復古吊帶與經典報童帽，洋溢著率性、陽光且充滿時代感的活潑氣息。",
-                    imageUrl: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80"
+                    imageUrl: "https://lochoive-code.github.io/jpc/retro-outfits-05.jpeg"
                 },
                 {
                     title: "靜宜｜華麗大圓帽與名媛風穿搭",
                     shortDesc: "寬沿名媛禮帽與精緻胸針",
                     fullDesc: "戴著優雅大圓帽與復古胸針的高貴派對造型，展現當時仕紳名媛出席重要社交聚會的頂級美學。",
-                    imageUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80"
+                    imageUrl: "https://lochoive-code.github.io/jpc/retro-outfits-06.jpeg"
                 }
             ]
         };
