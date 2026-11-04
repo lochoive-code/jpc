@@ -28,8 +28,7 @@ box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.07)}
 .val:hover,.val:focus-visible{color:var(--brand)}
 .val:focus-visible,.btn:focus-visible{outline:2px solid var(--brand);outline-offset:4px;border-radius:2px}
 .ext{color:var(--mute)}
-.btn{margin-top:28px;width:100%;height:52px;border:0;border-radius:26px;background:var(--brand);color:#fff;
-font:600 16px/1 inherit;font-family:inherit;letter-spacing:.06em;cursor:pointer;transition:transform .15s,opacity .15s}
+.btn{display:flex;align-items:center;justify-content:center;text-decoration:none;margin-top:28px;width:100%;height:52px;border-radius:26px;background:var(--brand);color:#fff;font-weight:600;font-size:16px;letter-spacing:.06em;transition:transform .15s,opacity .15s}
 .btn:active{transform:scale(.98);opacity:.9}
 .msg{min-height:20px;margin:12px 0 0;font-size:13px;line-height:1.5;color:var(--mute);text-align:center}
 </style>
@@ -47,24 +46,7 @@ font:600 16px/1 inherit;font-family:inherit;letter-spacing:.06em;cursor:pointer;
     <div class="row"><span class="label">EMAIL</span><a class="val" href="mailto:weiling_yi@jpcco.com">weiling_yi@jpcco.com</a></div>
     <div class="row"><span class="label">WEBSITE</span><a class="val" href="https://www.jpcco.com" target="_blank" rel="noopener">www.jpcco.com</a></div>
   </section>
-  <button class="btn" id="save" type="button">加入通訊錄</button>
-  <p class="msg" id="msg" role="status"></p>
+  <a class="btn" href="https://lochoive-code.github.io/jpc/Weiling_Yi.vcf" target="_blank" rel="noopener">加入通訊錄</a>
 </main>
-<script>
-var VCF=["BEGIN:VCARD","VERSION:3.0","N;CHARSET=UTF-8:易;瑋鈴;;;","FN;CHARSET=UTF-8:易瑋鈴 Weiling Yi","NICKNAME:Weiling Yi","ORG;CHARSET=UTF-8:JPC connectivity","TITLE;CHARSET=UTF-8:董事長室&人資行政部","TEL;TYPE=WORK,VOICE:+886-2-8227-1658,8117","EMAIL;TYPE=INTERNET,WORK:weiling_yi@jpcco.com","URL:https://www.jpcco.com","END:VCARD",""].join("\r\n");
-var btn=document.getElementById("save"),msg=document.getElementById("msg");
-btn.addEventListener("click",async function(){
-  msg.textContent="";
-  try{
-    var d=await claude.use("downloads");
-    if(!d){throw {code:"unavailable"};}
-    await d.save({filename:"Weiling_Yi.vcf",data:VCF});
-    msg.textContent="已儲存，開啟檔案即可加入通訊錄。";
-  }catch(e){
-    if(e&&e.code==="declined"){return;}
-    msg.textContent="此頁面暫時無法直接下載通訊錄檔，請改用電話或 Email 連結儲存聯絡資訊。";
-  }
-});
-</script>
 </body>
 </html>
